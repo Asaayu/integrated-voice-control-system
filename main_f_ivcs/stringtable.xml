@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="Integrated Voice Control System">
+	<Container name="Main Strings">
+		<Key ID="STR_IVCS_MOD_NAME">
+			<Original>Integrated AI Voice Control System</Original>
+		</Key>
+	</Container>
+	<Container name="Keybind Strings">
+		<Key ID="STR_IVCS_KEYBIND_PTT_NAME">
+			<Original>Push-To-Talk Key</Original>
+		</Key>
+		<Key ID="STR_IVCS_KEYBIND_PTT_TOOLTIP">
+			<Original>When pressed, this key will enable voice recognition and when released, voice recognition will be disabled.</Original>
+		</Key>
+	</Container>
+	<Container name="Settings Strings">
+		<Key ID="STR_IVCS_SETTINGS_CONFIDENCE_NAME">
+			<Original>Required Result Confidence Level</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_CONFIDENCE_TOOLTIP">
+			<Original>The result from the speech recognition engine comes with a confidence value based on how confident it is between the originally spoken words and the generated text it has created.\nThe engine will attempt to find the closest word from the list of avaliable words that it is expecting, you can then use the confidence value as a fail safe to stop badly translated values from being processed.\nMay require a game restart to take effect.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_INITAL_SILENCE_TIMEOUT_NAME">
+			<Original>Inital Silence Timeout</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_INITAL_SILENCE_TIMEOUT_TOOLTIP">
+			<Original>Sets the time interval during which the speech recognition engine accepts input containing only silence before finalizing recognition.\nMay require a game restart to take effect.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_SILENCE_FINISHED_TIMEOUT_NAME">
+			<Original>End Silence Timeout (Finished)</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_SILENCE_FINISHED_TIMEOUT_TOOLTIP">
+			<Original>Sets the interval of silence that the speech recognition engine will accept at the end of a finished command input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_SILENCE_TIMEOUT_NAME">
+			<Original>End Silence Timeout</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_SILENCE_TIMEOUT_TOOLTIP">
+			<Original>Sets the interval of silence that the speech recognition engine will accept at the end of a not yet finished command input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_NAME">
+			<Original>End Background Noise Timeout</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_TOOLTIP">
+			<Original>Sets the interval of background noise that the speech recognition engine will accept at the end of an input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TARGET_CONFIRM_UI_NAME">
+			<Original>Display Selected Target</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TARGET_CONFIRM_UI_TOOLTIP">
+			<Original>Displays a circle over the selected target when giving target orders.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_OUTPUT_GROUP_CHAT_NAME">
+			<Original>Output Recognised Text in Group Chat</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_OUTPUT_GROUP_CHAT_TOOLTIP">
+			<Original>Recognised text that results in a command or function being run will be output into group chat, the same as a command given through the game.</Original>
+		</Key>
+	</Container>
+	<Container name="Pause Menu Strings">
+		<Key ID="STR_IVCS_PAUSE_MENU_TEST_BUTTON_NAME">
+			<Original>IVCS Audio Test</Original>
+		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_TEST_BUTTON_TOOLTIP">
+			<Original>Open the IVCS testing menu, allowing you to test your computers voice recognition.</Original>
+		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_NAME">
+			<Original>Windows Voice Training</Original>
+		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_TOOLTIP">
+			<Original>Open the Windows Speech Recognition Voice Training Wizard, allowing you to train your computer's speech recognition to understand your voice easier.</Original>
+		</Key>
+	</Container>
+	<Container name="Settings Category Strings">
+		<Key ID="STR_IVCS_SETTINGS_CATEGORY_NAME">
+			<Original>Integrated AI Voice Control System</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_RESULT_NAME">
+			<Original>Results</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_INPUT_NAME">
+			<Original>Input</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_USER_FEEDBACK_NAME">
+			<Original>Feedback to the User</Original>
+		</Key>
+	</Container>
+	<Container name="Microphone Testing Display Strings">
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TITLE">
+			<Original>Integrated AI Voice Control System (IVCS)</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_DESCRIPTION">
+			<Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3.&lt;br/&gt;This menu allows you to test your microphone and built-in Windows speech recognition engine.&lt;br/&gt;Say the phrases below, they will turn green when the engine recognises you've said the phrase.&lt;br/&gt;The engine will only recognise the following phrases as correct input when this menu is open&lt;br/&gt;&lt;t size='0.75' color='#B3B3B3'&gt;You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.&lt;/t&gt;</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_01">
+			<Original>Integrated Voice Control System</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_02">
+			<Original>Team yellow, regroup!</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_03">
+			<Original>1, hold fire!</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_04">
+			<Original>1, 2, 3, 4, 5, return to formation.</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_05">
+			<Original>Everybody, stop!</Original>
+		</Key>
+		<Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_CURRENT_TITLE">
+			<Original>Engine Hypothesis:</Original>
+		</Key>
+	</Container>
+	<Container name="User Feedback">
+		<Key ID="STR_IVCS_FEEDBACK_TARGET_OBJECT_NOT_FOUND">
+			<Original>No target object could be found</Original>
+		</Key>
+		<Key ID="STR_IVCS_FEEDBACK_VEHICLE_OBJECT_NOT_FOUND">
+			<Original>No vehicle object could be found</Original>
+		</Key>
+		<Key ID="STR_IVCS_FEEDBACK_TARGET_TEXT">
+			<Original>Target</Original>
+		</Key>
+		<Key ID="STR_IVCS_FEEDBACK_SUPPRESSIVE_FIRE_TARGET_TEXT">
+			<Original>Suppressive Fire Target</Original>
+		</Key>
+		<Key ID="STR_IVCS_FEEDBACK_GET_IN_TARGET_TEXT">
+			<Original>Get In</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_SALUTE_1">
+			<Original>%1 - Salute</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_SIT_1">
+			<Original>%1 - Sit</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_STAND_1">
+			<Original>%1 - Stand</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_CROUCH_1">
+			<Original>%1 - Crouch</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_PRONE_1">
+			<Original>%1 - Prone</Original>
+		</Key>
+	</Container>
+</Project>
