@@ -72,6 +72,23 @@ namespace ivcs
 
             Function.VersionCheck();
 
+            HashSet<string> languages = new HashSet<string>();
+            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            {
+                languages.Add(lang.Culture.EnglishName);
+            }
+
+            HashSet<string> recognizers = new HashSet<string>();
+            foreach (RecognizerInfo recognizer in SpeechRecognitionEngine.InstalledRecognizers())
+            {
+                recognizers.Add(recognizer.Culture.EnglishName);
+            }
+
+            Log.Info($"Languages: {string.Join(", ", languages)}");
+            Log.Info($"Recognizers: {string.Join(", ", recognizers)}");
+            SentrySdk.AddBreadcrumb($"Languages: {string.Join(", ",languages)}", "Information", "info", null, BreadcrumbLevel.Info);
+            SentrySdk.AddBreadcrumb($"Recognizers: {string.Join(", ", recognizers)}", "Information", "info", null, BreadcrumbLevel.Info);
+
             output.Append(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
@@ -266,7 +283,7 @@ namespace ivcs
                     string settings_file = "ms-settings:speech";
                     try
                     {
-                        int windows_version = (int) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "");
+                        int windows_version = int.Parse(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString());
                         if (windows_version < 10)
                             throw new VersionMismatchException("Windows 10 or greater is required to open this link.");
 
