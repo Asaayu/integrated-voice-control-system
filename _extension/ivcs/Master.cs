@@ -593,8 +593,15 @@ namespace ivcs
                             speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
                             speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
-                            // Configure input to the speech recognizer.
-                            speech_engine.SetInputToDefaultAudioDevice();
+                            try
+                            {
+                                // Configure input to the speech recognizer.
+                                speech_engine.SetInputToDefaultAudioDevice();
+                            }
+                            catch (InvalidOperationException ioe)
+                            {
+                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                            }                            
 
                             Log.Info("Main speech recognition engine is now running...");
                         }
@@ -641,27 +648,15 @@ namespace ivcs
 
                 try
                 {
+                    // Try to set the default audio device
+                    speech_engine.SetInputToDefaultAudioDevice();
+
                     // Start asynchronous, continuous speech recognition. 
                     speech_engine.RecognizeAsync(RecognizeMode.Multiple);
                 }
                 catch (InvalidOperationException ioe)
                 {
-                    try
-                    {
-                        speech_engine.SetInputToDefaultAudioDevice();
-                    }
-                    catch (InvalidOperationException ioe2)
-                    {
-                        Log.Info("An invalid operation exception error occurred when attempting to set to the default audio device.");
-                        SentrySdk.CaptureException(ioe2);
-                    }
-                    Log.Info("An invalid operation exception error occurred. Setting the engine input to the default audio device.");
-                    SentrySdk.CaptureException(ioe);
-                }
-                catch (Exception e)
-                {
-                    Log.Info("An error occurred when attempting to enable the speech engine");
-                    Log.Error("An error occurred when attempting to enable the speech engine", e);
+                    Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
                 }
 
                 for (int i = 0; i <= 4; i++)
@@ -689,7 +684,6 @@ namespace ivcs
                 }
                 catch (Exception e)
                 {
-                    Log.Info("An error occurred when attempting to disable the speech engine");
                     Log.Error("An error occurred when attempting to disable the speech engine", e);
                 }
 
@@ -902,8 +896,15 @@ namespace ivcs
                         speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
                         speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
-                        // Start asynchronous, continuous speech recognition.  
-                        speech_testing.RecognizeAsync(RecognizeMode.Multiple);
+                        try
+                        {
+                            // Start asynchronous, continuous speech recognition.  
+                            speech_testing.RecognizeAsync(RecognizeMode.Multiple);
+                        }
+                        catch (InvalidOperationException ioe)
+                        {
+                            Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                        }                        
 
                         Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
                         Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
