@@ -661,6 +661,12 @@ namespace ivcs
 
                 try
                 {
+                    // Sometimes it dosen't load any grammars?
+                    if (speech_engine.Grammars.Count <= 0)
+                    {
+                        ReloadGrammar();
+                    }
+
                     // Try to set the default audio device
                     speech_engine.SetInputToDefaultAudioDevice();
 
@@ -670,6 +676,10 @@ namespace ivcs
                 catch (InvalidOperationException ioe)
                 {
                     Log.Error("The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", ioe);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Something went wrong when trying to activate the speech engine.", e);
                 }
 
                 for (int i = 0; i <= 4; i++)
