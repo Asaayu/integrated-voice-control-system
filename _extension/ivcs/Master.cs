@@ -283,16 +283,16 @@ namespace ivcs
                     string settings_file = "ms-settings:speech";
                     try
                     {
-                        int windows_version = int.Parse(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString());
-                        if (windows_version < 10)
-                            throw new VersionMismatchException("Windows 10 or greater is required to open this link.");
+                        string windows_version = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString();
+                        if (windows_version == "10")
+                            throw new VersionMismatchException("Windows 10 is required to open this link.");
 
                         Process.Start(settings_file);
                         output.Append("true");
                     }
                     catch (VersionMismatchException vme)
                     {
-                        Log.Error($"Windows 10 or greater is required to open this link.", vme);
+                        Log.Error($"Windows 10 is required to open this link.", vme);
                     }
                     catch (Exception e)
                     {
