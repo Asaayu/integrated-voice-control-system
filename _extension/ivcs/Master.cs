@@ -119,64 +119,7 @@ namespace ivcs
 
                 // RELOAD_GRAMMAR: Reload the grammer currently loaded in the speech recognition engine
                 case "reload_grammar":
-                    if (!Function.mission_start_complete)
-                    {
-                        Log.Info("Attempted to reload grammer before the mission start thread could run!");
-                        SentrySdk.AddBreadcrumb("Attempted to reload grammer before the mission start thread could run", "Log Message", "error", null, BreadcrumbLevel.Error);
-                        return;
-                    }
-                    else
-                    {
-                        if (Function.speech_engine != null)
-                        {
-                            // Unload all old grammars
-                            Function.speech_engine.UnloadAllGrammars();
-
-                            // Get the grammar
-                            Grammar grammar = Function.GetGrammar();
-
-                            if (!grammar.Equals(null))
-                            {
-                                try
-                                {
-                                    if (!Function.speech_engine.Grammars.Contains(grammar))
-                                    {
-                                        // Load the custom grammer into the engine
-                                        Function.speech_engine.LoadGrammar(grammar);
-                                    }
-                                }
-                                catch (InvalidOperationException ioe)
-                                {
-                                    MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
-                                    SentrySdk.CaptureException(ioe);
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                Log.Error("Cannot reload grammar as none was found!", new Exception("Could not find main grammer file when attempting to reload the grammer"));
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!", "Log Message", "error", null, BreadcrumbLevel.Error);
-
-                            if (Function.main_thread != null)
-                            {
-                                // Abort the old thread first
-                                Function.main_thread.Abort();
-                            }
-
-                            // Start a new thread
-                            Function.main_thread = new Thread(Function.MissionStart);
-                            Function.main_thread.Start();
-
-
-                            return;
-                        }
-                    }
-                    output.Append("true");
+                    output.Append(Function.ReloadGrammar());
                     return;
 
                 // GET_CONFIDENCE: Get the language
@@ -643,6 +586,68 @@ namespace ivcs
 
             // Set that the thread has reached it's end
             mission_start_complete = true;
+        }
+
+        internal static string ReloadGrammar()
+        {
+            if (!mission_start_complete)
+            {
+                Log.Info("Attempted to reload grammer before the mission start thread could run!");
+                SentrySdk.AddBreadcrumb("Attempted to reload grammer before the mission start thread could run", "Log Message", "error", null, BreadcrumbLevel.Error);
+                return "false";
+            }
+            else
+            {
+                if (speech_engine != null)
+                {
+                    // Unload all old grammars
+                    speech_engine.UnloadAllGrammars();
+
+                    // Get the grammar
+                    Grammar grammar = GetGrammar();
+
+                    if (!grammar.Equals(null))
+                    {
+                        try
+                        {
+                            if (!speech_engine.Grammars.Contains(grammar))
+                            {
+                                // Load the custom grammer into the engine
+                                speech_engine.LoadGrammar(grammar);
+                            }
+                        }
+                        catch (InvalidOperationException ioe)
+                        {
+                            MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
+                            SentrySdk.CaptureException(ioe);
+                            return "false";
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Cannot reload grammar as none was found!", new Exception("Could not find main grammer file when attempting to reload the grammer"));
+                        return "false";
+                    }
+                }
+                else
+                {
+                    SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!", "Log Message", "error", null, BreadcrumbLevel.Error);
+
+                    if (main_thread != null)
+                    {
+                        // Abort the old thread first
+                        main_thread.Abort();
+                    }
+
+                    // Start a new thread
+                    main_thread = new Thread(MissionStart);
+                    main_thread.Start();
+
+
+                    return "true";
+                }
+                return "true";
+            }
         }
 
         internal static void PttDown()
