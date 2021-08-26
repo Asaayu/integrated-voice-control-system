@@ -143,7 +143,6 @@ namespace ivcs
                         }
                         else
                         {
-                            Log.Info("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!");
                             SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!", "Log Message", "error", null, BreadcrumbLevel.Error);
 
                             if (Function.main_thread != null)
@@ -648,7 +647,7 @@ namespace ivcs
                 }
                 catch (InvalidOperationException ioe)
                 {
-                    Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                    Log.Error("The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", ioe);
                 }
 
                 for (int i = 0; i <= 4; i++)
@@ -924,6 +923,12 @@ namespace ivcs
                 MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
                 SentrySdk.CaptureException(ae);
             }
+            catch (NullReferenceException ae)
+            {
+                // This user does not have the correct culture installed
+                MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                SentrySdk.CaptureException(ae);
+            }
             catch (ThreadAbortException)
             {
                 Log.Info("Testing thread aborted...");
@@ -1007,13 +1012,11 @@ namespace ivcs
             }
             catch (FileNotFoundException fnfe)
             {
-                Log.Info("Grammer file not found!");
                 Log.Error("Grammer file not found!", fnfe);
                 return null;
             }
             catch (Exception e)
             {
-                Log.Info("Encountered errror getting grammar file!");
                 Log.Error("Encountered errror getting grammar file!", e);
                 return null;
             };
