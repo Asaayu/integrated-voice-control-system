@@ -1,6 +1,14 @@
 # Prerequisites
 *.d
 
+# Visual Studio
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+
 # Object files
 *.o
 *.ko
