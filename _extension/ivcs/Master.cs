@@ -498,7 +498,7 @@ namespace ivcs
         internal static double end_babbel = 0.0;
 
         internal static string language = "english";
-        internal static string culture = "en-US";
+        internal static string culture = "en";
         internal static NumberFormatInfo nfi = new NumberFormatInfo();
 
         internal static bool ptt = false;
