@@ -4,3 +4,6 @@ P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs.csprojAssemblyReference.cache
 P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs.csproj.CoreCompileInputs.cache
 P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs_x64.dll
 P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs_x64.pdb
+F:\SteamLibrary\steamapps\common\Arma 3\@ivcs\ivcs_x64.dll.config
+P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs.csproj.CopyComplete
+P:\ivcs\_extension\ivcs\obj\x64\Release\ivcs.csproj.Fody.CopyLocal.cache

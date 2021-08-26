@@ -10,6 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using Sentry;
+using System.Reflection;
+using System.Net;
+using System.Net.Http;
+using System.Activities;
+using System.Diagnostics;
+using System.Security.Authentication;
+
 
 namespace ivcs
 {
@@ -41,10 +49,30 @@ namespace ivcs
             // Reduce output by 1 to avoid accidental overflow
             outputSize--;
 
+            // Setup the sentry sdk
+            SentrySdk.Init("https://6181346751b5496395f06e6ec7cf70da@o970796.ingest.sentry.io/5922320");
+            SentrySdk.StartSession();
+            SentrySdk.ConfigureScope(scope =>
+            {
+                scope.SetTag("ivcs_version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                scope.User = new User
+                {
+                    Id = Environment.GetEnvironmentVariable("STEAMID")
+                };
+                scope.Release = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            });
+
+            // Set the number format
+            Function.nfi.NumberDecimalSeparator = ".";
+            Function.nfi.NumberGroupSeparator = "";
+
+            // Setup the file logging
             Log.Setup();
             Log.Info("Logging system setup complete...");
 
-            output.Append("IVCS");
+            Function.VersionCheck();
+
+            output.Append(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         // Do not remove these six lines
@@ -57,6 +85,8 @@ namespace ivcs
         {
             // Reduce output by 1 to avoid accidental overflow
             outputSize--;
+
+            SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call", "debug", null, BreadcrumbLevel.Debug);
 
             switch (function.ToLower())
             {
@@ -72,34 +102,58 @@ namespace ivcs
 
                 // RELOAD_GRAMMAR: Reload the grammer currently loaded in the speech recognition engine
                 case "reload_grammar":
-                    if (Function.speech_engine != null)
+                    if (!Function.mission_start_complete)
                     {
-                        // Unload all old grammars
-                        Function.speech_engine.UnloadAllGrammars();
-
-                        // Get the grammar
-                        Grammar grammar = Function.GetGrammar();
-
-                        if (grammar != null)
-                        {
-                            // Reload the new grammar
-                            Function.speech_engine.LoadGrammar(grammar);
-                        }
-                        else
-                        {
-                            Log.Error("Cannot reload grammar as none was found!");
-                        }
+                        Log.Info("Attempted to reload grammer before the mission start thread could run!");
+                        SentrySdk.AddBreadcrumb("Attempted to reload grammer before the mission start thread could run", "Log Message", "error", null, BreadcrumbLevel.Error);
+                        return;
                     }
                     else
                     {
-                        Log.Info("Speech engine not found when attempting to reload grammar!");
+                        if (Function.speech_engine != null)
+                        {
+                            // Unload all old grammars
+                            Function.speech_engine.UnloadAllGrammars();
+
+                            // Get the grammar
+                            Grammar grammar = Function.GetGrammar();
+
+                            if (!grammar.Equals(null))
+                            {
+                                try
+                                {
+                                    if (!Function.speech_engine.Grammars.Contains(grammar))
+                                    {
+                                        // Load the custom grammer into the engine
+                                        Function.speech_engine.LoadGrammar(grammar);
+                                    }
+                                }
+                                catch (InvalidOperationException ioe)
+                                {
+                                    MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
+                                    SentrySdk.CaptureException(ioe);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                Log.Error("Cannot reload grammar as none was found!", new Exception("Could not find main grammer file when attempting to reload the grammer"));
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Log.Info("Speech engine not found when attempting to reload grammar!");
+                            SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar", "Log Message", "error", null, BreadcrumbLevel.Error);
+                            return;
+                        }
                     }
                     output.Append("true");
                     return;
 
                 // GET_CONFIDENCE: Get the language
                 case "get_confidence":
-                    output.Append(Function.confidence.ToString());
+                    output.Append(Function.confidence.ToString(Function.nfi));
                     return;
 
                 // GET_CULTURE: Get the culture
@@ -114,22 +168,22 @@ namespace ivcs
 
                 // GET_INITAL_SILENCE: Get the end silence finished timeout
                 case "get_inital_silence":
-                    output.Append(Function.inital_silence.ToString());
+                    output.Append(Function.inital_silence.ToString(Function.nfi));
                     return;
 
                 // GET_END_SILENCE_FINISHED: Get the end silence finished timeout
                 case "get_end_silence_finished":
-                    output.Append(Function.end_silence_finished.ToString());
+                    output.Append(Function.end_silence_finished.ToString(Function.nfi));
                     return;
 
                 // GET_END_SILENCE: Get the end silence timeout
                 case "get_end_silence":
-                    output.Append(Function.end_silence.ToString());
+                    output.Append(Function.end_silence.ToString(Function.nfi));
                     return;
 
                 // GET_END_BABBEL: Get the end babbel timeout
                 case "get_end_babbel":
-                    output.Append(Function.end_babbel.ToString());
+                    output.Append(Function.end_babbel.ToString(Function.nfi));
                     return;
 
                 // START_TEST: Start test voice recognition
@@ -144,7 +198,8 @@ namespace ivcs
                 case "end_test":
                     // End the testing thread
                     Function.TestEnd();
-                    Function.testing_thread.Abort();
+                    if (Function.testing_thread != null)
+                        Function.testing_thread.Abort();
                     output.Append("true");
                     return;
 
@@ -180,8 +235,45 @@ namespace ivcs
                 // OPEN_TRAINING: Opens the control panel and opens the speech training UI
                 case "open_training":
                     // Do not allow clients to edit this string
-                    System.Diagnostics.Process.Start($"{Environment.SystemDirectory}" + @"\Speech\SpeechUX\SpeechUXWiz.exe", "UserTraining"); 
-                    output.Append("true");
+                    string training_file = $"{Environment.SystemDirectory}" + @"\Speech\SpeechUX\SpeechUXWiz.exe";
+                    try
+                    {
+                        if (!File.Exists(training_file))
+                            throw new FileNotFoundException($"File '{training_file}' could not be found.");
+                        
+                        Process.Start(training_file, "UserTraining");
+                        output.Append("true");
+                    }
+                    catch (FileNotFoundException fnfe)
+                    {
+                        Log.Error($"File '{training_file}' could not be found.", fnfe);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"An exception occurred when attempting to open Windows speech training software.", e);
+                    }
+                    return;
+                    
+                // OPEN_SPEECH_SETTINGS: Opens the speech language settings
+                case "open_speech_settings":
+                    // Do not allow clients to edit this string
+                    string settings_file = "ms-settings:speech";
+                    try
+                    {
+                        if (Environment.OSVersion.Version.Major < 10)
+                            throw new VersionMismatchException("Windows 10 or greater is required to open this link.");
+
+                        Process.Start(settings_file);
+                        output.Append("true");
+                    }
+                    catch (VersionMismatchException vme)
+                    {
+                        Log.Error($"Windows 10 or greater is required to open this link.", vme);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"An exception occurred when attempting to open Windows speech settings software.", e);
+                    }
                     return;
             }
         }
@@ -200,18 +292,20 @@ namespace ivcs
             if (argCount <= 0)
                 return -2;
 
+            SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call (Array)", "debug", null, BreadcrumbLevel.Debug);
+
             args[0] = args[0].Replace("\"", "");
             switch (function.ToLower())
             {
                 // SET_CONFIDENCE: Set the confidence value that needs to be passed for a 
                 case "set_confidence":
-                    double value = double.Parse(args[0]);
+                    double value = double.Parse(args[0].Replace(",", "."), Function.nfi);
                     if (Function.confidence != value)
                     {
                         Log.Info($"Changing confidence value from {Function.confidence} to {value}...");
                         Function.confidence = value;
                     }
-                    output.Append(Function.confidence.ToString());
+                    output.Append(Function.confidence.ToString(Function.nfi));
                     return 1;
 
                 // SET_CULTURE: Set the culture to be used in the speech recognition engine
@@ -236,55 +330,107 @@ namespace ivcs
 
                 // SET_INITAL_SILENCE: Set the inital silence timeout
                 case "set_inital_silence":
-                    double _value = double.Parse(args[0]);
-                    if (Function.inital_silence != _value)
+                    try
                     {
-                        Log.Info($"Changing inital_silence timeout from {Function.inital_silence} to {_value}...");
-                        Function.inital_silence = _value;
-                        if (Function.speech_engine != null)
-                            Function.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(Function.inital_silence);
+                        double _value = double.Parse(args[0].Replace(",", "."), Function.nfi);
+                        if (Function.inital_silence != _value)
+                        {
+                            Log.Info($"Changing inital_silence timeout from {Function.inital_silence} to {_value}...");
+                            Function.inital_silence = _value;
+                            if (Function.speech_engine != null)
+                                Function.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(Function.inital_silence);
+                        }
+                        output.Append(Function.inital_silence.ToString(Function.nfi));
+                        return 1;
                     }
-                    output.Append(Function.inital_silence.ToString());
-                    return 1;
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Reset the number to the default value
+                        Function.inital_silence = 0.15;
+                        if (Function.speech_engine != null)
+                            Function.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(0.15);
+
+                        return -1;
+                    }
+                    
 
                 // SET_END_SILENCE_FINISHED: Set the inital silence timeout
                 case "set_end_silence_finished":
-                    double __value = double.Parse(args[0]);
-                    if (Function.end_silence_finished != __value)
+                    try
                     {
-                        Log.Info($"Changing end silence finished timeout from {Function.end_silence_finished} to {__value}...");
-                        Function.end_silence_finished = __value;
-                        if (Function.speech_engine != null)
-                            Function.speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(Function.end_silence_finished);
+                        double __value = double.Parse(args[0].Replace(",", "."), Function.nfi);
+                        if (Function.end_silence_finished != __value)
+                        {
+                            Log.Info($"Changing end silence finished timeout from {Function.end_silence_finished} to {__value}...");
+                            Function.end_silence_finished = __value;
+                            if (Function.speech_engine != null)
+                                Function.speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(Function.end_silence_finished);
+                        }
+                        output.Append(Function.end_silence_finished.ToString(Function.nfi));
+                        return 1;
                     }
-                    output.Append(Function.end_silence_finished.ToString());
-                    return 1;
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Reset the number to the default value
+                        Function.end_silence_finished = 0.5;
+                        if (Function.speech_engine != null)
+                            Function.speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(0.5);
+
+                        return -1;
+                    }
+                    
 
                 // SET_END_SILENCE: Set the end silence timeout
                 case "set_end_silence":
-                    double ___value = double.Parse(args[0]);
-                    if (Function.end_silence != ___value)
+                    try
                     {
-                        Log.Info($"Changing end silence timeout from {Function.end_silence} to {___value}...");
-                        Function.end_silence = ___value;
-                        if (Function.speech_engine != null)
-                            Function.speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(Function.end_silence);
+                        double ___value = double.Parse(args[0].Replace(",", "."), Function.nfi);
+                        if (Function.end_silence != ___value)
+                        {
+                            Log.Info($"Changing end silence timeout from {Function.end_silence} to {___value}...");
+                            Function.end_silence = ___value;
+                            if (Function.speech_engine != null)
+                                Function.speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(Function.end_silence);
+                        }
+                        output.Append(Function.end_silence.ToString(Function.nfi));
+                        return 1;
                     }
-                    output.Append(Function.end_silence.ToString());
-                    return 1;
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Reset the number to the default value
+                        Function.end_silence = 0.15;
+                        if (Function.speech_engine != null)
+                            Function.speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(0.15);
+
+                        return -1;
+                    }
+                    
 
                 // SET_END_BABBEL: Set the end babbel timeout
                 case "set_end_babbel":
-                    double ____value = double.Parse(args[0]);
-                    if (Function.end_babbel != ____value)
+                    try
                     {
-                        Log.Info($"Changing end babbel timeout from {Function.end_babbel} to {____value}...");
-                        Function.end_babbel = ____value;
-                        if (Function.speech_engine != null)
-                            Function.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(Function.end_babbel);
+                        double ____value = double.Parse(args[0].Replace(",", "."), Function.nfi);
+                        if (Function.end_babbel != ____value)
+                        {
+                            Log.Info($"Changing end babbel timeout from {Function.end_babbel} to {____value}...");
+                            Function.end_babbel = ____value;
+                            if (Function.speech_engine != null)
+                                Function.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(Function.end_babbel);
+                        }
+                        output.Append(Function.end_babbel.ToString(Function.nfi));
+                        return 1;
                     }
-                    output.Append(Function.end_babbel.ToString());
-                    return 1;
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Reset the number to the default value
+                        Function.end_babbel = 0.0;
+                        if (Function.speech_engine != null)
+                            Function.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(0.0);
+
+                        return -1;
+                    }
+                    
 
                 // CONVERT_NUMBER_READABLE: Convert a number from text to digets
                 case "convert_number_readable":
@@ -306,7 +452,7 @@ namespace ivcs
                     if (argCount < 1)
                         return -1;
 
-                    output.Append(args[0].All(char.IsDigit).ToString());
+                    output.Append(args[0].All(char.IsDigit).ToString(Function.nfi));
                     return 1;
                     
                 // TITLE_CASE: Convert string to title case
@@ -314,7 +460,14 @@ namespace ivcs
                     if (argCount < 1)
                         return -1;
 
-                    output.Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(args[0]).Replace("Team, ", "Team "));
+                    output.Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(args[0])
+                        .Replace("Team, ", "Team ")
+                        .Replace("Red, ", "Red ")
+                        .Replace("Green, ", "Green ")
+                        .Replace("Blue, ", "Blue ")
+                        .Replace("Yellow, ", "Yellow ")
+                        .Replace("White, ", "White ")
+                        );
                     return 1;
             }
             return 0;
@@ -332,9 +485,11 @@ namespace ivcs
 
         internal static string language = "english";
         internal static string culture = "en-US";
+        internal static NumberFormatInfo nfi = new NumberFormatInfo();
 
         internal static bool ptt = false;
         internal static bool speech = false;
+        internal static bool mission_start_complete = false;
 
         internal static SpeechRecognitionEngine speech_testing;
         internal static SpeechRecognitionEngine speech_engine;
@@ -352,7 +507,33 @@ namespace ivcs
 
         internal static string Info()
         {
-            return "Integrated AI Voice Control System - v1.0.0";
+            return $"Integrated AI Voice Control System - v{Assembly.GetExecutingAssembly().GetName().Version}";
+        }
+        
+        internal static async void VersionCheck()
+        {
+            try
+            {
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                using (HttpClient client = new HttpClient(new HttpClientHandler {UseDefaultCredentials = true}))
+                {
+                    string output = await client.GetStringAsync("http://raw.githubusercontent.com/Asaayu/integrated-voice-control-system/main/version_check.txt");
+
+                    // Check if a new version is avaliable
+                    if (!output.Contains(Assembly.GetExecutingAssembly().GetName().Version.ToString()))
+                    {
+                        MessageBox.Show($"A new version of the mod is avaliable to download.\nClick on the three dots under the mod in your Arma 3 launcher then click 'Repair' to update the mod.", "Mod Update Avaliable", MessageBoxButtons.OK);
+                        SentrySdk.AddBreadcrumb("User informed new version avaliable", "Update Popup", "info", null, BreadcrumbLevel.Info);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                SentrySdk.AddBreadcrumb("Version Check Error", "Version Check Error", "error", null, BreadcrumbLevel.Error);
+                SentrySdk.CaptureException(e);
+            };
         }
 
         internal static void MissionStart()
@@ -361,43 +542,66 @@ namespace ivcs
 
             try
             {
+                // Setup the culture required
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+
+                // Setup the decial character                
+                nfi.NumberDecimalSeparator = ".";
+                nfi.NumberGroupSeparator = "";
+
                 // Get the grammer for the test
                 Grammar grammar = GetGrammar();
 
                 // Make sure it exists
                 if (grammar == null)
                 {
-                    Log.Error("Grammer returned null in main call...");
-                    return;
+                    Log.Error("Grammer returned null in main call...", new Exception("Could not find main grammer file"));
                 }
 
-                // Create the speech recognition engine
-                speech_engine = new SpeechRecognitionEngine(new CultureInfo(culture));
+                try
+                {
+                    // Create the speech recognition engine
+                    speech_engine = new SpeechRecognitionEngine(new CultureInfo("en-US"));
 
-                // Load the custom grammer into the engine
-                speech_engine.LoadGrammar(grammar);
+                    try
+                    {
+                        if (!speech_engine.Grammars.Contains(grammar))
+                        {
+                            // Load the custom grammer into the engine
+                            speech_engine.LoadGrammar(grammar);
+                        }
 
-                // Add a handler for the speech recognized event.  
-                speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
-                speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
-                speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
-                speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
-                speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
+                        // Add a handler for the speech recognized event.  
+                        speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
+                        speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
+                        speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
+                        speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
+                        speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
 
-                speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
+                        speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                        speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                        speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                        speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
-                // Configure input to the speech recognizer.
-                speech_engine.SetInputToDefaultAudioDevice();
+                        // Configure input to the speech recognizer.
+                        speech_engine.SetInputToDefaultAudioDevice();
 
-                Log.Info("Main speech recognition engine is now running...");
-            }
-            catch (ArgumentException ae)
-            {
-                Log.Info($"Currently selected culture '{culture}' can't be found in your operating system...");
-                Log.Error(ae.ToString());
+                        Log.Info("Main speech recognition engine is now running...");
+                        mission_start_complete = true;
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
+                        SentrySdk.CaptureException(ioe);
+                    }
+                }
+                catch (ArgumentException ae)
+                {
+                    // This user does not have the correct culture installed
+                    MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                    SentrySdk.CaptureException(ae);
+                }
             }
             catch (ThreadAbortException)
             {
@@ -406,7 +610,7 @@ namespace ivcs
             catch (Exception e)
             {
                 Log.Info("Encountered error with speech recognition engine call...");
-                Log.Error(e.ToString());
+                Log.Error("Encountered error with speech recognition engine call...", e);
             };
         }
 
@@ -414,7 +618,7 @@ namespace ivcs
         {
             Log.Info("PTT key pressed, enabling speech recognition...");
 
-            if (!ptt)
+            if (!ptt && speech_engine != null)
             {
                 ptt = true;
                 speech = false;
@@ -424,17 +628,25 @@ namespace ivcs
                     // Start asynchronous, continuous speech recognition. 
                     speech_engine.RecognizeAsync(RecognizeMode.Multiple);
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ioe)
                 {
-                    speech_engine.SetInputToDefaultAudioDevice();
+                    try
+                    {
+                        speech_engine.SetInputToDefaultAudioDevice();
+                    }
+                    catch (InvalidOperationException ioe2)
+                    {
+                        Log.Info("An invalid operation exception error occurred when attempting to set to the default audio device.");
+                        SentrySdk.CaptureException(ioe2);
+                    }
                     Log.Info("An invalid operation exception error occurred. Setting the engine input to the default audio device.");
+                    SentrySdk.CaptureException(ioe);
                 }
                 catch (Exception e)
                 {
                     Log.Info("An error occurred when attempting to enable the speech engine");
-                    Log.Error(e.ToString());
+                    Log.Error("An error occurred when attempting to enable the speech engine", e);
                 }
-
 
                 for (int i = 0; i <= 4; i++)
                 {
@@ -443,13 +655,13 @@ namespace ivcs
             }
             else
             {
-                Log.Error("PTT key is already down and cannot call down function again...");
+                Log.Info("PTT key is already down and cannot call down function again...");
             }
         }
 
         internal static void PttUp()
         {
-            if (ptt)
+            if (ptt && speech_engine != null)
             {
                 ptt = false;
                 Log.Info("PTT key released, disabling speech recognition...");
@@ -462,7 +674,7 @@ namespace ivcs
                 catch (Exception e)
                 {
                     Log.Info("An error occurred when attempting to disable the speech engine");
-                    Log.Error(e.ToString());
+                    Log.Error("An error occurred when attempting to disable the speech engine", e);
                 }
 
                 for (int i = 0; i <= 4; i++)
@@ -472,7 +684,7 @@ namespace ivcs
             }
             else
             {
-                Log.Error("PTT key is already up and cannot call up function again...");
+                Log.Info("PTT key is already up and cannot call up function again...");
             }
         }
 
@@ -483,7 +695,7 @@ namespace ivcs
             // Reset the background to black
             for (int i = 0; i <= 1; i++)
             {
-                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0,0,0,{opacity}]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0,0,0,{opacity.ToString(Function.nfi).Replace(",",".")}]]");
             }
 
             // Fade display in
@@ -502,7 +714,7 @@ namespace ivcs
             // Set the background red to notify the user the phrase is not valid
             for (int i = 0; i <= 1; i++)
             {
-                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity}]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
             }
         }
 
@@ -511,6 +723,7 @@ namespace ivcs
             // Log the input text
             Log.Input($"Reconginsed text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
             Log.Input($"Semantics: '{e.Result.Semantics.Value}'");
+            Log.Input($"Culture: '{speech_engine.RecognizerInfo.Culture}'");
 
             foreach (KeyValuePair<string,SemanticValue> value in e.Result.Semantics)
             {
@@ -526,19 +739,19 @@ namespace ivcs
             {
                 if (e.Result.Text.Contains("every1"))
                 {
-                    Log.Error("Text contained 'every1' in text. Error occurred");
+                    Log.Error("Text contained 'every1' in text. Error occurred", new Exception("Text contained 'every1'"));
 
                     // Set the background red to notify the user the phrase is not valid
                     for (int i = 0; i <= 1; i++)
                     {
-                        Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity}]]");
+                        Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                     }
                     return;
                 }
                 // Set the background green to notify the user the phrase is valid and confidence was high enough
                 for (int i = 0; i <= 1; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.13,0.54,0.21,{opacity}]]");
+                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.13,0.54,0.21,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                 }
 
                 //string data = ConvertSemantic((string)e.Result.Semantics.Value, e.Result.Text);
@@ -552,7 +765,7 @@ namespace ivcs
                 // Set the background orange to notify the user that the phrase is valid, but confidence was not high enough.
                 for (int i = 0; i <= 1; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.988,0.518,0.012,{opacity}]]");
+                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.988,0.518,0.012,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                 }
             }
         }
@@ -631,7 +844,7 @@ namespace ivcs
             catch (Exception e)
             {
                 Log.Info($"Exception encountered while attempting to convert semantics...");
-                Log.Error(e.ToString());
+                Log.Error($"Exception encountered while attempting to convert semantics...", e);
             }
             return "[[], '', []]";
         }
@@ -649,42 +862,58 @@ namespace ivcs
                 Grammar grammar = GetGrammar("testing");
 
                 // Make sure it exists
-                if (grammar == null)
+                if (grammar != null)
                 {
-                    Log.Error("Grammer returned null in speech recognition engine test...");
-                    return;
+                    try
+                    {
+
+                        if (!speech_testing.Grammars.Contains(grammar))
+                        {
+                            // Load the custom grammer into the engine
+                            speech_testing.LoadGrammar(grammar);
+                        }
+
+                        // Add a handler for the speech recognized event.  
+                        speech_testing.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Testing_SpeechRecognized);
+                        speech_testing.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(Testing_SpeechHypothesized);
+                        speech_testing.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(Testing_SpeechRecognitionRejected);
+
+                        // Configure input to the speech recognizer.
+                        speech_testing.SetInputToDefaultAudioDevice();
+
+                        speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                        speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                        speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                        speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
+
+                        // Start asynchronous, continuous speech recognition.  
+                        speech_testing.RecognizeAsync(RecognizeMode.Multiple);
+
+                        Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
+                        Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
+                        Log.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
+                        Log.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
+
+                        Log.Info("Speech recognition engine test is now running...");
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        // This user does not have the correct culture installed
+                        MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
+                        SentrySdk.CaptureException(ioe);
+                        return;
+                    }
                 }
-
-                // Load the custom grammer into the engine
-                speech_testing.LoadGrammar(grammar);
-
-                // Add a handler for the speech recognized event.  
-                speech_testing.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Testing_SpeechRecognized);
-                speech_testing.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(Testing_SpeechHypothesized);
-                speech_testing.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(Testing_SpeechRecognitionRejected);
-
-                // Configure input to the speech recognizer.
-                speech_testing.SetInputToDefaultAudioDevice();
-
-                speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
-
-                // Start asynchronous, continuous speech recognition.  
-                speech_testing.RecognizeAsync(RecognizeMode.Multiple);                
-
-                Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
-                Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
-                Log.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
-                Log.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
-
-                Log.Info("Speech recognition engine test is now running...");
+                else
+                {
+                    Log.Error("Grammer returned null in speech recognition engine test...", new Exception("Could not find testing grammer file"));
+                };
             }
             catch (ArgumentException ae)
             {
-                Log.Info($"Currently selected culture '{culture}' can't be found in your operating system...");
-                Log.Error(ae.ToString());
+                // This user does not have the correct culture installed
+                MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                SentrySdk.CaptureException(ae);
             }
             catch (ThreadAbortException)
             {
@@ -693,19 +922,30 @@ namespace ivcs
             catch (Exception e)
             {
                 Log.Info("Encountered error with speech recognition engine testing...");
-                Log.Error(e.ToString());
+                Log.Error("Encountered error with speech recognition engine testing...", e);
             };
         }
 
         internal static void TestEnd()
         {
-            // Stop the engine from listening
-            speech_testing.RecognizeAsyncCancel();
+            try
+            {
+                if (speech_testing != null)
+                {
+                    // Stop the engine from listening
+                    speech_testing.RecognizeAsyncCancel();
 
-            // Dispose the testing speech
-            speech_testing.Dispose();
+                    // Dispose the testing speech
+                    speech_testing.Dispose();
+                }
 
-            Log.Info("Speech recognition engine test has finished running...");
+                Log.Info("Speech recognition engine test has finished running...");
+            }
+            catch (Exception e)
+            {
+                Log.Info("Encountered error when attempting to stop the speech test...");
+                Log.Error("Encountered error when attempting to stop the speech test...", e);
+            }            
         }
 
         static void Testing_SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
@@ -732,13 +972,13 @@ namespace ivcs
                 string[] data = ((string)e.Result.Semantics.Value).Split(':');
 
                 // Set the text color for the specific ctrl based on the users input
-                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_test_display', {int.Parse(data[1]) + 1000}, [0,1,0,1]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_test_display', {int.Parse(data[1], nfi) + 1000}, [0,1,0,1]]");
             }
         }
 
         internal static Grammar GetGrammar(string filename = "")
         {
-            string location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string grammar_file = location + $@"\grammar\grammar_{language}.xml";
 
             try
@@ -759,30 +999,13 @@ namespace ivcs
             catch (FileNotFoundException fnfe)
             {
                 Log.Info("Grammer file not found!");
-                Log.Error(fnfe.ToString());
-                MessageBox.Show
-                (
-                    $"Intergrated Voice Control System could not find the grammer file '{grammar_file}' in the mod's install directory." +
-                    Environment.NewLine +
-                    Environment.NewLine +
-                    "Please repair the mod installation using your Arma 3 launcher, if this problem persists please report it to the developers.", "Error: Grammer file not found",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error
-                );
+                Log.Error("Grammer file not found!", fnfe);
                 return null;
             }
             catch (Exception e)
             {
                 Log.Info("Encountered errror getting grammar file!");
-                Log.Error(e.ToString());
-                MessageBox.Show
-                (
-                    
-                    $"Intergrated Voice Control System encountered an errror when attempting to read grammer file '{grammar_file}'." +
-                    Environment.NewLine +
-                    Environment.NewLine +
-                    "Please repair the mod installation using your Arma 3 launcher, if this problem persists please report it to the developers.", "Error: Grammer file exception",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error
-                );
+                Log.Error("Encountered errror getting grammar file!", e);
                 return null;
             };
         }
@@ -864,9 +1087,9 @@ namespace ivcs
                     return input;
 
                 if (add_comma)
-                    return input.Substring(0, start_str) + (total_l + acc_l).ToString() + "." + (total_r + acc_r).ToString() + "," + input.Substring(end_str, input.Length - end_str);
+                    return input.Substring(0, start_str) + (total_l + acc_l).ToString(Function.nfi) + "." + (total_r + acc_r).ToString(Function.nfi) + "," + input.Substring(end_str, input.Length - end_str);
 
-                return input.Substring(0, start_str) + (total_l + acc_l).ToString() + "." + (total_r + acc_r).ToString() + input.Substring(end_str, input.Length - end_str);
+                return input.Substring(0, start_str) + (total_l + acc_l).ToString(Function.nfi) + "." + (total_r + acc_r).ToString(Function.nfi) + input.Substring(end_str, input.Length - end_str);
             }
             else
             {
@@ -893,9 +1116,9 @@ namespace ivcs
                     return input;
 
                 if (add_comma)
-                    return input.Substring(0, start_str) + (total + acc).ToString() + "," + input.Substring(end_str, input.Length - end_str);
+                    return input.Substring(0, start_str) + (total + acc).ToString(Function.nfi) + "," + input.Substring(end_str, input.Length - end_str);
 
-                return input.Substring(0, start_str) + (total + acc).ToString() + input.Substring(end_str, input.Length - end_str);
+                return input.Substring(0, start_str) + (total + acc).ToString(Function.nfi) + input.Substring(end_str, input.Length - end_str);
             }
         }
     }
@@ -903,8 +1126,6 @@ namespace ivcs
     internal class Log
     {
         internal static bool debug;
-        private static string log_directory;
-        private static string log_file;
 
         internal static void Setup()
         {
@@ -913,42 +1134,6 @@ namespace ivcs
 
             if (debug)
                 AllocConsole();
-
-            // Get current directory
-            string current_directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-            // Save locations and files
-            log_directory = current_directory + @"\logs\";
-            log_file = log_directory + "ivcs_extension_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss") + ".txt";
-
-            try
-            {
-                // Create directories 
-                Directory.CreateDirectory(log_directory);
-            }
-            catch (Exception e)
-            {
-                Info("An error has occured when attempting to create required directories...");
-                Error(e.ToString());
-            };
-            
-            try
-            {
-                // Delete files that haven't been accessed for more then seven days
-                string[] files = Directory.GetFiles(log_directory);
-
-                foreach (string file in files)
-                {
-                    FileInfo file_info = new FileInfo(file);
-                    if (file_info.LastAccessTime < DateTime.Now.AddDays(-7))
-                        file_info.Delete();
-                }
-            }
-            catch (Exception e)
-            {
-                Info("An error has occured when attempting to delete old files...");
-                Error(e.ToString());
-            };
         }
 
         [DllImport("kernel32")]
@@ -958,15 +1143,13 @@ namespace ivcs
         {
             try
             {
+                SentrySdk.AddBreadcrumb(message, "Log Message", "info", null, BreadcrumbLevel.Info);
+
                 string message_text = DateTime.Now.ToString("[dd/MM/yyyy hh:mm:ss tt]") + "[" + prefix + "] " + message;
 
                 if (debug)
                     Console.WriteLine(message_text);
 
-                using (StreamWriter sw = File.AppendText(log_file))
-                {
-                    sw.WriteLine(message_text);
-                }
                 return true;
             }
             catch
@@ -975,25 +1158,21 @@ namespace ivcs
             }
         }
 
-        internal static bool Error(string message)
+        internal static bool Error(string message, Exception e)
         {
+            SentrySdk.AddBreadcrumb(message, "Log Message", "error", null, BreadcrumbLevel.Error);
+
             bool response = Info(message, "ERROR");
-            MessageBox.Show
-                (
-                    "Please report this error to the developers." +
-                    Environment.NewLine +
-                    Environment.NewLine +
-                    message +
-                    Environment.NewLine +
-                    Environment.NewLine +
-                    "Your game may crash when you close this window.", "Error During Execution",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error
-                );
+            SentrySdk.CaptureException(e);
+
+            MessageBox.Show($"An error has occurred.\n\n\n{e.Message}\n{e.StackTrace}\n\n\nThis mod may not work correctly after this error, if it happens frequently try repairing your mod through the Arma 3 launcher.\nIf it still occurs please inform a developer.", "An error has occurred!", MessageBoxButtons.OK);
             return response;
         }
 
         internal static bool Debug(string message)
         {
+            SentrySdk.AddBreadcrumb(message, "Log Message", "debug", null, BreadcrumbLevel.Debug);
+
             if (debug)
                 return Info(message, "DEBUG");
 
