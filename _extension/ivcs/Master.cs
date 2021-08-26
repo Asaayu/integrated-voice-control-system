@@ -143,8 +143,20 @@ namespace ivcs
                         }
                         else
                         {
-                            Log.Info("Speech engine not found when attempting to reload grammar!");
-                            SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar", "Log Message", "error", null, BreadcrumbLevel.Error);
+                            Log.Info("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!");
+                            SentrySdk.AddBreadcrumb("Speech engine not found when attempting to reload grammar! Attempting to restart mission thread!", "Log Message", "error", null, BreadcrumbLevel.Error);
+
+                            if (Function.main_thread != null)
+                            {
+                                // Abort the old thread first
+                                Function.main_thread.Abort();
+                            }
+
+                            // Start a new thread
+                            Function.main_thread = new Thread(Function.MissionStart);
+                            Function.main_thread.Start();
+
+
                             return;
                         }
                     }
@@ -554,53 +566,54 @@ namespace ivcs
                 Grammar grammar = GetGrammar();
 
                 // Make sure it exists
-                if (grammar == null)
+                if (grammar != null)
                 {
-                    Log.Error("Grammer returned null in main call...", new Exception("Could not find main grammer file"));
-                }
-
-                try
-                {
-                    // Create the speech recognition engine
-                    speech_engine = new SpeechRecognitionEngine(new CultureInfo("en-US"));
-
                     try
                     {
-                        if (!speech_engine.Grammars.Contains(grammar))
+                        // Create the speech recognition engine
+                        speech_engine = new SpeechRecognitionEngine(new CultureInfo("en-US"));
+
+                        try
                         {
-                            // Load the custom grammer into the engine
-                            speech_engine.LoadGrammar(grammar);
+                            if (!speech_engine.Grammars.Contains(grammar))
+                            {
+                                // Load the custom grammer into the engine
+                                speech_engine.LoadGrammar(grammar);
+                            }
+
+                            // Add a handler for the speech recognized event.  
+                            speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
+                            speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
+                            speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
+                            speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
+                            speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
+
+                            speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                            speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                            speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                            speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
+
+                            // Configure input to the speech recognizer.
+                            speech_engine.SetInputToDefaultAudioDevice();
+
+                            Log.Info("Main speech recognition engine is now running...");
                         }
-
-                        // Add a handler for the speech recognized event.  
-                        speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
-                        speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
-                        speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
-                        speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
-                        speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
-
-                        speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                        speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                        speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                        speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
-
-                        // Configure input to the speech recognizer.
-                        speech_engine.SetInputToDefaultAudioDevice();
-
-                        Log.Info("Main speech recognition engine is now running...");
-                        mission_start_complete = true;
+                        catch (InvalidOperationException ioe)
+                        {
+                            MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
+                            SentrySdk.CaptureException(ioe);
+                        }
                     }
-                    catch (InvalidOperationException ioe)
+                    catch (ArgumentException ae)
                     {
-                        MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
-                        SentrySdk.CaptureException(ioe);
+                        // This user does not have the correct culture installed
+                        MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                        SentrySdk.CaptureException(ae);
                     }
                 }
-                catch (ArgumentException ae)
+                else
                 {
-                    // This user does not have the correct culture installed
-                    MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                    SentrySdk.CaptureException(ae);
+                    Log.Error("Grammer returned null in main call...", new Exception("Could not find main grammer file"));
                 }
             }
             catch (ThreadAbortException)
@@ -612,6 +625,9 @@ namespace ivcs
                 Log.Info("Encountered error with speech recognition engine call...");
                 Log.Error("Encountered error with speech recognition engine call...", e);
             };
+
+            // Set that the thread has reached it's end
+            mission_start_complete = true;
         }
 
         internal static void PttDown()
@@ -1143,10 +1159,10 @@ namespace ivcs
         {
             try
             {
-                SentrySdk.AddBreadcrumb(message, "Log Message", "info", null, BreadcrumbLevel.Info);
+                if (prefix != "INPUT")
+                    SentrySdk.AddBreadcrumb(message, "Log Message", prefix.ToLower(), null, BreadcrumbLevel.Info);
 
                 string message_text = DateTime.Now.ToString("[dd/MM/yyyy hh:mm:ss tt]") + "[" + prefix + "] " + message;
-
                 if (debug)
                     Console.WriteLine(message_text);
 
@@ -1160,8 +1176,6 @@ namespace ivcs
 
         internal static bool Error(string message, Exception e)
         {
-            SentrySdk.AddBreadcrumb(message, "Log Message", "error", null, BreadcrumbLevel.Error);
-
             bool response = Info(message, "ERROR");
             SentrySdk.CaptureException(e);
 
@@ -1171,12 +1185,7 @@ namespace ivcs
 
         internal static bool Debug(string message)
         {
-            SentrySdk.AddBreadcrumb(message, "Log Message", "debug", null, BreadcrumbLevel.Debug);
-
-            if (debug)
-                return Info(message, "DEBUG");
-
-            return false;
+            return Info(message, "DEBUG");
         }
 
         internal static bool Input(string message)
