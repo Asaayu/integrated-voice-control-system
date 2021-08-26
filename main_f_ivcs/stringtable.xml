@@ -70,6 +70,12 @@
 		<Key ID="STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_TOOLTIP">
 			<Original>Open the Windows Speech Recognition Voice Training Wizard, allowing you to train your computer's speech recognition to understand your voice easier.</Original>
 		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_NAME">
+			<Original>Windows Speech Settings</Original>
+		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_TOOLTIP">
+			<Original>Open the Windows Speech Settings, allowing you to change your operating systems speech language settings.</Original>
+		</Key>
 	</Container>
 	<Container name="Settings Category Strings">
 		<Key ID="STR_IVCS_SETTINGS_CATEGORY_NAME">
@@ -141,6 +147,9 @@
 		</Key>
 		<Key ID="STR_IVCS_SYSTEMCHAT_PRONE_1">
 			<Original>%1 - Prone</Original>
+		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_GET_OUT_1">
+			<Original>%1 - Get Out</Original>
 		</Key>
 	</Container>
 </Project>

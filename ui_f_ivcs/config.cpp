@@ -10,3 +10,4 @@ class RscTitles
 
 #include "displays\ivcs_test_display.hpp"
 #include "displays\ivcs_training_display.hpp"
+#include "displays\ivcs_speech_display.hpp"

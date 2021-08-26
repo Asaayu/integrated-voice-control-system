@@ -15,10 +15,6 @@ call IVCS_fnc_callback;
 	sleep 1;
 	if (!is3DEN && {!isNull (findDisplay 46)}) then
 	{
-		// Menu testing option
-		[[localize "STR_IVCS_PAUSE_MENU_TEST_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_TEST_BUTTON_TOOLTIP"], "ivcs_test_display"] call CBA_fnc_addPauseMenuOption;
-		[[localize "STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_TOOLTIP"], "ivcs_training_display"] call CBA_fnc_addPauseMenuOption;
-
 		// Create the engine if it does not exist
 		"ivcs" callExtension "mission_start";
 

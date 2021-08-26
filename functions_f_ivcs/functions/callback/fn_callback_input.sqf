@@ -62,6 +62,8 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "formation_diamond": {localize "STR_A3_FORMATION___DIAMOND"};
 		case "formation_column": {localize "STR_A3_FORMATION___COLUMN"};
 		case "get_in": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___GET_IN", "%1.1", "%1"]])#0};
+		case "get_out": {localize "STR_IVCS_SYSTEMCHAT_GET_OUT_1"};
+		case "scan_horizon": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SCAN_HORIZON", "%1.1", "%1"]])#0};
 		default {""};
 	};
 
