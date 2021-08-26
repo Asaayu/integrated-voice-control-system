@@ -481,7 +481,7 @@ namespace ivcs
                     // Check if a new version is avaliable
                     if (!output.Contains(Assembly.GetExecutingAssembly().GetName().Version.ToString()))
                     {
-                        MessageBox.Show($"A new version of the mod is avaliable to download.\nClick on the three dots under the mod in your Arma 3 launcher then click 'Repair' to update the mod.", "Mod Update Avaliable", MessageBoxButtons.OK);
+                        MessageBox.Show($"A new version of Integrated AI Voice Control System is avaliable to download.\nClick on the three dots under the mod in your Arma 3 launcher then click 'Repair' to update the mod.", "Mod Update Avaliable", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                         SentrySdk.AddBreadcrumb("User informed new version avaliable", "Update Popup", "info", null, BreadcrumbLevel.Info);
                     }
                 }
