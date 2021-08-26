@@ -154,6 +154,14 @@
 						<tag>out="prone[pos_down]";</tag>
 					</item>
 					<item>
+						hit the deck
+						<tag>out="hit the deck[pos_down]";</tag>
+					</item>
+					<item>
+						hit the dirt
+						<tag>out="hit the dirt[pos_down]";</tag>
+					</item>
+					<item>
 						copy my stance
 						<tag>out="copy my stance[pos_auto]";</tag>
 					</item>
@@ -310,6 +318,25 @@
 					<item>
 						no target
 						<tag>out="no target[cancel_target]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Move to the cursor call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						move to that position
+						<tag>out="move to that position[move_cursor]";</tag>
+					</item>
+					<item>
+						move there
+						<tag>out="move there[move_cursor]";</tag>
+					</item>
+					<item>
+						move
+						<tag>out="move[move_cursor]";</tag>
 					</item>
 				</one-of>
 			</item>
@@ -490,21 +517,33 @@
 			<!-- Get in call -->
 			<item>
 				<ruleref uri="#selection"/>
-				get in that
-				<tag>out="get in that[get_in]:{type}";</tag>
 				<one-of>
 					<item>
-						<ruleref uri="#object_selection_vehicle"/>
+						mount up
+						<tag>out="mount up[get_in_player]";</tag>
 					</item>
 					<item>
-						<ruleref uri="#object_selection_vehicle"/>
-						as
-						<ruleref uri="#vehicle_role"/>
+						get in
+						<tag>out="get in[get_in_player]";</tag>
+					</item>
+					<item>
+						get in that
+						<tag>out="get in that[get_in]:{type}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+							</item>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+								as
+								<ruleref uri="#vehicle_role"/>
+							</item>
+						</one-of>
 					</item>
 				</one-of>
 			</item>
 
-			<!-- Get in call -->
+			<!-- Formation call -->
 			<item>
 				form
 				<one-of>

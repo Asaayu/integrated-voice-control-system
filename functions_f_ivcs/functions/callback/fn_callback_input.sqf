@@ -1,6 +1,7 @@
 params [["_left",[],[[]]], ["_function","",[""]], ["_right",[],[[]]]];
 
-private _full_group = units group player - [player];
+private _player = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
+private _full_group = units group _player - [_player];
 private _units = [];
 
 // Check if there are any units
@@ -61,9 +62,11 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "formation_echelon_left": {localize "STR_A3_FORMATION___ECHELON_L_"};
 		case "formation_diamond": {localize "STR_A3_FORMATION___DIAMOND"};
 		case "formation_column": {localize "STR_A3_FORMATION___COLUMN"};
+		case "get_in_player";
 		case "get_in": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___GET_IN", "%1.1", "%1"]])#0};
 		case "get_out": {localize "STR_IVCS_SYSTEMCHAT_GET_OUT_1"};
 		case "scan_horizon": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SCAN_HORIZON", "%1.1", "%1"]])#0};
+		case "move_cursor": {localize "STR_IVCS_SYSTEMCHAT_MOVE_1"};
 		default {""};
 	};
 
@@ -86,7 +89,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 			// Don't place spaces between only numbers
 			_right_text = _right joinString "";
 		};
-		player groupChat (format [_text, _left_text, _right_text]);
+		_player groupChat (format [_text, _left_text, _right_text]);
 	}
 	else
 	{
@@ -97,11 +100,16 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 	};
 };
 
-// By default cancel the horizon scan
+// By default all handles
 {
+	private _handles = _x getVariable ["ivcs_handles", []];
+	{
+		terminate _x;
+	} foreach _handles;
+
+	_x setVariable ["ivcs_handles", []];
 	_x setVariable ["ivcs_scan_horizon_end", true];
 } foreach _units;
-
 
 // These functions are defined in the grammar file which is used by the speech recognition engine
 switch (tolower _function) do
@@ -109,7 +117,7 @@ switch (tolower _function) do
 	case "regroup":
 	{
 		// Tell the units to follow
-		_units commandFollow (leader group player);
+		_units commandFollow (leader group _player);
 	};
 	case "stop":
 	{
@@ -177,7 +185,7 @@ switch (tolower _function) do
 		// Tell the units to never fire
 		if (_units isEqualTo _full_group) then
 		{
-			player setCombatMode "BLUE";
+			_player setCombatMode "BLUE";
 		}
 		else
 		{
@@ -191,7 +199,7 @@ switch (tolower _function) do
 		// Tell the units to fire at will, but not leave formation
 		if (_units isEqualTo _full_group) then
 		{
-			player setCombatMode "YELLOW";
+			_player setCombatMode "YELLOW";
 		}
 		else
 		{
@@ -205,7 +213,7 @@ switch (tolower _function) do
 		// Tell the units to fire at will, but not leave formation
 		if (_units isEqualTo _full_group) then
 		{
-			player setCombatMode "RED";
+			_player setCombatMode "RED";
 		}
 		else
 		{
@@ -233,7 +241,7 @@ switch (tolower _function) do
 	case "find_cover":
 	{
 		// Get units to move to a cover position
-		private _positions = [player, 20] call IVCS_fnc_cover;
+		private _positions = [_player, 20] call IVCS_fnc_cover;
 		{
 			private _pos = selectRandom _positions;
 			if (count _positions <= 0) then
@@ -248,6 +256,20 @@ switch (tolower _function) do
 			_x commandMove AGLToASL _pos;
 		} foreach _units;
 	};
+	case "move_cursor":
+	{
+		private _position = if visibleMap then
+		{
+			// Move to a position on the map
+			(findDisplay 12 displayCtrl 51) posScreenToWorld getMousePosition;
+		}
+		else
+		{
+			// Move to the position where the player is looking
+			screenToWorld [0.5,0.5];
+		};
+		_units commandMove _position;
+	};
 	case "move_grid":
 	{
 		// Get units to move to a grid position
@@ -258,22 +280,22 @@ switch (tolower _function) do
 	case "move_left_quick":
 	{
 		// Get units to move to a grid position
-		_units commandMove (player getPos [40, (getDir player) - 90]);
+		_units commandMove (_player getPos [40, (getDir _player) - 90]);
 	};
 	case "move_right_quick":
 	{
 		// Get units to move to a grid position
-		_units commandMove (player getPos [40, (getDir player) + 90]);
+		_units commandMove (_player getPos [40, (getDir _player) + 90]);
 	};
 	case "move_front_quick":
 	{
 		// Get units to move to a grid position
-		_units commandMove (player getPos [40, (getDir player) + 0]);
+		_units commandMove (_player getPos [40, (getDir _player) + 0]);
 	};
 	case "move_back_quick":
 	{
 		// Get units to move to a grid position
-		_units commandMove (player getPos [40, (getDir player) - 180]);
+		_units commandMove (_player getPos [40, (getDir _player) - 180]);
 	};
 	case "move_distance_point";
 	case "move_distance_and";
@@ -284,17 +306,17 @@ switch (tolower _function) do
 
 		private _distance = parseNumber _distance;
 		private _unit = [1000, 1] select (_unit find "meter" == 0);
-		private _direction = [_direction, player] call ivcs_fnc_convert_direction;
+		private _direction = [_direction, _player] call ivcs_fnc_convert_direction;
 
-		private _end_pos = [getPosATL player, _distance*_unit, _direction] call BIS_fnc_relPos;
+		private _end_pos = [getPosATL _player, _distance*_unit, _direction] call BIS_fnc_relPos;
 		_units commandMove _end_pos;
 	};
 	case "watch_direction":
 	{
 		// Get units to watch a relative direction
 		_right params ["_direction"];
-		private _direction = [_direction, player] call ivcs_fnc_convert_direction;
-		_units commandWatch (player getPos [10000, _direction]);
+		private _direction = [_direction, _player] call ivcs_fnc_convert_direction;
+		_units commandWatch (_player getPos [10000, _direction]);
 	};
 	case "suppressive_fire":
 	{
@@ -354,13 +376,13 @@ switch (tolower _function) do
 				private _pos = screenToWorld [0.5,0.5];
 
 				// Limit to 500 meters to avoid running into issues where
-				if (player distance _pos < 500) then
+				if (_player distance _pos < 500) then
 				{
 					_units commandSuppressiveFire AGLToASL _pos;
 				}
 				else
 				{
-					_units commandSuppressiveFire (player getPos [300, getDir player]);
+					_units commandSuppressiveFire (_player getPos [300, getDir _player]);
 				};
 			}
 			else
@@ -409,12 +431,18 @@ switch (tolower _function) do
 		// Tell all units to get out of their vehicles
 		commandGetOut _units;
 	};
+	case "get_in_player";
 	case "get_in":
 	{
 		// Get units to suppress a position
 		_right params [["_type","",[""]], "_as", ["_role","",[""]]];
 
 		private _object = [_type] call ivcs_fnc_convert_objects;
+
+		if (_function == "get_in_player" && {!(vehicle _player isEqualTo player)}) then
+		{
+			_object = vehicle _player;
+		};
 
 		if !(isNull _object) then
 		{
@@ -423,7 +451,7 @@ switch (tolower _function) do
 			["100_Commands", selectRandom["BoardThatVehicle.ogg","GetInThatVehicle.ogg"]] call IVCS_fnc_speak;
 
 			{
-				[_x, _object, _role_text] spawn
+				private _handle = [_x, _object, _role_text] spawn
 				{
 					_this params ["_unit", "_object", "_role_text"];
 					_unit doMove (getPosATL _object);
@@ -457,6 +485,9 @@ switch (tolower _function) do
 						};
 					};
 				};
+
+				private _handles = _x getVariable ["ivcs_handles", []];
+				_x setVariable ["ivcs_handles", (_handles + _handler)];
 			} foreach _units;
 
 			if (uiNamespace getVariable ["ivcs_target_confirm_ui", true]) then

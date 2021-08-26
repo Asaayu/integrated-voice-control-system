@@ -151,5 +151,22 @@
 		<Key ID="STR_IVCS_SYSTEMCHAT_GET_OUT_1">
 			<Original>%1 - Get Out</Original>
 		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_MOVE_1">
+	          <Original>%1 - Move</Original>
+	          <Chinese>%1－移動</Chinese>
+	          <French>%1 - Mobile</French>
+	          <Spanish>%1 - Mover</Spanish>
+	          <Italian>%1 - Sposta</Italian>
+	          <Polish>%1 - Udaj się do</Polish>
+	          <Russian>%1 - перейти</Russian>
+	          <German>%1 - Bewegen</German>
+	          <Czech>%1 - přesun</Czech>
+	          <English>%1 - Move</English>
+	          <Portuguese>%1 – Mover</Portuguese>
+	          <Korean>%1 으로 이동하라.</Korean>
+	          <Chinesesimp>%1 - 前进</Chinesesimp>
+	          <Japanese>%1 - 移動</Japanese>
+	          <Turkish>%1 - Git</Turkish>
+	        </Key>
 	</Container>
 </Project>

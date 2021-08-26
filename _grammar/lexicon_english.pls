@@ -382,4 +382,47 @@
 		<phoneme>ˈdaɪ.ə.mənd</phoneme>
 		<phoneme>ˈdaɪ.mənd</phoneme>
 	</lexeme>
+	<lexeme>
+		<grapheme>move</grapheme>
+		<phoneme>muːv</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>to</grapheme>
+		<phoneme>tuː</phoneme>
+		<phoneme>tʊ</phoneme>
+		<phoneme>tu</phoneme>
+		<phoneme>tə</phoneme>
+		<phoneme>t̬ə</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>that</grapheme>
+		<phoneme>ðæt</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>position</grapheme>
+		<phoneme>pəˈzɪʃ.ən</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>there</grapheme>
+		<phoneme>ðeər</phoneme>
+		<phoneme>ðer</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>hit</grapheme>
+		<phoneme>hɪt</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>the</grapheme>
+		<phoneme>ðiː</phoneme>
+		<phoneme>ðə</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>deck</grapheme>
+		<phoneme>dek</phoneme>
+	</lexeme>
+	<lexeme>
+		<grapheme>dirt</grapheme>
+		<phoneme>dɜːt</phoneme>
+		<phoneme>dɝːt</phoneme>
+	</lexeme>
 </lexicon>

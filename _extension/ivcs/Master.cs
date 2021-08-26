@@ -17,7 +17,7 @@ using System.Net.Http;
 using System.Activities;
 using System.Diagnostics;
 using System.Security.Authentication;
-
+using Microsoft.Win32;
 
 namespace ivcs
 {
@@ -267,7 +267,8 @@ namespace ivcs
                     string settings_file = "ms-settings:speech";
                     try
                     {
-                        if (Environment.OSVersion.Version.Major < 10)
+                        int windows_version = (int) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "");
+                        if (windows_version < 10)
                             throw new VersionMismatchException("Windows 10 or greater is required to open this link.");
 
                         Process.Start(settings_file);
