@@ -1,4 +1,4 @@
-﻿using RGiesecke.DllExport;
+using RGiesecke.DllExport;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -168,11 +168,6 @@ namespace ivcs
                     output.Append(Function.confidence.ToString(Function.nfi));
                     return;
 
-                // GET_CULTURE: Get the culture
-                case "get_culture":
-                    output.Append(Function.culture);
-                    return;
-
                 // GET_LANGUAGE: Get the language
                 case "get_language":
                     output.Append(Function.language);
@@ -318,16 +313,6 @@ namespace ivcs
                         Function.confidence = value;
                     }
                     output.Append(Function.confidence.ToString(Function.nfi));
-                    return 1;
-
-                // SET_CULTURE: Set the culture to be used in the speech recognition engine
-                case "set_culture":
-                    if (Function.culture != args[0])
-                    {
-                        Log.Info($"Changing culture from {Function.culture} to {args[0]}...");
-                        Function.culture = args[0];
-                    }
-                    output.Append(Function.culture);
                     return 1;
 
                 // SET_LANGUAGE: Set the language file to be used in the speech recognition grammar
@@ -622,6 +607,12 @@ namespace ivcs
                 {
                     Log.Error("Grammer returned null in main call...", new Exception("Could not find main grammer file"));
                 }
+            }
+            catch (CultureNotFoundException cnfe)
+            {
+                // This user does not have the correct culture installed
+                MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                SentrySdk.CaptureException(cnfe);
             }
             catch (ThreadAbortException)
             {
