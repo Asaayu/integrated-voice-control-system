@@ -67,6 +67,11 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "get_out": {localize "STR_IVCS_SYSTEMCHAT_GET_OUT_1"};
 		case "scan_horizon": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SCAN_HORIZON", "%1.1", "%1"]])#0};
 		case "move_cursor": {localize "STR_IVCS_SYSTEMCHAT_MOVE_1"};
+		case "sitrep": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SITREP", "%1.1", "%1"]])#0};
+		case "lights_off": {localize "STR_IVCS_SYSTEMCHAT_LIGHTS_OFF_1"};
+		case "lights_on": {localize "STR_IVCS_SYSTEMCHAT_LIGHTS_ON_1"};
+		case "lasers_off": {localize "STR_IVCS_SYSTEMCHAT_LASER_OFF_1"};
+		case "lasers_on": {localize "STR_IVCS_SYSTEMCHAT_LASER_ON_1"};
 		default {""};
 	};
 
