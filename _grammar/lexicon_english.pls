@@ -462,6 +462,10 @@
 		<phoneme>laɪt</phoneme>
 	</lexeme>
 	<lexeme>
+		<grapheme>flashlights</grapheme>
+		<phoneme>ˈflæʃ.laɪt</phoneme>
+	</lexeme>
+	<lexeme>
 		<grapheme>out</grapheme>
 		<phoneme>aʊt</phoneme>
 	</lexeme>

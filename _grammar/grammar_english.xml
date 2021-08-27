@@ -129,6 +129,23 @@
 						</one-of>
 					</item>
 					<item>
+						flashlights
+						<one-of>
+							<item>
+								out
+								<tag>out="flashlights out[lights_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="flashlights off[lights_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="flashlights on[lights_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
 						lasers
 						<one-of>
 							<item>
