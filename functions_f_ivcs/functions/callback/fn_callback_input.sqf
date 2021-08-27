@@ -72,6 +72,8 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "lights_on": {localize "STR_IVCS_SYSTEMCHAT_LIGHTS_ON_1"};
 		case "lasers_off": {localize "STR_IVCS_SYSTEMCHAT_LASER_OFF_1"};
 		case "lasers_on": {localize "STR_IVCS_SYSTEMCHAT_LASER_ON_1"};
+		case "watch_direction": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___WATCH____2", "%1.1", "%1"]])#0};
+		case "suppressive_fire": {localize "STR_A3_SUPPRESSIVE_FIRE_"};
 		default {""};
 	};
 
