@@ -478,11 +478,11 @@
 				<one-of>
 					<item>
 						that
-						<tag>out="move to that[move_object]";</tag>
+						<tag>out="move to that[move_object]:{object}";</tag>
 					</item>
 					<item>
 						the
-						<tag>out="move to the[move_object]";</tag>
+						<tag>out="move to the[move_object]:{object}";</tag>
 					</item>
 				</one-of>
 				<ruleref uri="#object_selection"/>

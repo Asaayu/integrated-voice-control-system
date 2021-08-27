@@ -1,18 +1,18 @@
-params [["_input","",[""]]];
+params [["_input","",[""]],["_ff",false,[false]]];
 
 private _search_fnc =
 {
-	params ["_types"];
+	params ["_types","_ff"];
 
 	private _target = cursorTarget;
-	if (alive _target && {[_target, _types] call _type_fnc}) then
+	if (alive _target && {[_target, _types,_ff] call _type_fnc}) then
 	{
 		_target
 	}
 	else
 	{
 		private _target_object = cursorObject;
-		if (alive _target_object && {[_target_object, _types] call _type_fnc}) then
+		if (alive _target_object && {[_target_object, _types, _ff] call _type_fnc}) then
 		{
 			_target_object
 		}
@@ -22,7 +22,7 @@ private _search_fnc =
 
 			{
 				// Only return objects that are alive, non-hidden, and of the correct type
-				if (alive _x  && {!(isObjectHidden _x) && {simulationEnabled _x && {[_x, _types] call _type_fnc}}}) then
+				if (alive _x  && {!(isObjectHidden _x) && {simulationEnabled _x && {[_x, _types, _ff] call _type_fnc}}}) then
 				{
 					private _direction = player getDir _x;
 					private _diff = abs (_direction - (getDir player));
@@ -68,7 +68,7 @@ private _search_fnc =
 
 private _type_fnc =
 {
-	params ["_unit","_types"];
+	params ["_unit","_types","_ff"];
 
 	private _pass = false;
 	{
@@ -78,7 +78,7 @@ private _type_fnc =
 		};
 	} foreach _types;
 
-	if (_unit isKindOf "Man" && {(side player) getFriend (side _unit) >= 0.6}) then
+	if (_ff && {_unit isKindOf "Man" && {(side player) getFriend (side _unit) >= 0.6}}) then
 	{
 		false;
 	}
@@ -101,43 +101,43 @@ private _object = switch _input do
 	case "unit";
 	case "person":
 	{
-		[["Man"]] call _search_fnc;
+		[["Man"],_ff] call _search_fnc;
 	};
 
 	// All Vehicles
 	case "vehicle":
 	{
-		[["Land","Air","Ship"]] call _search_fnc;
+		[["Land","Air","Ship"],_ff] call _search_fnc;
 	};
 
 	// Vehicles - Land
 	case "car":
 	{
-		[["Car"]] call _search_fnc;
+		[["Car"],_ff] call _search_fnc;
 	};
 	case "truck":
 	{
-		[["Truck_F"]] call _search_fnc;
+		[["Truck_F"],_ff] call _search_fnc;
 	};
 	case "kart":
 	{
-		[["Kart_01_Base_F"]] call _search_fnc;
+		[["Kart_01_Base_F"],_ff] call _search_fnc;
 	};
 	case "quadbike":
 	{
-		[["Quadbike_01_base_F"]] call _search_fnc;
+		[["Quadbike_01_base_F"],_ff] call _search_fnc;
 	};
 	case "suv":
 	{
-		[["SUV_01_base_F"]] call _search_fnc;
+		[["SUV_01_base_F"],_ff] call _search_fnc;
 	};
 	case "tank":
 	{
-		[["Tank_F"]] call _search_fnc;
+		[["Tank_F"],_ff] call _search_fnc;
 	};
 	case "apc":
 	{
-		[["Wheeled_APC_F", "APC_Tracked_01_base_F"]] call _search_fnc;
+		[["Wheeled_APC_F", "APC_Tracked_01_base_F"],_ff] call _search_fnc;
 	};
 
 	// Vehicles - Water
@@ -145,22 +145,22 @@ private _object = switch _input do
 	case "ship";
 	case "submarine":
 	{
-		[["Ship"]] call _search_fnc;
+		[["Ship"],_ff] call _search_fnc;
 	};
 
 	// Vehicles - Air
 	case "plane":
 	{
-		[["Plane"]] call _search_fnc;
+		[["Plane"],_ff] call _search_fnc;
 	};
 	case "helicopter";
 	case "heli":
 	{
-		[["Helicopter"]] call _search_fnc;
+		[["Helicopter"],_ff] call _search_fnc;
 	};
 	case "aircraft":
 	{
-		[["Air"]] call _search_fnc;
+		[["Air"],_ff] call _search_fnc;
 	};
 
 	// Can't determine the type of object

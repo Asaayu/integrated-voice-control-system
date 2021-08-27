@@ -40,6 +40,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "move_back_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_270_0"]};
 		case "move_distance_point";
 		case "move_distance_and";
+		case "move_object";
 		case "move_distance": {("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0};
 		case "open_fire_red": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
 		case "salute": {localize "STR_IVCS_SYSTEMCHAT_SALUTE_1"};
@@ -245,6 +246,57 @@ switch (tolower _function) do
 							1,
 							0,
 							localize "STR_IVCS_FEEDBACK_TARGET_TEXT",
+							2,
+							0.03,
+							"RobotoCondensedLight",
+							"center",
+							true
+						];
+					}
+					else
+					{
+						removeMissionEventHandler ["Draw3D", _thisEventHandler];
+					};
+				},
+				[
+					time,
+					_object
+				]];
+			};
+		}
+		else
+		{
+			systemChat localize "STR_IVCS_FEEDBACK_TARGET_OBJECT_NOT_FOUND";
+		};
+	};
+	case "move_object":
+	{
+		// Tell the units to target the object
+		private _object = [_right#0, true] call ivcs_fnc_convert_objects;
+
+		// Only command units to watch the target if the object actually exists
+		if !(isNull _object) then
+		{
+			_units commandMove getPos _object;
+
+			if (uiNamespace getVariable ["ivcs_target_confirm_ui", true]) then
+			{
+				addMissionEventHandler ["Draw3D",
+				{
+					private _time = _thisArgs#0;
+					private _object = _thisArgs#1;
+
+					if (alive _object && {time <= _time + 4}) then
+					{
+						drawIcon3D
+						[
+							"a3\ui_f\data\GUI\Cfg\Cursors\hc_overenemy_gs.paa",
+							[1,1,1,linearConversion [_time + 2, _time + 2.5, time, 1, 0]],
+							_object modelToWorldVisual (_object selectionPosition "pelvis"),
+							1,
+							1,
+							0,
+							localize "STR_IVCS_FEEDBACK_MOVE_TO_TARGET_TEXT",
 							2,
 							0.03,
 							"RobotoCondensedLight",

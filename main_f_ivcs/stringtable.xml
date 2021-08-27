@@ -133,6 +133,9 @@
 		<Key ID="STR_IVCS_FEEDBACK_GET_IN_TARGET_TEXT">
 			<Original>Get In</Original>
 		</Key>
+		<Key ID="STR_IVCS_FEEDBACK_MOVE_TO_TARGET_TEXT">
+			<Original>Move To</Original>
+		</Key>
 		<Key ID="STR_IVCS_SYSTEMCHAT_SALUTE_1">
 			<Original>%1 - Salute</Original>
 		</Key>
