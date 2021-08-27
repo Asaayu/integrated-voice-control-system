@@ -229,12 +229,24 @@
 						<tag>out="stand up[pos_up]";</tag>
 					</item>
 					<item>
+						up
+						<tag>out="up[pos_up]";</tag>
+					</item>
+					<item>
 						crouch
 						<tag>out="crouch[pos_middle]";</tag>
 					</item>
 					<item>
+						stay low
+						<tag>out="stay low[pos_middle]";</tag>
+					</item>
+					<item>
 						prone
 						<tag>out="prone[pos_down]";</tag>
+					</item>
+					<item>
+						down
+						<tag>out="down[pos_down]";</tag>
 					</item>
 					<item>
 						hit the deck
@@ -279,6 +291,14 @@
 				<ruleref uri="#selection"/>
 				<one-of>
 					<item>
+						quiet
+						<tag>out="quiet[combat_stealth]";</tag>
+					</item>
+					<item>
+						silent
+						<tag>out="silent[combat_stealth]";</tag>
+					</item>
+					<item>
 						stealth
 						<tag>out="stealth[combat_stealth]";</tag>
 					</item>
@@ -287,12 +307,20 @@
 						<tag>out="combat[combat_combat]";</tag>
 					</item>
 					<item>
+						lock and load
+						<tag>out="lock and load[combat_combat]";</tag>
+					</item>
+					<item>
 						danger
 						<tag>out="danger[combat_combat]";</tag>
 					</item>
 					<item>
 						aware
 						<tag>out="aware[combat_aware]";</tag>
+					</item>
+					<item>
+						stay sharp
+						<tag>out="stay sharp[combat_aware]";</tag>
 					</item>
 					<item>
 						safe
@@ -441,6 +469,23 @@
 						<tag>out="move[move_cursor]";</tag>
 					</item>
 				</one-of>
+			</item>
+
+			<!-- Move to the object call -->
+			<item>
+				<ruleref uri="#selection"/>
+				move to
+				<one-of>
+					<item>
+						that
+						<tag>out="move to that[move_object]";</tag>
+					</item>
+					<item>
+						the
+						<tag>out="move to the[move_object]";</tag>
+					</item>
+				</one-of>
+				<ruleref uri="#object_selection"/>
 			</item>
 
 			<!-- Move X distance from the unit -->
@@ -650,48 +695,109 @@
 							</item>
 						</one-of>
 					</item>
+					<item>
+						board that
+						<tag>out="board that[get_in]:{type}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+							</item>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+								as
+								<ruleref uri="#vehicle_role"/>
+							</item>
+						</one-of>
+					</item>
 				</one-of>
 			</item>
 
 			<!-- Formation call -->
 			<item>
-				form
 				<one-of>
 					<item>
-						column
-						<tag>out="form column[formation_column]";</tag>
+						<ruleref uri="#selection"/>
+						form
+						<one-of>
+							<item>
+								column
+								<tag>out="form column[formation_column]";</tag>
+							</item>
+							<item>
+								staggered column
+								<tag>out="form staggered column[formation_staggered_column]";</tag>
+							</item>
+							<item>
+								wedge
+								<tag>out="form wedge[formation_wedge]";</tag>
+							</item>
+							<item>
+								echelon left
+								<tag>out="form echelon left[formation_echelon_left]";</tag>
+							</item>
+							<item>
+								echelon right
+								<tag>out="form echelon right[formation_echelon_right]";</tag>
+							</item>
+							<item>
+								vee
+								<tag>out="form vee[formation_vee]";</tag>
+							</item>
+							<item>
+								line
+								<tag>out="form line[formation_line]";</tag>
+							</item>
+							<item>
+								file
+								<tag>out="form file[formation_file]";</tag>
+							</item>
+							<item>
+								diamond
+								<tag>out="form diamond[formation_diamond]";</tag>
+							</item>
+						</one-of>
 					</item>
 					<item>
-						staggered column
-						<tag>out="form staggered column[formation_staggered_column]";</tag>
-					</item>
-					<item>
-						wedge
-						<tag>out="form wedge[formation_wedge]";</tag>
-					</item>
-					<item>
-						echelon left
-						<tag>out="form echelon left[formation_echelon_left]";</tag>
-					</item>
-					<item>
-						echelon right
-						<tag>out="form echelon right[formation_echelon_right]";</tag>
-					</item>
-					<item>
-						vee
-						<tag>out="form vee[formation_vee]";</tag>
-					</item>
-					<item>
-						line
-						<tag>out="form line[formation_line]";</tag>
-					</item>
-					<item>
-						file
-						<tag>out="form file[formation_file]";</tag>
-					</item>
-					<item>
-						diamond
-						<tag>out="form diamond[formation_diamond]";</tag>
+						<ruleref uri="#selection"/>
+						formation
+						<one-of>
+							<item>
+								column
+								<tag>out="form column[formation_column]";</tag>
+							</item>
+							<item>
+								staggered column
+								<tag>out="form staggered column[formation_staggered_column]";</tag>
+							</item>
+							<item>
+								wedge
+								<tag>out="form wedge[formation_wedge]";</tag>
+							</item>
+							<item>
+								echelon left
+								<tag>out="form echelon left[formation_echelon_left]";</tag>
+							</item>
+							<item>
+								echelon right
+								<tag>out="form echelon right[formation_echelon_right]";</tag>
+							</item>
+							<item>
+								vee
+								<tag>out="form vee[formation_vee]";</tag>
+							</item>
+							<item>
+								line
+								<tag>out="form line[formation_line]";</tag>
+							</item>
+							<item>
+								file
+								<tag>out="form file[formation_file]";</tag>
+							</item>
+							<item>
+								diamond
+								<tag>out="form diamond[formation_diamond]";</tag>
+							</item>
+						</one-of>
 					</item>
 				</one-of>
 			</item>
