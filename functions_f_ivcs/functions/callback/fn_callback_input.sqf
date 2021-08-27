@@ -119,6 +119,87 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 // These functions are defined in the grammar file which is used by the speech recognition engine
 switch (tolower _function) do
 {
+	case "sitrep":
+	{
+		["120_Com_Ask", selectRandom["ReportIn.ogg", "Sitrep.ogg"], true] call IVCS_fnc_speak;
+		[_units, _player,_confirmation_speak] spawn
+		{
+			_this params ["_units","_player","_confirmation_speak"];
+			sleep 1;
+			{
+				if (alive _x) then
+				{
+					// Unit is alive
+					private _weapon = currentWeapon _x;
+					private _distance = _player distance _x > 100;
+					private _injured = damage _x > 0.25;
+					private _ammo = _weapon != "" && {{private _mag = _x; ([_weapon] call BIS_fnc_compatibleMagazines) findIf {_x == _mag} > -1} count (magazines _x) <= 2};
+					private _ammo_empty = _weapon != "" && {{private _mag = _x; ([_weapon] call BIS_fnc_compatibleMagazines) findIf {_x == _mag} > -1} count (magazines _x) <= 0};
+
+					private _unit = _x;
+					private _text = "";
+					{
+						private _add = [format[localize "STR_A3_GRID___2", "", mapGridPosition _unit], localize "STR_A3_INJURED", [localize "STR_A3_LOW_AMMO", localize "STR_A3_VR_HELI_WEAPONS_NO_AMMO"] select _ammo_empty];
+						if (_x) then
+						{
+							if (_text == "") then
+							{
+								_text = _add#_foreachindex;
+							}
+							else
+							{
+								_text = _text + ", " + (_add#_foreachindex);
+							};
+						};
+					} forEach [_distance, _injured, _ammo];
+
+					if (_text == "") then
+					{
+						_text = localize "STR_A3_A_M05_65_MOVING_BRA_0";
+					};
+
+					_x groupChat _text;
+					_x call _confirmation_speak;
+				}
+				else
+				{
+					// Unit is dead
+					["140_Com_Status", selectRandom["WeLostOneE_1.ogg","WeLostOneE_2.ogg","WeLostOneE_3.ogg"], true] call IVCS_fnc_speak;
+					[_x] joinSilent grpNull;
+				};
+				_player reveal _x;
+				sleep 1.5;
+			} foreach _units;
+		};
+	};
+	case "lights_off":
+	{
+		["100_Commands", "FlashlightsOff.ogg", true] call IVCS_fnc_speak;
+		{
+			_x enableGunLights "ForceOff";
+		} foreach _units;
+	};
+	case "lights_on":
+	{
+		["100_Commands", "FlashlightsOn.ogg", true] call IVCS_fnc_speak;
+		{
+			_x enableGunLights "ForceOn";
+		} foreach _units;
+	};
+	case "lasers_off":
+	{
+		["100_Commands", "PointersOff.ogg", true] call IVCS_fnc_speak;
+		{
+			_x enableIRLasers false;
+		} foreach _units;
+	};
+	case "lasers_on":
+	{
+		["100_Commands", "PointersOn.ogg", true] call IVCS_fnc_speak;
+		{
+			_x enableIRLasers true;
+		} foreach _units;
+	};
 	case "regroup":
 	{
 		// Tell the units to follow
