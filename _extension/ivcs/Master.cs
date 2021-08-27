@@ -72,22 +72,30 @@ namespace ivcs
 
             Function.VersionCheck();
 
-            HashSet<string> languages = new HashSet<string>();
-            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            try
             {
-                languages.Add(lang.Culture.EnglishName);
-            }
+                HashSet<string> languages = new HashSet<string>();
+                foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+                {
+                    languages.Add(lang.Culture.EnglishName);
+                }
 
-            HashSet<string> recognizers = new HashSet<string>();
-            foreach (RecognizerInfo recognizer in SpeechRecognitionEngine.InstalledRecognizers())
+                HashSet<string> recognizers = new HashSet<string>();
+                foreach (RecognizerInfo recognizer in SpeechRecognitionEngine.InstalledRecognizers())
+                {
+                    recognizers.Add(recognizer.Culture.EnglishName);
+                }
+
+                Log.Info($"Languages: {string.Join(", ", languages)}");
+                Log.Info($"Recognizers: {string.Join(", ", recognizers)}");
+                SentrySdk.AddBreadcrumb($"Languages: {string.Join(", ", languages)}", "Information", "info", null, BreadcrumbLevel.Info);
+                SentrySdk.AddBreadcrumb($"Recognizers: {string.Join(", ", recognizers)}", "Information", "info", null, BreadcrumbLevel.Info);
+            }
+            catch (Exception e)
             {
-                recognizers.Add(recognizer.Culture.EnglishName);
+                SentrySdk.AddBreadcrumb("I think this user has no speech recognisers installed", "Information", "debug", null, BreadcrumbLevel.Debug);
+                SentrySdk.CaptureException(e);
             }
-
-            Log.Info($"Languages: {string.Join(", ", languages)}");
-            Log.Info($"Recognizers: {string.Join(", ", recognizers)}");
-            SentrySdk.AddBreadcrumb($"Languages: {string.Join(", ",languages)}", "Information", "info", null, BreadcrumbLevel.Info);
-            SentrySdk.AddBreadcrumb($"Recognizers: {string.Join(", ", recognizers)}", "Information", "info", null, BreadcrumbLevel.Info);
 
             output.Append(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
