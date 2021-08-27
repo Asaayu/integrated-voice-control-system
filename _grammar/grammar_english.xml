@@ -96,6 +96,72 @@
 						on me
 						<tag>out="on me[regroup]";</tag>
 					</item>
+					<item>
+						fall in
+						<tag>out="fall in[regroup]";</tag>
+					</item>
+					<item>
+						rally up
+						<tag>out="rally up[regroup]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Laser/Lights call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						lights
+						<one-of>
+							<item>
+								out
+								<tag>out="lights out[lights_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="lights off[lights_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="lights on[lights_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						lasers
+						<one-of>
+							<item>
+								out
+								<tag>out="lasers out[lasers_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="lasers off[lasers_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="lasers on[lasers_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						pointers
+						<one-of>
+							<item>
+								out
+								<tag>out="pointers out[lasers_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="pointers off[lasers_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="pointers on[lasers_on]";</tag>
+							</item>
+						</one-of>
+					</item>
 				</one-of>
 			</item>
 
@@ -168,6 +234,25 @@
 					<item>
 						copy me
 						<tag>out="copy me[pos_auto]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- SITREP call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						sitrep
+						<tag>out="sitrep[sitrep]";</tag>
+					</item>
+					<item>
+						report in
+						<tag>out="report in[sitrep]";</tag>
+					</item>
+					<item>
+						status
+						<tag>out="status[sitrep]";</tag>
 					</item>
 				</one-of>
 			</item>
@@ -511,6 +596,10 @@
 						get out
 						<tag>out="get out[get_out]";</tag>
 					</item>
+					<item>
+						out
+						<tag>out="out[get_out]";</tag>
+					</item>
 				</one-of>
 			</item>
 
@@ -521,6 +610,10 @@
 					<item>
 						mount up
 						<tag>out="mount up[get_in_player]";</tag>
+					</item>
+					<item>
+						in
+						<tag>out="in[get_in_player]";</tag>
 					</item>
 					<item>
 						get in
