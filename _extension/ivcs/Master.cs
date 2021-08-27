@@ -235,7 +235,7 @@ namespace ivcs
                     try
                     {
                         string windows_version = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString();
-                        if (windows_version == "10")
+                        if (windows_version != "10")
                             throw new VersionMismatchException("Windows 10 is required to open this link.");
 
                         Process.Start(settings_file);
