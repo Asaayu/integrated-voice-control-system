@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- This is the en language grammar document -->
-<grammar version="1.0" xml:lang="en" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
+<grammar version="1.0" xml:lang="en-GB" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
 	<lexicon uri="lexicon_english.pls" />
 
 	<rule id="Main">
@@ -307,6 +307,14 @@
 						<tag>out="combat[combat_combat]";</tag>
 					</item>
 					<item>
+						get ready
+						<tag>out="get ready[combat_combat]";</tag>
+					</item>
+					<item>
+						get set to engage
+						<tag>out="get set to engage[combat_combat]";</tag>
+					</item>
+					<item>
 						lock and load
 						<tag>out="lock and load[combat_combat]";</tag>
 					</item>
@@ -319,12 +327,24 @@
 						<tag>out="aware[combat_aware]";</tag>
 					</item>
 					<item>
+						stay alert
+						<tag>out="stay alert[combat_aware]";</tag>
+					</item>
+					<item>
 						stay sharp
 						<tag>out="stay sharp[combat_aware]";</tag>
 					</item>
 					<item>
+						stay frosty
+						<tag>out="stay frosty[combat_aware]";</tag>
+					</item>
+					<item>
 						safe
 						<tag>out="safe[combat_safe]";</tag>
+					</item>
+					<item>
+						at ease
+						<tag>out="at ease[combat_safe]";</tag>
 					</item>
 					<item>
 						relax
@@ -415,6 +435,10 @@
 				<ruleref uri="#selection"/>
 				<one-of>
 					<item>
+						take cover
+						<tag>out="take cover[find_cover]";</tag>
+					</item>
+					<item>
 						find cover
 						<tag>out="find cover[find_cover]";</tag>
 					</item>
@@ -432,8 +456,28 @@
 			<!-- Target object call -->
 			<item>
 				<ruleref uri="#selection"/>
-				target that
-				<tag>out="target that[target_object]:{type}";</tag>
+				<one-of>
+					<item>
+						target that
+						<tag>out="target that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						engage that
+						<tag>out="engage that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						destroy that
+						<tag>out="destroy that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						attack that
+						<tag>out="attack that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						fire at that
+						<tag>out="fire at that[target_object]:{type}";</tag>
+					</item>
+				</one-of>
 				<ruleref uri="#object_selection"/>
 			</item>
 
@@ -635,8 +679,29 @@
 						<tag>out="suppressive fire[suppressive_fire]";</tag>
 					</item>
 					<item>
+						suppressing fire
+						<tag>out="suppressing fire[suppressive_fire]";</tag>
+					</item>
+					<item>
+						suppressing fire at that position
+						<tag>out="suppressing fire at that position[suppressive_fire]";</tag>
+					</item>
+					<item>
 						suppress that
 						<tag>out="suppress that[suppressive_fire]:{type}";</tag>
+						<ruleref uri="#object_selection"/>
+					</item>
+					<item>
+						<one-of>
+							<item>
+								suppressing fire at that
+								<tag>out="suppressing fire at that[suppressive_fire]:{type}";</tag>
+							</item>
+							<item>
+								suppressing fire that
+								<tag>out="suppressing fire that[suppressive_fire]:{type}";</tag>
+							</item>
+						</one-of>
 						<ruleref uri="#object_selection"/>
 					</item>
 				</one-of>
@@ -680,6 +745,10 @@
 					<item>
 						get in
 						<tag>out="get in[get_in_player]";</tag>
+					</item>
+					<item>
+						get in my vehicle
+						<tag>out="get in my vehicle[get_in_player]";</tag>
 					</item>
 					<item>
 						get in that
@@ -842,31 +911,25 @@
 	<rule id="object_selection" scope="public">
 		<!-- Select from a list of possible targets that the mod can convert -->
 		<one-of>
-			<item>enemy,</item>
-			<item>character,</item>
-			<item>soldier,</item>
-			<item>man,</item>
-			<item>guy,</item>
-			<item>woman,</item>
-			<item>girl,</item>
-			<item>unit,</item>
-			<item>person,</item>
-			<item>vehicle,</item>
-			<item>car,</item>
-			<item>truck,</item>
-			<item>tank,</item>
-			<item>apc,</item>
-			<item>boat,</item>
-			<item>ship,</item>
-			<item>submarine,</item>
-			<item>plane,</item>
-			<item>helicopter,</item>
-			<item>heli,</item>
-			<item>aircraft,</item>
-
-			<!-- Cancel command -->
+			<item>
+				<one-of>
+					<item>enemy,</item>
+					<item>character,</item>
+					<item>soldier,</item>
+					<item>man,</item>
+					<item>guy,</item>
+					<item>woman,</item>
+					<item>girl,</item>
+					<item>unit,</item>
+					<item>person,</item>
+				</one-of>
+			</item>
+			<item>
+				<ruleref uri="#object_selection_vehicle"/>
+			</item>
 			<item>cancel,</item>
 		</one-of>
+
 	</rule>
 	<rule id="object_selection_vehicle" scope="public">
 		<!-- Select from a list of possible targets that the mod can convert -->
@@ -1145,6 +1208,24 @@
 			<item>10,</item>
 			<item>11,</item>
 			<item>12,</item>
+			<item>13,</item>
+			<item>14,</item>
+			<item>15,</item>
+			<item>16,</item>
+			<item>17,</item>
+			<item>18,</item>
+			<item>19,</item>
+			<item>20,</item>
+			<item>21,</item>
+			<item>22,</item>
+			<item>23,</item>
+			<item>24,</item>
+			<item>25,</item>
+			<item>26,</item>
+			<item>27,</item>
+			<item>28,</item>
+			<item>29,</item>
+			<item>30,</item>
 		</one-of>
 	</rule>
 </grammar>

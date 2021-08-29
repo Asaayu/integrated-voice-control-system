@@ -1,4 +1,4 @@
-<lexicon version="1.0" alphabet="ipa" xml:lang="en" xmlns="http://www.w3.org/2005/01/pronunciation-lexicon">
+<lexicon version="1.0" alphabet="ipa" xmlns="http://www.w3.org/2005/01/pronunciation-lexicon">
 	<lexeme>
 		<grapheme>0</grapheme>
 		<phoneme>zero</phoneme>

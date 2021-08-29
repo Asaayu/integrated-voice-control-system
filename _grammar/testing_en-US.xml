@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- This is the testing grammar document -->
-<grammar version="1.0" xml:lang="en" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
+<grammar version="1.0" xml:lang="en-US" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
 	<lexicon uri="lexicon_english.pls" />
 
 	<rule id="Main">

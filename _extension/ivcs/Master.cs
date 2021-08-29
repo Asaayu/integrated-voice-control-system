@@ -18,6 +18,7 @@ using System.Activities;
 using System.Diagnostics;
 using System.Security.Authentication;
 using Microsoft.Win32;
+using System.Threading.Tasks;
 
 namespace ivcs
 {
@@ -83,6 +84,20 @@ namespace ivcs
                 HashSet<string> recognizers = new HashSet<string>();
                 foreach (RecognizerInfo recognizer in SpeechRecognitionEngine.InstalledRecognizers())
                 {
+                    if (Function.recognizer == null && recognizer.Culture.ToString() == "en-GB")
+                    {
+                        Function.recognizer = recognizer;
+                        Function.culture = "en-GB";
+                        Log.Info("Added GB recognizer");
+                        SentrySdk.AddBreadcrumb("Added GB recognizer");
+                    }
+                    else if (false && Function.recognizer == null && recognizer.Culture.ToString() == "en-US")
+                    {
+                        Function.recognizer = recognizer;
+                        Function.culture = "en-US";
+                        Log.Info("Added US recognizer");
+                        SentrySdk.AddBreadcrumb("Added US recognizer");
+                    }
                     recognizers.Add(recognizer.Culture.EnglishName);
                 }
 
@@ -463,7 +478,8 @@ namespace ivcs
         internal static double end_babbel = 0.0;
 
         internal static string language = "english";
-        internal static string culture = "en";
+        internal static string culture = "en-US";
+        internal static RecognizerInfo recognizer;
         internal static NumberFormatInfo nfi = new NumberFormatInfo();
 
         internal static bool ptt = false;
@@ -508,6 +524,14 @@ namespace ivcs
                     }
                 }
             }
+            catch (TaskCanceledException)
+            {
+                // This is just a normal error, don't do anything
+            }
+            catch (HttpRequestException)
+            {
+                // This is probably related to a user who's firewall is blockign the connection, don't do anything
+            }
             catch (Exception e)
             {
                 SentrySdk.AddBreadcrumb("Version Check Error", "Version Check Error", "error", null, BreadcrumbLevel.Error);
@@ -529,6 +553,17 @@ namespace ivcs
                 nfi.NumberDecimalSeparator = ".";
                 nfi.NumberGroupSeparator = "";
 
+                try
+                {
+                    if (recognizer == null)
+                        throw new Exception("Couldn't find en-US or en-GB speech recogniser on the system.");
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Couldn't find en-US or en-GB speech recogniser on the system.", e);
+                    return;
+                };
+
                 // Get the grammer for the test
                 Grammar grammar = GetGrammar();
 
@@ -538,71 +573,75 @@ namespace ivcs
                     try
                     {
                         // Create the speech recognition engine
-                        speech_engine = new SpeechRecognitionEngine(new CultureInfo("en-US"));
+                        speech_engine = new SpeechRecognitionEngine(recognizer);
 
-                        try
+                        if (speech_engine != null)
                         {
-                            if (!speech_engine.Grammars.Contains(grammar))
-                            {
-                                // Load the custom grammer into the engine
-                                speech_engine.LoadGrammar(grammar);
-                            }
-
-                            // Add a handler for the speech recognized event.  
-                            speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
-                            speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
-                            speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
-                            speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
-                            speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
-
-                            speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                            speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                            speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                            speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
-
                             try
                             {
-                                // Configure input to the speech recognizer.
-                                speech_engine.SetInputToDefaultAudioDevice();
+                                if (!speech_engine.Grammars.Contains(grammar))
+                                {
+                                    // Load the custom grammer into the engine
+                                    speech_engine.LoadGrammar(grammar);
+                                }
+
+                                // Add a handler for the speech recognized event.  
+                                speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
+                                speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
+                                speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
+                                speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
+                                speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
+
+                                speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                                speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                                speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                                speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
+
+                                try
+                                {
+                                    // Configure input to the speech recognizer.
+                                    speech_engine.SetInputToDefaultAudioDevice();
+                                }
+                                catch (InvalidOperationException ioe)
+                                {
+                                    Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                                }
+
+                                Log.Info("Main speech recognition engine is now running...");
                             }
                             catch (InvalidOperationException ioe)
                             {
-                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
-                            }                            
-
-                            Log.Info("Main speech recognition engine is now running...");
-                        }
-                        catch (InvalidOperationException ioe)
-                        {
-                            MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
-                            SentrySdk.CaptureException(ioe);
+                                Log.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
+                            }
                         }
                     }
-                    catch (ArgumentException ae)
+                    catch (ArgumentException)
                     {
                         // This user does not have the correct culture installed
                         MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                        SentrySdk.CaptureException(ae);
                     }
                 }
                 else
                 {
-                    Log.Error("Grammer returned null in main call...", new Exception("Could not find main grammer file"));
+                    Log.Error("Could not find main grammer file...", new Exception("Could not find main grammer file"));
                 }
             }
-            catch (CultureNotFoundException cnfe)
+            catch (CultureNotFoundException)
             {
                 // This user does not have the correct culture installed
                 MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                SentrySdk.CaptureException(cnfe);
             }
             catch (ThreadAbortException)
             {
                 Log.Info("Mission start main thread aborted...");
             }
+            catch (NullReferenceException nre)
+            {
+                MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
+                Log.Error("NullReferenceException in mission start function thread", nre);
+            }
             catch (Exception e)
             {
-                Log.Info("Encountered error with speech recognition engine call...");
                 Log.Error("Encountered error with speech recognition engine call...", e);
             };
 
@@ -640,8 +679,7 @@ namespace ivcs
                         }
                         catch (InvalidOperationException ioe)
                         {
-                            MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
-                            SentrySdk.CaptureException(ioe);
+                            Log.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
                             return "false";
                         }
                     }
@@ -689,15 +727,18 @@ namespace ivcs
                         ReloadGrammar();
                     }
 
-                    // Try to set the default audio device
-                    speech_engine.SetInputToDefaultAudioDevice();
+                    try
+                    {
+                        // Try to set the default audio device
+                        speech_engine.SetInputToDefaultAudioDevice();
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        MessageBox.Show($"The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", "Missing Required Language", MessageBoxButtons.OK);
+                    }
 
                     // Start asynchronous, continuous speech recognition. 
                     speech_engine.RecognizeAsync(RecognizeMode.Multiple);
-                }
-                catch (InvalidOperationException ioe)
-                {
-                    Log.Error("The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", ioe);
                 }
                 catch (Exception e)
                 {
@@ -794,8 +835,6 @@ namespace ivcs
             {
                 if (e.Result.Text.Contains("every1"))
                 {
-                    Log.Error("Text contained 'every1' in text. Error occurred", new Exception("Text contained 'every1'"));
-
                     // Set the background red to notify the user the phrase is not valid
                     for (int i = 0; i <= 1; i++)
                     {
@@ -861,44 +900,43 @@ namespace ivcs
                 switch (data.Length)
                 {
                     case 1:
-                        {
-                            string[] data_list = text.Split(new string[] { key }, StringSplitOptions.RemoveEmptyEntries);
+                    {
+                        string[] data_list = text.Split(new string[] { key }, StringSplitOptions.RemoveEmptyEntries);
 
-                            // This is probably a call to all units
-                            if (data_list.Length <= 0)
-                            {
-                                return $"[['All'], '{command}']";
-                            }
-                            else
-                            {
-                                string left_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
-                                return $"[['{left_data}'], '{command}', []]".Replace(",''", "");
-                            };
+                        // This is probably a call to all units
+                        if (data_list.Length <= 0)
+                        {
+                            return $"[['All'], '{command}']";
+                        }
+                        else
+                        {
+                            string left_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
+                            return $"[['{left_data}'], '{command}', []]".Replace(",''", "");
                         };
+                    };
                     case 2:
-                        {
-                            string[] data_list = text.Split(new string[] { key }, StringSplitOptions.RemoveEmptyEntries);
-                            string left_data;
-                            string right_data;
+                    {
+                        string[] data_list = text.Split(new string[] { key }, StringSplitOptions.RemoveEmptyEntries);
+                        string left_data;
+                        string right_data;
 
-                            // Probably a call to all units
-                            if (data_list.Length == 1)
-                            {
-                                left_data = "All";
-                                right_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
-                            }
-                            else
-                            {
-                                left_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
-                                right_data = string.Join("','", data_list[1].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
-                            };
-                            return $"[['{left_data}'], '{command}', ['{right_data}']]".Replace(",''", "");
+                        // Probably a call to all units
+                        if (data_list.Length == 1)
+                        {
+                            left_data = "All";
+                            right_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
+                        }
+                        else
+                        {
+                            left_data = string.Join("','", data_list[0].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
+                            right_data = string.Join("','", data_list[1].Replace(", ", ",").Replace(" ", ",").Split(',').Where(x => !string.IsNullOrEmpty(x)).ToArray());
                         };
-                }                
+                        return $"[['{left_data}'], '{command}', ['{right_data}']]".Replace(",''", "");
+                    };
+                };
             }
             catch (Exception e)
             {
-                Log.Info($"Exception encountered while attempting to convert semantics...");
                 Log.Error($"Exception encountered while attempting to convert semantics...", e);
             }
             return "[[], '', []]";
@@ -911,77 +949,84 @@ namespace ivcs
             try
             {
                 // Create the speech recognition engine
-                speech_testing = new SpeechRecognitionEngine(new CultureInfo(culture));
+                speech_testing = new SpeechRecognitionEngine(recognizer);
 
-                // Get the grammer for the test
-                Grammar grammar = GetGrammar("testing");
-
-                // Make sure it exists
-                if (grammar != null)
+                if (speech_testing != null)
                 {
-                    try
+                    // Get the grammer for the test
+                    Grammar grammar = GetGrammar($"testing_{culture}");
+
+                    // Make sure it exists
+                    if (grammar != null)
                     {
-
-                        if (!speech_testing.Grammars.Contains(grammar))
-                        {
-                            // Load the custom grammer into the engine
-                            speech_testing.LoadGrammar(grammar);
-                        }
-
-                        // Add a handler for the speech recognized event.  
-                        speech_testing.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Testing_SpeechRecognized);
-                        speech_testing.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(Testing_SpeechHypothesized);
-                        speech_testing.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(Testing_SpeechRecognitionRejected);
-
-                        // Configure input to the speech recognizer.
-                        speech_testing.SetInputToDefaultAudioDevice();
-
-                        speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                        speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                        speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                        speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
-
                         try
                         {
-                            // Start asynchronous, continuous speech recognition.  
-                            speech_testing.RecognizeAsync(RecognizeMode.Multiple);
+
+                            if (!speech_testing.Grammars.Contains(grammar))
+                            {
+                                // Load the custom grammer into the engine
+                                speech_testing.LoadGrammar(grammar);
+                            }
+
                         }
                         catch (InvalidOperationException ioe)
                         {
-                            Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
-                        }                        
+                            // This user does not have the correct culture installed
+                            Log.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
+                        }
 
-                        Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
-                        Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
-                        Log.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
-                        Log.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
+                        try
+                        {
+                            // Add a handler for the speech recognized event.  
+                            speech_testing.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Testing_SpeechRecognized);
+                            speech_testing.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(Testing_SpeechHypothesized);
+                            speech_testing.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(Testing_SpeechRecognitionRejected);
 
-                        Log.Info("Speech recognition engine test is now running...");
-                    }
-                    catch (InvalidOperationException ioe)
-                    {
-                        // This user does not have the correct culture installed
-                        MessageBox.Show($"The grammer file appears to be broken, repair the mod through the Arma 3 Launcher to fix this issue.\nMake sure you've installed and set your operating systems speech language to \"English (United States)\".\nIf it continues to happen please report it to a developer.", "Incorrect Grammer Language", MessageBoxButtons.OK);
-                        SentrySdk.CaptureException(ioe);
-                        return;
-                    }
-                }
-                else
-                {
-                    Log.Error("Grammer returned null in speech recognition engine test...", new Exception("Could not find testing grammer file"));
+                            try
+                            {
+                                // Configure input to the speech recognizer.
+                                speech_testing.SetInputToDefaultAudioDevice();
+                            }
+                            catch (InvalidOperationException ioe)
+                            {
+                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                            }
+
+
+                            speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                            speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                            speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                            speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
+
+                            try
+                            {
+                                // Start asynchronous, continuous speech recognition.  
+                                speech_testing.RecognizeAsync(RecognizeMode.Multiple);
+                            }
+                            catch (InvalidOperationException ioe)
+                            {
+                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                            }
+
+                            Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
+                            Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
+                            Log.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
+                            Log.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
+
+                            Log.Info("Speech recognition engine test is now running...");
+                        }
+                        catch (NullReferenceException nre)
+                        {
+                            Log.Error("NullReferenceException error with speech recognition engine testing...", nre);
+                            SentrySdk.CaptureException(nre);
+                        }
+                    };
                 };
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
                 // This user does not have the correct culture installed
                 MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                SentrySdk.CaptureException(ae);
-            }
-            catch (NullReferenceException ae)
-            {
-                // This user does not have the correct culture installed
-                MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                SentrySdk.CaptureException(ae);
             }
             catch (ThreadAbortException)
             {
@@ -989,7 +1034,6 @@ namespace ivcs
             }
             catch (Exception e)
             {
-                Log.Info("Encountered error with speech recognition engine testing...");
                 Log.Error("Encountered error with speech recognition engine testing...", e);
             };
         }
@@ -1011,7 +1055,6 @@ namespace ivcs
             }
             catch (Exception e)
             {
-                Log.Info("Encountered error when attempting to stop the speech test...");
                 Log.Error("Encountered error when attempting to stop the speech test...", e);
             }            
         }
@@ -1047,7 +1090,7 @@ namespace ivcs
         internal static Grammar GetGrammar(string filename = "")
         {
             string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string grammar_file = location + $@"\grammar\grammar_{language}.xml";
+            string grammar_file = location + $@"\grammar\grammar_{culture}.xml";
 
             try
             {
