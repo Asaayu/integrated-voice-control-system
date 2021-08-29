@@ -878,10 +878,12 @@
 			<item>ship,</item>
 			<item>submarine,</item>
 			<item>tank,</item>
+			<item>armor,</item>
 			<item>apc,</item>
 			<item>plane,</item>
 			<item>helicopter,</item>
 			<item>heli,</item>
+			<item>chopper,</item>
 			<item>aircraft,</item>
 
 			<!-- Cancel command -->
