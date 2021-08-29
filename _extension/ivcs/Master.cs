@@ -732,7 +732,7 @@ namespace ivcs
                         // Try to set the default audio device
                         speech_engine.SetInputToDefaultAudioDevice();
                     }
-                    catch (InvalidOperationException ioe)
+                    catch (InvalidOperationException)
                     {
                         MessageBox.Show($"The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", "Missing Required Language", MessageBoxButtons.OK);
                     }
