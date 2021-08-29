@@ -342,27 +342,27 @@
 						<one-of>
 							<item>
 								left
-								<tag>out="flank left[move_left_quick]";</tag>
+								<tag>out="flank left[flank_left_quick]";</tag>
 							</item>
 							<item>
 								right
-								<tag>out="flank right[move_right_quick]";</tag>
+								<tag>out="flank right[flank_right_quick]";</tag>
 							</item>
 							<item>
 								front
-								<tag>out="flank front[move_front_quick]";</tag>
+								<tag>out="flank front[flank_front_quick]";</tag>
 							</item>
 							<item>
 								back
-								<tag>out="flank back[move_back_quick]";</tag>
+								<tag>out="flank back[flank_back_quick]";</tag>
 							</item>
 							<item>
 								forwards
-								<tag>out="flank forwards[move_front_quick]";</tag>
+								<tag>out="flank forwards[flank_front_quick]";</tag>
 							</item>
 							<item>
 								backwards
-								<tag>out="flank backwards[move_back_quick]";</tag>
+								<tag>out="flank backwards[flank_back_quick]";</tag>
 							</item>
 						</one-of>
 					</item>
