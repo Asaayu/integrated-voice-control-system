@@ -207,6 +207,9 @@ switch (tolower _function) do
 	{
 		// Tell the units to follow
 		_units commandFollow (leader group _player);
+
+		// Sets the formation direction
+		(group _player) setFormDir (getDir _player);
 	};
 	case "stop":
 	{
