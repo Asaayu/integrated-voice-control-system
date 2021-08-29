@@ -131,7 +131,7 @@ private _object = switch _input do
 	{
 		[["SUV_01_base_F"],_ff] call _search_fnc;
 	};
-	case "armour";
+	case "armor";
 	case "tank":
 	{
 		[["Tank_F"],_ff] call _search_fnc;
