@@ -76,6 +76,12 @@
 		<Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_TOOLTIP">
 			<Original>Open the Windows Speech Settings, allowing you to change your operating systems speech language settings.</Original>
 		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_SOUND_BUTTON_NAME">
+			<Original>Windows Sound Control Panel</Original>
+		</Key>
+		<Key ID="STR_IVCS_PAUSE_MENU_SOUND_BUTTON_TOOLTIP">
+			<Original>Open the Windows Sound Control Panel, allowing you to change the default input and output device.</Original>
+		</Key>
 	</Container>
 	<Container name="Settings Category Strings">
 		<Key ID="STR_IVCS_SETTINGS_CATEGORY_NAME">
