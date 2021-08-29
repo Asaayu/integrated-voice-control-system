@@ -250,6 +250,20 @@ namespace ivcs
                         Log.Error($"An exception occurred when attempting to open Windows speech settings software.", e);
                     }
                     return;
+
+                    // OPEN_SOUND_CONTROL_PANEL_SETTINGS: Opens the sound control panel settings
+                case "open_sound_control_panel_settings":                    
+                    try
+                    {
+                        // Do not allow clients to edit this
+                        Process.Start(Path.Combine(Environment.SystemDirectory, "control.exe"), "/name Microsoft.Sound");
+                        output.Append("true");
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"An exception occurred when attempting to open Windows sound control panel.", e);
+                    }
+                    return;
             }
         }
 
