@@ -91,7 +91,7 @@ namespace ivcs
                         Log.Info("Added GB recognizer");
                         SentrySdk.AddBreadcrumb("Added GB recognizer");
                     }
-                    else if (false && Function.recognizer == null && recognizer.Culture.ToString() == "en-US")
+                    else if (Function.recognizer == null && recognizer.Culture.ToString() == "en-US")
                     {
                         Function.recognizer = recognizer;
                         Function.culture = "en-US";
