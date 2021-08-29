@@ -422,22 +422,42 @@ switch (tolower _function) do
 	};
 	case "move_left_quick":
 	{
-		// Get units to move to a grid position
+		// Moves the units to a position relative to the position
 		_units commandMove (_player getPos [40, (getDir _player) - 90]);
 	};
 	case "move_right_quick":
 	{
-		// Get units to move to a grid position
+		// Moves the units to a position relative to the position
 		_units commandMove (_player getPos [40, (getDir _player) + 90]);
 	};
 	case "move_front_quick":
 	{
-		// Get units to move to a grid position
+		// Moves the units to a position relative to the position
 		_units commandMove (_player getPos [40, (getDir _player) + 0]);
 	};
 	case "move_back_quick":
 	{
-		// Get units to move to a grid position
+		// Moves the units to a position relative to the position
+		_units commandMove (_player getPos [40, (getDir _player) - 180]);
+	};
+	case "flank_left_quick":
+	{
+		// Changes the units formation position
+		_units commandMove (_player getPos [40, (getDir _player) - 90]);
+	};
+	case "flank_right_quick":
+	{
+		// Changes the units formation position
+		_units commandMove (_player getPos [40, (getDir _player) + 90]);
+	};
+	case "flank_front_quick":
+	{
+		// Changes the units formation position
+		_units commandMove (_player getPos [40, (getDir _player) + 0]);
+	};
+	case "flank_back_quick":
+	{
+		// Changes the units formation position
 		_units commandMove (_player getPos [40, (getDir _player) - 180]);
 	};
 	case "move_distance_point";
