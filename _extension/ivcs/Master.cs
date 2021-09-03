@@ -233,9 +233,9 @@ namespace ivcs
                         Process.Start(training_file, "UserTraining");
                         output.Append("true");
                     }
-                    catch (FileNotFoundException fnfe)
+                    catch (FileNotFoundException)
                     {
-                        Log.Error($"File '{training_file}' could not be found.", fnfe);
+                        MessageBox.Show($"File '{training_file}' could not be found.", "File not found", MessageBoxButtons.OK);
                     }
                     catch (Exception e)
                     {
@@ -560,6 +560,7 @@ namespace ivcs
                 }
                 catch (Exception e)
                 {
+                    MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
                     Log.Error("Couldn't find en-US or en-GB speech recogniser on the system.", e);
                     return;
                 };
@@ -602,9 +603,9 @@ namespace ivcs
                                     // Configure input to the speech recognizer.
                                     speech_engine.SetInputToDefaultAudioDevice();
                                 }
-                                catch (InvalidOperationException ioe)
+                                catch (InvalidOperationException)
                                 {
-                                    Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                                    MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                                 }
 
                                 Log.Info("Main speech recognition engine is now running...");
@@ -729,12 +730,11 @@ namespace ivcs
 
                     try
                     {
-                        // Try to set the default audio device
                         speech_engine.SetInputToDefaultAudioDevice();
                     }
                     catch (InvalidOperationException)
                     {
-                        MessageBox.Show($"The mod can't connect to your microphone, make sure it's enabled and set as the default input device in your sound settings before trying again.", "Missing Required Language", MessageBoxButtons.OK);
+                        MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                     }
 
                     // Start asynchronous, continuous speech recognition. 
@@ -986,26 +986,18 @@ namespace ivcs
                             {
                                 // Configure input to the speech recognizer.
                                 speech_testing.SetInputToDefaultAudioDevice();
-                            }
-                            catch (InvalidOperationException ioe)
-                            {
-                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
-                            }
 
+                                speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
+                                speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
+                                speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
+                                speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
-                            speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
-                            speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
-                            speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                            speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
-
-                            try
-                            {
                                 // Start asynchronous, continuous speech recognition.  
                                 speech_testing.RecognizeAsync(RecognizeMode.Multiple);
                             }
-                            catch (InvalidOperationException ioe)
+                            catch (InvalidOperationException)
                             {
-                                Log.Error("The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", ioe);
+                                MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                             }
 
                             Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
