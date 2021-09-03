@@ -34,9 +34,13 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "assign_color": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
 		case "find_cover": {localize "STR_A3___1___TAKE_COVER"};
 		case "move_grid": {localize "STR_A3__MUNIT___MOVE___GRID___MGRID"};
+		case "flank_left_quick";
 		case "move_left_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_180_0"]};
+		case "flank_right_quick";
 		case "move_right_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_90_0"]};
+		case "flank_front_quick";
 		case "move_front_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_0_0"]};
+		case "flank_back_quick";
 		case "move_back_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_270_0"]};
 		case "move_distance_point";
 		case "move_distance_and";

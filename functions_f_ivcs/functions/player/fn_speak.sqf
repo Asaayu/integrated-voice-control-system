@@ -10,7 +10,7 @@ if (_voice_directory isEqualTo "") exitWith {false};
 
 // "\A3\Dubbing_Radio_F\data\ENG\Male01ENG\"
 // Make sure there is a blackslash at the end of the string
-if ((_voice_directory select [count _voice_directory - 1,1]) != "\") then
+if !((_voice_directory select [count _voice_directory - 1,1]) isEqualTo "\") then
 {
 	_voice_directory = _voice_directory + "\";
 };
