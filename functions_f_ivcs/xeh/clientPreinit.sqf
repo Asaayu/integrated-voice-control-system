@@ -15,6 +15,12 @@ call IVCS_fnc_callback;
 	sleep 1;
 	if (!is3DEN && {!isNull (findDisplay 46)}) then
 	{
+		// Call this file after a mission is loaded
+		addMissionEventHandler ["Loaded",
+		{
+			call compile preprocessFileLineNumbers '\ivcs\functions_f_ivcs\xeh\clientPreinit.sqf';
+		}];
+
 		// Create the engine if it does not exist
 		"ivcs" callExtension "mission_start";
 
