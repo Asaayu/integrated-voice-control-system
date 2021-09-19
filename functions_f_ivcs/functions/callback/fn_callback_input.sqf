@@ -78,7 +78,8 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 		case "lasers_off": {localize "STR_IVCS_SYSTEMCHAT_LASER_OFF_1"};
 		case "lasers_on": {localize "STR_IVCS_SYSTEMCHAT_LASER_ON_1"};
 		case "watch_direction": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___WATCH____2", "%1.1", "%1"]])#0};
-		case "suppressive_fire": {localize "STR_A3_SUPPRESSIVE_FIRE_"};
+		case "watch_cursor": {localize "STR_IVCS_SYSTEMCHAT_WATCH_1"};
+		case "suppressive_fire": {localize "STR_IVCS_SYSTEMCHAT_MOVE_1"};
 		default {""};
 	};
 
@@ -484,6 +485,21 @@ switch (tolower _function) do
 		_right params ["_direction"];
 		private _direction = [_direction, _player] call ivcs_fnc_convert_direction;
 		_units commandWatch (_player getPos [10000, _direction]);
+	};
+	case "watch_cursor":
+	{
+		// Get units to watch a relative direction
+		private _position = if visibleMap then
+		{
+			// Move to a position on the map
+			(findDisplay 12 displayCtrl 51) posScreenToWorld getMousePosition;
+		}
+		else
+		{
+			// Move to the position where the player is looking
+			screenToWorld [0.5,0.5];
+		};
+		_units commandWatch _position;
 	};
 	case "suppressive_fire":
 	{
