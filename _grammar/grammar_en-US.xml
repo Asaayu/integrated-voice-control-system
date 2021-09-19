@@ -509,6 +509,10 @@
 						<tag>out="move there[move_cursor]";</tag>
 					</item>
 					<item>
+						move here
+						<tag>out="move here[move_cursor]";</tag>
+					</item>
+					<item>
 						move
 						<tag>out="move[move_cursor]";</tag>
 					</item>
@@ -652,18 +656,28 @@
 			<!-- Watch direction call -->
 			<item>
 				<ruleref uri="#selection"/>
-				<item>
-					watch
-					<tag>out="watch[watch_direction]:{direction}";</tag>
-					<one-of>
-						<item>
-							<ruleref uri="#direction_relative"/>
-						</item>
-						<item>
-							<ruleref uri="#direction_compass"/>
-						</item>
-					</one-of>
-				</item>
+				<one-of>
+					<item>
+						watch
+						<tag>out="watch[watch_direction]:{direction}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#direction_relative"/>
+							</item>
+							<item>
+								<ruleref uri="#direction_compass"/>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						watch there
+						<tag>out="watch there[watch_cursor]";</tag>
+					</item>
+					<item>
+						watch here
+						<tag>out="watch here[watch_cursor]";</tag>
+					</item>
+				</one-of>
 			</item>
 
 			<!-- Suppressive fire call -->
