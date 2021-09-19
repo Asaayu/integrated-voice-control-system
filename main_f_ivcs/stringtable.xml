@@ -177,6 +177,23 @@
 			<Japanese>%1 - 移動</Japanese>
 			<Turkish>%1 - Git</Turkish>
 		</Key>
+		<Key ID="STR_IVCS_SYSTEMCHAT_WATCH_1">
+			<Original>%1 - Watch</Original>
+			<Chinese>%1－觀看</Chinese>
+			<French>%1 - Surveiller</French>
+			<Spanish>%1, vigile.</Spanish>
+			<Italian>%1 - Osserva</Italian>
+			<Polish>%1 - obserwacja</Polish>
+			<Russian>%1 - наблюдать.</Russian>
+			<German>%1 - Beobachten</German>
+			<Czech>%1 - pozoruj</Czech>
+			<English>%1 - Watch</English>
+			<Portuguese>%1 – Observar</Portuguese>
+			<Korean>%1 - 경계</Korean>
+			<Chinesesimp>%1 - 监视</Chinesesimp>
+			<Japanese>%1 - 監視</Japanese>
+			<Turkish>%1 - İzle</Turkish>
+	        </Key>
 		<Key ID="STR_IVCS_SYSTEMCHAT_LIGHTS_OFF_1">
 			<Original>%1 - Lights Off</Original>
 	        </Key>
