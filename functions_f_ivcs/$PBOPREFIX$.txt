@@ -1,6 +1,0 @@
-//<'functions_f_ivcs.pbo' properties via Mikero's dos tools, dll version 9.90>
-prefix=ivcs\functions_f_ivcs;
-Mikero=DePbo.dll.9.90;
-version=24121923;
-//PboType=Arma Addon;
-//</properties>
