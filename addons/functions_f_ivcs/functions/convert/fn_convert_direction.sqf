@@ -52,8 +52,8 @@ private _direction_final = switch (toLower _direction) do
 	};
 
 	case ("front");
-	case ("foreward");
-	case ("forewards");
+	case ("forward");
+	case ("forwards");
 	default
 	{
 	    (getDir _relative_object) + 0

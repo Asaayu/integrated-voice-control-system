@@ -35,6 +35,7 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 		"ivcs" callExtension ["set_initial_silence", [_value toFixed 2]];
 	}
 ] call CBA_fnc_addSetting;
+
 // End silence finished timeout
 [
 	"ivcs_end_silence_finished_timeout",
@@ -48,6 +49,7 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 		"ivcs" callExtension ["set_end_silence_finished", [_value toFixed 2]];
 	}
 ] call CBA_fnc_addSetting;
+
 // End silence timeout
 [
 	"ivcs_end_silence_timeout",
@@ -61,17 +63,18 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 		"ivcs" callExtension ["set_end_silence", [_value toFixed 2]];
 	}
 ] call CBA_fnc_addSetting;
-// End babbel timeout
+
+// End babble timeout
 [
-	"ivcs_end_babbel_timeout",
+	"ivcs_end_babble_timeout",
 	"SLIDER",
-	["STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_NAME", "STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_TOOLTIP"],
+	["STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_NAME", "STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_TOOLTIP"],
 	["STR_IVCS_MOD_NAME", "STR_IVCS_SETTINGS_SUBCATEGORY_INPUT_NAME"],
 	[0, 10, 0, 2],
 	2,
 	{
 		_this params ["_value"];
-		"ivcs" callExtension ["set_end_babbel", [_value toFixed 2]];
+		"ivcs" callExtension ["set_end_babble", [_value toFixed 2]];
 	}
 ] call CBA_fnc_addSetting;
 
@@ -89,6 +92,7 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 		uiNamespace setVariable ["ivcs_target_confirm_ui", _value];
 	}
 ] call CBA_fnc_addSetting;
+
 [
 	"ivcs_output_group_chat",
 	"CHECKBOX",

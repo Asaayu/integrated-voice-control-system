@@ -21,10 +21,10 @@
             <Key ID="STR_IVCS_SETTINGS_CONFIDENCE_TOOLTIP">
                 <Original>The result from the speech recognition engine comes with a confidence value based on how confident it is between the originally spoken words and the generated text it has created.\nThe engine will attempt to find the closest word from the list of avaliable words that it is expecting, you can then use the confidence value as a fail safe to stop badly translated values from being processed.\nMay require a game restart to take effect.</Original>
             </Key>
-            <Key ID="STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_NAME">
+            <Key ID="STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_NAME">
                 <Original>End Background Noise Timeout</Original>
             </Key>
-            <Key ID="STR_IVCS_SETTINGS_END_BABBEL_TIMEOUT_TOOLTIP">
+            <Key ID="STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_TOOLTIP">
                 <Original>Sets the interval of background noise that the speech recognition engine will accept at the end of an input before finalizing recognition.\nMay require a game restart to take effect.</Original>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_SILENCE_FINISHED_TIMEOUT_NAME">
@@ -103,7 +103,7 @@
                 <Original>Engine Hypothesis:</Original>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_DESCRIPTION">
-                <Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3.&lt;br/&gt;This menu allows you to test your microphone and built-in Windows speech recognition engine.&lt;br/&gt;Say the phrases below, they will turn green when the engine recognises you've said the phrase.&lt;br/&gt;The engine will only recognise the following phrases as correct input when this menu is open&lt;br/&gt;&lt;t size='0.75' color='#B3B3B3'&gt;You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.&lt;/t&gt;</Original>
+                <Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3.&lt;br/&gt;This menu allows you to test your microphone and built-in Windows speech recognition engine.&lt;br/&gt;Say the phrases below, they will turn green when the engine recognizes you've said the phrase.&lt;br/&gt;The engine will only recognize the following phrases as correct input when this menu is open&lt;br/&gt;&lt;t size='0.75' color='#B3B3B3'&gt;You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.&lt;/t&gt;</Original>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_01">
                 <Original>Integrated Voice Control System</Original>

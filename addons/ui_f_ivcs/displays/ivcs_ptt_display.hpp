@@ -51,7 +51,7 @@ class ivcs_ptt_display
             y = Y(0.75);
             w = W(0.35);
             h = H(0.2);
-            text = "\ivcs\ui_f_ivcs\data\ptt_gradient_right_ca.paa";
+            text = "\z\ivcs\addons\ui_f_ivcs\data\ptt_gradient_right_ca.paa";
             colorText[] = {0,0,0,0.5};
         };
         class background_gradient_left: background_gradient_right
@@ -59,7 +59,7 @@ class ivcs_ptt_display
             idc = 101;
             fade = 1;
             x = X(0.15);
-            text = "\ivcs\ui_f_ivcs\data\ptt_gradient_left_ca.paa";
+            text = "\z\ivcs\addons\ui_f_ivcs\data\ptt_gradient_left_ca.paa";
         };
     };
     class controls

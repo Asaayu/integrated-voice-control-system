@@ -6,3 +6,6 @@ hemtt.exe
 /.vscode
 /extension/.vs
 /extension/obj
+*.dll
+*.dll.config
+*.pdb

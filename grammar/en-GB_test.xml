@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- This is the testing grammar document -->
-<grammar version="1.0" xml:lang="en-GB" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
-	<lexicon uri="lexicon_english.pls" />
+<grammar version="1.0" xml:lang="en-GB" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
+	<lexicon uri="en.pls" />
 
-	<rule id="Main">
+	<rule id="main">
 		<one-of>
 			<!-- Testing calls -->
 			<item>

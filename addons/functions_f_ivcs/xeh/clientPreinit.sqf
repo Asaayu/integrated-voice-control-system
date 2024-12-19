@@ -18,7 +18,7 @@ call IVCS_fnc_callback;
 		// Call this file after a mission is loaded
 		addMissionEventHandler ["Loaded",
 		{
-			call compile preprocessFileLineNumbers '\ivcs\functions_f_ivcs\xeh\clientPreinit.sqf';
+			call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\clientPreinit.sqf';
 		}];
 
 		// Create the engine if it does not exist

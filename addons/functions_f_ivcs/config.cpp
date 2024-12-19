@@ -5,16 +5,16 @@ class Extended_PreInit_EventHandlers
 {
 	class ivcs_preinit
 	{
-		clientInit = "call compile preprocessFileLineNumbers '/ivcs/functions_f_ivcs/xeh/clientPreinit.sqf'";
-		serverInit = "call compile preprocessFileLineNumbers '/ivcs/functions_f_ivcs/xeh/serverPreinit.sqf'";
+		clientInit = "call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\clientPreinit.sqf'";
+		serverInit = "call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\serverPreinit.sqf'";
 	};
 };
 class Extended_PostInit_EventHandlers
 {
 	class ivcs_postinit
 	{
-		clientInit = "call compile preprocessFileLineNumbers '/ivcs/functions_f_ivcs/xeh/clientPostinit.sqf'";
-		serverInit = "call compile preprocessFileLineNumbers '/ivcs/functions_f_ivcs/xeh/serverPostinit.sqf'";
+		clientInit = "call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\clientPostinit.sqf'";
+		serverInit = "call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\serverPostinit.sqf'";
 	};
 };
 
@@ -26,19 +26,19 @@ class cfgfunctions
 		tag = "IVCS";
 		class ivcs_callback
 		{
-			file = "/ivcs/functions_f_ivcs/functions/callback";
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\callback";
 			class callback {};
 			class callback_input {};
 		};
 		class ivcs_ptt
 		{
-			file = "/ivcs/functions_f_ivcs/functions/ptt";
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\ptt";
 			class ptt_down {};
 			class ptt_up {};
 		};
 		class ivcs_convert
 		{
-			file = "/ivcs/functions_f_ivcs/functions/convert";
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\convert";
 			class convert_units {};
 			class convert_groups {};
 			class convert_direction {};
@@ -48,12 +48,12 @@ class cfgfunctions
 		};
 		class ivcs_ai
 		{
-			file = "/ivcs/functions_f_ivcs/functions/ai";
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\ai";
 			class cover {};
 		};
 		class ivcs_player
 		{
-			file = "/ivcs/functions_f_ivcs/functions/player";
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\player";
 			class speak {};
 		};
 	};

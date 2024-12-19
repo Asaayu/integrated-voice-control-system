@@ -11,8 +11,11 @@ build = 0
 
 [files]
 include = [
-    "extension/grammar/*",
-    "extension/**/*.dll",
-    "extension/**/*.so",
+    "grammar/**/*",
+    "*.dll",
+    "*.so",
     "LICENSE",
+]
+exclude = [
+    "**/*.psd"
 ]

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- This is the en language grammar document -->
-<grammar version="1.0" xml:lang="en-US" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="Main">
-	<lexicon uri="lexicon_english.pls" />
+<grammar version="1.0" xml:lang="en-US" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
+	<lexicon uri="en.pls" />
 
-	<rule id="Main">
+	<rule id="main">
 		<one-of>
 			<!-- Assign team color call -->
 			<item>
@@ -982,8 +981,8 @@
 		</one-of>
 	</rule>
 
-	<!-- Multiple selections have a comma at the end to allow easy seperation in code -->
-	<!-- Realitive directions from the player -->
+	<!-- Multiple selections have a comma at the end to allow easy separation in code -->
+	<!-- Relative directions from the player -->
 	<rule id="direction_relative" scope="public">
 		<one-of>
 			<!-- Directions -->
@@ -996,7 +995,7 @@
 		</one-of>
 	</rule>
 
-	<!-- Realitive cardinal directions from a compass -->
+	<!-- Relative cardinal directions from a compass -->
 	<rule id="direction_compass" scope="public">
 		<one-of>
 			<!-- Directions -->

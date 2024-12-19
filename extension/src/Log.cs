@@ -1,8 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Sentry;
 
-namespace Extension
+namespace IVCS
 {
     internal class Log
     {
@@ -11,10 +12,9 @@ namespace Extension
         internal static void Setup()
         {
             // Check for debug parameter
-            debug = Environment.CommandLine.Contains("-ivcs_debug");
+            debug = Environment.CommandLine.Contains("-debug");
 
-            if (debug)
-                AllocConsole();
+            if (debug) AllocConsole();
         }
 
         [DllImport("kernel32")]
@@ -24,8 +24,8 @@ namespace Extension
         {
             try
             {
-                //if (prefix != "INPUT")
-                    //SentrySdk.AddBreadcrumb(message, "Log Message", prefix.ToLower(), null, BreadcrumbLevel.Info);
+                if (prefix != "INPUT")
+                    SentrySdk.AddBreadcrumb(message, "Log Message", prefix.ToLower(), null, BreadcrumbLevel.Info);
 
                 string message_text = DateTime.Now.ToString("[dd/MM/yyyy hh:mm:ss tt]") + "[" + prefix + "] " + message;
                 if (debug)

@@ -152,11 +152,11 @@ switch (toLower _function) do
 						{
 							if (_text == "") then
 							{
-								_text = _add#_forEachindex;
+								_text = _add#_forEachIndex;
 							}
 							else
 							{
-								_text = _text + ", " + (_add#_forEachindex);
+								_text = _text + ", " + (_add#_forEachIndex);
 							};
 						};
 					} forEach [_distance, _injured, _ammo];
@@ -719,7 +719,7 @@ switch (toLower _function) do
 	{
 		// This is for the salute call
 		{
-			if (_forEachindex == 0) then {_x call _confirmation_speak};
+			if (_forEachIndex == 0) then {_x call _confirmation_speak};
 
 			// Get units to salute
 			_x action ["salute", _x];
@@ -728,7 +728,7 @@ switch (toLower _function) do
 	case "sit":
 	{
 		{
-			if (_forEachindex == 0) then {_x call _confirmation_speak};
+			if (_forEachIndex == 0) then {_x call _confirmation_speak};
 
 			// Sit down
 			_x action ["sitdown", _x];

@@ -1,4 +1,3 @@
-using RGiesecke.DllExport;
 using System;
 using System.Activities;
 using System.Collections.Generic;
@@ -13,8 +12,10 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using RGiesecke.DllExport;
+using Sentry;
 
-namespace Extension
+namespace IVCS
 {
     public class Master
     {
@@ -45,17 +46,17 @@ namespace Extension
             outputSize--;
 
             // Setup the sentry sdk
-            //SentrySdk.Init("https://6181346751b5496395f06e6ec7cf70da@o970796.ingest.sentry.io/5922320");
-            //SentrySdk.StartSession();
-            //SentrySdk.ConfigureScope(scope =>
-            //{
-            //    scope.SetTag("ivcs_version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            //    scope.User = new User
-            //    {
-            //        Id = Environment.GetEnvironmentVariable("STEAMID")
-            //    };
-            //    scope.Release = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            //});
+            SentrySdk.Init("https://6181346751b5496395f06e6ec7cf70da@o970796.ingest.sentry.io/5922320");
+            SentrySdk.StartSession();
+            SentrySdk.ConfigureScope(scope =>
+            {
+                scope.SetTag("ivcs_version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                scope.User = new SentryUser
+                {
+                    Id = Environment.GetEnvironmentVariable("STEAMID")
+                };
+                scope.Release = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            });
 
             // Set the number format
             Functions.nfi.NumberDecimalSeparator = ".";
@@ -83,27 +84,27 @@ namespace Extension
                         Functions.recognizer = recognizer;
                         Functions.culture = "en-GB";
                         Log.Info("Added GB recognizer");
-                        //SentrySdk.AddBreadcrumb("Added GB recognizer");
+                        SentrySdk.AddBreadcrumb("Added GB recognizer");
                     }
                     else if (Functions.recognizer == null && recognizer.Culture.ToString() == "en-US")
                     {
                         Functions.recognizer = recognizer;
                         Functions.culture = "en-US";
                         Log.Info("Added US recognizer");
-                        //SentrySdk.AddBreadcrumb("Added US recognizer");
+                        SentrySdk.AddBreadcrumb("Added US recognizer");
                     }
                     recognizers.Add(recognizer.Culture.EnglishName);
                 }
 
                 Log.Info($"Languages: {string.Join(", ", languages)}");
                 Log.Info($"Recognizers: {string.Join(", ", recognizers)}");
-                //SentrySdk.AddBreadcrumb($"Languages: {string.Join(", ", languages)}", "Information", "info", null, BreadcrumbLevel.Info);
-                //SentrySdk.AddBreadcrumb($"Recognizers: {string.Join(", ", recognizers)}", "Information", "info", null, BreadcrumbLevel.Info);
+                SentrySdk.AddBreadcrumb($"Languages: {string.Join(", ", languages)}", "Information", "info", null, BreadcrumbLevel.Info);
+                SentrySdk.AddBreadcrumb($"Recognizers: {string.Join(", ", recognizers)}", "Information", "info", null, BreadcrumbLevel.Info);
             }
             catch (Exception e)
             {
-                //SentrySdk.AddBreadcrumb("I think this user has no speech recognisers installed", "Information", "debug", null, BreadcrumbLevel.Debug);
-                //SentrySdk.CaptureException(e);
+                SentrySdk.AddBreadcrumb("I think this user has no speech recognisers installed", "Information", "debug", null, BreadcrumbLevel.Debug);
+                SentrySdk.CaptureException(e);
             }
 
             output.Append(Assembly.GetExecutingAssembly().GetName().Version.ToString());
@@ -120,11 +121,11 @@ namespace Extension
             // Reduce output by 1 to avoid accidental overflow
             outputSize--;
 
-            //SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call", "debug", null, BreadcrumbLevel.Debug);
+            SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call", "debug", null, BreadcrumbLevel.Debug);
 
             switch (function.ToLower())
             {
-                // PRELOAD: Preload stuff requred for the mod
+                // PRELOAD: Preload stuff required for the mod
                 case "preload":
                     output.Append("true");
                     return;
@@ -134,7 +135,7 @@ namespace Extension
                     output.Append(Functions.Info());
                     return;
 
-                // RELOAD_GRAMMAR: Reload the grammer currently loaded in the speech recognition engine
+                // RELOAD_GRAMMAR: Reload the grammar currently loaded in the speech recognition engine
                 case "reload_grammar":
                     output.Append(Functions.ReloadGrammar());
                     return;
@@ -149,9 +150,9 @@ namespace Extension
                     output.Append(Functions.language);
                     return;
 
-                // GET_INITAL_SILENCE: Get the end silence finished timeout
-                case "get_inital_silence":
-                    output.Append(Functions.inital_silence.ToString(Functions.nfi));
+                // GET_INITIAL_SILENCE: Get the end silence finished timeout
+                case "get_initial_silence":
+                    output.Append(Functions.initial_silence.ToString(Functions.nfi));
                     return;
 
                 // GET_END_SILENCE_FINISHED: Get the end silence finished timeout
@@ -164,9 +165,9 @@ namespace Extension
                     output.Append(Functions.end_silence.ToString(Functions.nfi));
                     return;
 
-                // GET_END_BABBEL: Get the end babbel timeout
-                case "get_end_babbel":
-                    output.Append(Functions.end_babbel.ToString(Functions.nfi));
+                // GET_END_BABBLE: Get the end babble timeout
+                case "get_end_babble":
+                    output.Append(Functions.end_babble.ToString(Functions.nfi));
                     return;
 
                 // START_TEST: Start test voice recognition
@@ -214,7 +215,7 @@ namespace Extension
                     Functions.main_thread.Start();
                     output.Append("true");
                     return;
-                    
+
                 // OPEN_TRAINING: Opens the control panel and opens the speech training UI
                 case "open_training":
                     // Do not allow clients to edit this string
@@ -223,7 +224,7 @@ namespace Extension
                     {
                         if (!File.Exists(training_file))
                             throw new FileNotFoundException($"File '{training_file}' could not be found.");
-                        
+
                         Process.Start(training_file, "UserTraining");
                         output.Append("true");
                     }
@@ -236,7 +237,7 @@ namespace Extension
                         Log.Error($"An exception occurred when attempting to open Windows speech training software.", e);
                     }
                     return;
-                    
+
                 // OPEN_SPEECH_SETTINGS: Opens the speech language settings
                 case "open_speech_settings":
                     // Do not allow clients to edit this string
@@ -260,8 +261,8 @@ namespace Extension
                     }
                     return;
 
-                    // OPEN_SOUND_CONTROL_PANEL_SETTINGS: Opens the sound control panel settings
-                case "open_sound_control_panel_settings":                    
+                // OPEN_SOUND_CONTROL_PANEL_SETTINGS: Opens the sound control panel settings
+                case "open_sound_control_panel_settings":
                     try
                     {
                         // Do not allow clients to edit this
@@ -290,12 +291,12 @@ namespace Extension
             if (argCount <= 0)
                 return -2;
 
-            //SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call (Array)", "debug", null, BreadcrumbLevel.Debug);
+            SentrySdk.AddBreadcrumb(function.ToLower(), "Function Call (Array)", "debug", null, BreadcrumbLevel.Debug);
 
             args[0] = args[0].Replace("\"", "");
             switch (function.ToLower())
             {
-                // SET_CONFIDENCE: Set the confidence value that needs to be passed for a 
+                // SET_CONFIDENCE: Set the confidence value that needs to be passed for a
                 case "set_confidence":
                     double value = double.Parse(args[0].Replace(",", "."), Functions.nfi);
                     if (Functions.confidence != value)
@@ -316,33 +317,33 @@ namespace Extension
                     output.Append(Functions.language);
                     return 1;
 
-                // SET_INITAL_SILENCE: Set the inital silence timeout
-                case "set_inital_silence":
+                // SET_INITIAL_SILENCE: Set the initial silence timeout
+                case "set_initial_silence":
                     try
                     {
                         double _value = double.Parse(args[0].Replace(",", "."), Functions.nfi);
-                        if (Functions.inital_silence != _value)
+                        if (Functions.initial_silence != _value)
                         {
-                            Log.Info($"Changing inital_silence timeout from {Functions.inital_silence} to {_value}...");
-                            Functions.inital_silence = _value;
+                            Log.Info($"Changing inital_silence timeout from {Functions.initial_silence} to {_value}...");
+                            Functions.initial_silence = _value;
                             if (Functions.speech_engine != null)
-                                Functions.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(Functions.inital_silence);
+                                Functions.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(Functions.initial_silence);
                         }
-                        output.Append(Functions.inital_silence.ToString(Functions.nfi));
+                        output.Append(Functions.initial_silence.ToString(Functions.nfi));
                         return 1;
                     }
                     catch (ArgumentOutOfRangeException)
                     {
                         // Reset the number to the default value
-                        Functions.inital_silence = 0.15;
+                        Functions.initial_silence = 0.15;
                         if (Functions.speech_engine != null)
                             Functions.speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(0.15);
 
                         return -1;
                     }
-                    
 
-                // SET_END_SILENCE_FINISHED: Set the inital silence timeout
+
+                // SET_END_SILENCE_FINISHED: Set the initial silence timeout
                 case "set_end_silence_finished":
                     try
                     {
@@ -366,7 +367,7 @@ namespace Extension
 
                         return -1;
                     }
-                    
+
 
                 // SET_END_SILENCE: Set the end silence timeout
                 case "set_end_silence":
@@ -392,40 +393,40 @@ namespace Extension
 
                         return -1;
                     }
-                    
 
-                // SET_END_BABBEL: Set the end babbel timeout
+
+                // SET_END_BABBLE: Set the end babble timeout
                 case "set_end_babbel":
                     try
                     {
                         double ____value = double.Parse(args[0].Replace(",", "."), Functions.nfi);
-                        if (Functions.end_babbel != ____value)
+                        if (Functions.end_babble != ____value)
                         {
-                            Log.Info($"Changing end babbel timeout from {Functions.end_babbel} to {____value}...");
-                            Functions.end_babbel = ____value;
+                            Log.Info($"Changing end babbel timeout from {Functions.end_babble} to {____value}...");
+                            Functions.end_babble = ____value;
                             if (Functions.speech_engine != null)
-                                Functions.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(Functions.end_babbel);
+                                Functions.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(Functions.end_babble);
                         }
-                        output.Append(Functions.end_babbel.ToString(Functions.nfi));
+                        output.Append(Functions.end_babble.ToString(Functions.nfi));
                         return 1;
                     }
                     catch (ArgumentOutOfRangeException)
                     {
                         // Reset the number to the default value
-                        Functions.end_babbel = 0.0;
+                        Functions.end_babble = 0.0;
                         if (Functions.speech_engine != null)
                             Functions.speech_engine.BabbleTimeout = TimeSpan.FromSeconds(0.0);
 
                         return -1;
                     }
-                    
 
-                // CONVERT_NUMBER_READABLE: Convert a number from text to digets
+
+                // CONVERT_NUMBER_READABLE: Convert a number from text to digits
                 case "convert_number_readable":
                     output.Append(Functions.ReadableNumbers(args[0]));
                     return 1;
-                    
-                // REPLACE: Replace second argument with third arguemnt in first argument
+
+                // REPLACE: Replace second argument with third argument in first argument
                 case "replace":
                     if (argCount < 3)
                         return -1;
@@ -434,7 +435,7 @@ namespace Extension
                     args[2] = args[2].Replace("\"", "");
                     output.Append(args[0].Replace(args[1], args[2]));
                     return 1;
-                    
+
                 // NUMBER_CHECK: Check if only numbers are in the provided string
                 case "number_check":
                     if (argCount < 1)
@@ -442,7 +443,7 @@ namespace Extension
 
                     output.Append(args[0].All(char.IsDigit).ToString(Functions.nfi));
                     return 1;
-                    
+
                 // TITLE_CASE: Convert string to title case
                 case "title_case":
                     if (argCount < 1)

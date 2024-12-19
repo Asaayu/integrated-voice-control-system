@@ -43,7 +43,7 @@ class ivcs_test_display
             h = H(0.02);
             color[] = {1,1,1,0.7};
             colorActive[] = {1,1,1,1};
-            text = "\ivcs\ui_f_ivcs\data\close_ca.paa";
+            text = "\a3\3den\Data\ControlsGroups\Tutorial\close_ca.paa";
             onButtonClick = "(ctrlParent (_this#0)) closeDisplay 0;";
         };
         class main_text: ctrlStructuredText
