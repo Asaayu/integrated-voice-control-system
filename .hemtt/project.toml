@@ -1,0 +1,17 @@
+name = "Integrated AI Voice Control System"
+author = "Asaayu"
+prefix = "ivcs"
+mainprefix = "z"
+
+[version]
+major = 1
+minor = 1
+patch = 0
+
+[files]
+include = [
+    "extension/grammar/*",
+    "extension/**/*.dll",
+    "extension/**/*.so",
+    "LICENSE",
+]
