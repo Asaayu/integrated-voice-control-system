@@ -1,11 +1,11 @@
 class CfgPatches
 {
-	class functions_f_ivcs
+	class main_f_ivcs
 	{
-		NAME(Functions)
-		AUTHORS
-		URL
-		VERSION
+		NAME(UI);
+		AUTHORS;
+		URL;
+		VERSION;
 		requiredAddons[] = { "main_f_ivcs" };
 		units[] = {};
 		weapons[] = {};
