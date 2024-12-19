@@ -1,0 +1,28 @@
+name = "Integrated AI Voice Control System"
+author = "Asaayu"
+prefix = "ivcs"
+mainprefix = "z"
+
+keyname = "{{prefix}}_{{version}}"
+signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
+
+[version]
+major = 2
+minor = 0
+patch = 0
+build = 0
+
+[files]
+include = [
+    "grammar/**/*",
+    "*/*.resources.dll",
+    "*.dll",
+    "*.so",
+    "LICENSE",
+]
+exclude = [
+    "**/*.psd"
+]
+
+[hemtt.release]
+archive = false # Automatically done via git

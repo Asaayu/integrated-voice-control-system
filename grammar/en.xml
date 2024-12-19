@@ -1,0 +1,1244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" xml:lang="en" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
+	<lexicon uri="en.pls" />
+
+	<rule id="main">
+		<one-of>
+			<!-- Assign team color call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						assign
+						<tag>out="assign[assign_color]:{color}";</tag>
+					</item>
+					<item>
+						join
+						<tag>out="join[assign_color]:{color}";</tag>
+					</item>
+				</one-of>
+				<ruleref uri="#team_colors"/>
+			</item>
+
+			<!-- Open/Hold fire call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						hold fire
+						<tag>out="hold fire[hold_fire]";</tag>
+					</item>
+					<item>
+						fire
+						<tag>out="fire[open_fire]";</tag>
+					</item>
+					<item>
+						open fire
+						<tag>out="open fire[open_fire]";</tag>
+					</item>
+					<item>
+						fire at will
+						<tag>out="fire at will[open_fire]";</tag>
+					</item>
+					<item>
+						engage
+						<tag>out="engage[open_fire]";</tag>
+					</item>
+					<item>
+						engage at will
+						<tag>out="engage at will[open_fire_red]";</tag>
+					</item>
+					<item>
+						free to engage
+						<tag>out="free to engage[open_fire_red]";</tag>
+					</item>
+					<item>
+						weapons free
+						<tag>out="weapons free[open_fire]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+
+			<!-- Scan Horizon call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						scan the horizon
+						<tag>out="scan the horizon[scan_horizon]";</tag>
+					</item>
+					<item>
+						scan horizon
+						<tag>out="scan horizon[scan_horizon]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Regroup call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						regroup
+						<tag>out="regroup[regroup]";</tag>
+					</item>
+					<item>
+						return to formation
+						<tag>out="return to formation[regroup]";</tag>
+					</item>
+					<item>
+						follow me
+						<tag>out="follow me[regroup]";</tag>
+					</item>
+					<item>
+						on me
+						<tag>out="on me[regroup]";</tag>
+					</item>
+					<item>
+						fall in
+						<tag>out="fall in[regroup]";</tag>
+					</item>
+					<item>
+						rally up
+						<tag>out="rally up[regroup]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Laser/Lights call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						lights
+						<one-of>
+							<item>
+								out
+								<tag>out="lights out[lights_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="lights off[lights_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="lights on[lights_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						flashlights
+						<one-of>
+							<item>
+								out
+								<tag>out="flashlights out[lights_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="flashlights off[lights_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="flashlights on[lights_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						lasers
+						<one-of>
+							<item>
+								out
+								<tag>out="lasers out[lasers_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="lasers off[lasers_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="lasers on[lasers_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						pointers
+						<one-of>
+							<item>
+								out
+								<tag>out="pointers out[lasers_off]";</tag>
+							</item>
+							<item>
+								off
+								<tag>out="pointers off[lasers_off]";</tag>
+							</item>
+							<item>
+								on
+								<tag>out="pointers on[lasers_on]";</tag>
+							</item>
+						</one-of>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Stop call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						stop
+						<tag>out="stop[stop]";</tag>
+					</item>
+					<item>
+						halt
+						<tag>out="halt[stop]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- AI actions call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						salute
+						<tag>out="salute[salute]";</tag>
+					</item>
+					<item>
+						sit
+						<tag>out="sit[sit]";</tag>
+					</item>
+					<item>
+						drop your backpack
+						<tag>out="drop your backpack[drop_bag]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Unit position call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						on your feet
+						<tag>out="on your feet[pos_up]";</tag>
+					</item>
+					<item>
+						stand up
+						<tag>out="stand up[pos_up]";</tag>
+					</item>
+					<item>
+						up
+						<tag>out="up[pos_up]";</tag>
+					</item>
+					<item>
+						crouch
+						<tag>out="crouch[pos_middle]";</tag>
+					</item>
+					<item>
+						stay low
+						<tag>out="stay low[pos_middle]";</tag>
+					</item>
+					<item>
+						prone
+						<tag>out="prone[pos_down]";</tag>
+					</item>
+					<item>
+						down
+						<tag>out="down[pos_down]";</tag>
+					</item>
+					<item>
+						hit the deck
+						<tag>out="hit the deck[pos_down]";</tag>
+					</item>
+					<item>
+						hit the dirt
+						<tag>out="hit the dirt[pos_down]";</tag>
+					</item>
+					<item>
+						copy my stance
+						<tag>out="copy my stance[pos_auto]";</tag>
+					</item>
+					<item>
+						copy me
+						<tag>out="copy me[pos_auto]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- SITREP call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						sitrep
+						<tag>out="sitrep[sitrep]";</tag>
+					</item>
+					<item>
+						report in
+						<tag>out="report in[sitrep]";</tag>
+					</item>
+					<item>
+						status
+						<tag>out="status[sitrep]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Combat mode call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						quiet
+						<tag>out="quiet[combat_stealth]";</tag>
+					</item>
+					<item>
+						silent
+						<tag>out="silent[combat_stealth]";</tag>
+					</item>
+					<item>
+						stealth
+						<tag>out="stealth[combat_stealth]";</tag>
+					</item>
+					<item>
+						combat
+						<tag>out="combat[combat_combat]";</tag>
+					</item>
+					<item>
+						get ready
+						<tag>out="get ready[combat_combat]";</tag>
+					</item>
+					<item>
+						get set to engage
+						<tag>out="get set to engage[combat_combat]";</tag>
+					</item>
+					<item>
+						lock and load
+						<tag>out="lock and load[combat_combat]";</tag>
+					</item>
+					<item>
+						danger
+						<tag>out="danger[combat_combat]";</tag>
+					</item>
+					<item>
+						aware
+						<tag>out="aware[combat_aware]";</tag>
+					</item>
+					<item>
+						stay alert
+						<tag>out="stay alert[combat_aware]";</tag>
+					</item>
+					<item>
+						stay sharp
+						<tag>out="stay sharp[combat_aware]";</tag>
+					</item>
+					<item>
+						stay frosty
+						<tag>out="stay frosty[combat_aware]";</tag>
+					</item>
+					<item>
+						safe
+						<tag>out="safe[combat_safe]";</tag>
+					</item>
+					<item>
+						at ease
+						<tag>out="at ease[combat_safe]";</tag>
+					</item>
+					<item>
+						relax
+						<tag>out="relax[combat_safe]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Quick movement calls -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						flank
+						<one-of>
+							<item>
+								left
+								<tag>out="flank left[flank_left_quick]";</tag>
+							</item>
+							<item>
+								right
+								<tag>out="flank right[flank_right_quick]";</tag>
+							</item>
+							<item>
+								front
+								<tag>out="flank front[flank_front_quick]";</tag>
+							</item>
+							<item>
+								back
+								<tag>out="flank back[flank_back_quick]";</tag>
+							</item>
+							<item>
+								forwards
+								<tag>out="flank forwards[flank_front_quick]";</tag>
+							</item>
+							<item>
+								backwards
+								<tag>out="flank backwards[flank_back_quick]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						move
+						<one-of>
+							<item>
+								left
+								<tag>out="move left[move_left_quick]";</tag>
+							</item>
+							<item>
+								right
+								<tag>out="move right[move_right_quick]";</tag>
+							</item>
+							<item>
+								front
+								<tag>out="move front[move_front_quick]";</tag>
+							</item>
+							<item>
+								back
+								<tag>out="move back[move_back_quick]";</tag>
+							</item>
+							<item>
+								forwards
+								<tag>out="move forwards[move_front_quick]";</tag>
+							</item>
+							<item>
+								up
+								<tag>out="move up[move_front_quick]";</tag>
+							</item>
+							<item>
+								backwards
+								<tag>out="move backwards[move_back_quick]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						fall back
+						<tag>out="fall back[move_back_quick]";</tag>
+					</item>
+					<item>
+						advance
+						<tag>out="advance[move_front_quick]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Find cover call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						take cover
+						<tag>out="take cover[find_cover]";</tag>
+					</item>
+					<item>
+						find cover
+						<tag>out="find cover[find_cover]";</tag>
+					</item>
+					<item>
+						move to cover
+						<tag>out="move to cover[find_cover]";</tag>
+					</item>
+					<item>
+						get to cover
+						<tag>out="get to cover[find_cover]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Target object call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						target that
+						<tag>out="target that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						engage that
+						<tag>out="engage that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						destroy that
+						<tag>out="destroy that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						attack that
+						<tag>out="attack that[target_object]:{type}";</tag>
+					</item>
+					<item>
+						fire at that
+						<tag>out="fire at that[target_object]:{type}";</tag>
+					</item>
+				</one-of>
+				<ruleref uri="#object_selection"/>
+			</item>
+
+			<!-- Cancel target call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						cancel target
+						<tag>out="cancel target[cancel_target]";</tag>
+					</item>
+					<item>
+						no target
+						<tag>out="no target[cancel_target]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Move to the cursor call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						move to that position
+						<tag>out="move to that position[move_cursor]";</tag>
+					</item>
+					<item>
+						move there
+						<tag>out="move there[move_cursor]";</tag>
+					</item>
+					<item>
+						move here
+						<tag>out="move here[move_cursor]";</tag>
+					</item>
+					<item>
+						move
+						<tag>out="move[move_cursor]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Move to the object call -->
+			<item>
+				<ruleref uri="#selection"/>
+				move to
+				<one-of>
+					<item>
+						that
+						<tag>out="move to that[move_object]:{object}";</tag>
+					</item>
+					<item>
+						the
+						<tag>out="move to the[move_object]:{object}";</tag>
+					</item>
+				</one-of>
+				<ruleref uri="#object_selection"/>
+			</item>
+
+			<!-- Move X distance from the unit -->
+			<item>
+				<ruleref uri="#selection"/>
+				<item>
+					move
+					<tag>out="move[move_distance]:{distance_direction}";</tag>
+				</item>
+				<one-of>
+					<item>
+						<ruleref uri="#digits_text"/>
+						<one-of>
+							<item>
+								<ruleref uri="#distance_unit_thousand"/>
+								<ruleref uri="#distance_unit_meters"/>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_thousand"/>
+								<one-of>
+									<item>
+										<ruleref uri="#tens"/>
+										<item repeat="0-1">
+											<ruleref uri="#digits_text"/>
+										</item>
+										<ruleref uri="#distance_unit_meters"/>
+									</item>
+									<item>
+										<ruleref uri="#digits_text"/>
+										<ruleref uri="#distance_unit_hundred"/>
+										<item repeat="0-1">
+											and,
+											<tag>out="move[move_distance_and]:{distance_direction}";</tag>
+										</item>
+										<ruleref uri="#tens"/>
+										<item repeat="0-1">
+											<ruleref uri="#digits_text"/>
+										</item>
+										<ruleref uri="#distance_unit_meters"/>
+									</item>
+								</one-of>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_hundred"/>
+								<ruleref uri="#distance_unit_meters"/>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_hundred"/>
+								<item>
+									and,
+									<tag>out="move[move_distance_and]:{distance_direction}";</tag>
+								</item>
+								<item repeat="0-1">
+									<ruleref uri="#tens"/>
+									<item repeat="0-1">
+										<ruleref uri="#digits_text"/>
+									</item>
+									<ruleref uri="#distance_unit_meters"/>
+								</item>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_kilometers"/>
+							</item>
+							<item>
+								<ruleref uri="#separator"/>
+								<ruleref uri="#digits_text"/>
+								<ruleref uri="#distance_unit_kilometers"/>
+								<tag>out="move[move_distance_point]:{distance_direction}";</tag>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_meters"/>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						<ruleref uri="#tens"/>
+						<item repeat="0-1">
+							<ruleref uri="#digits_text"/>
+						</item>
+						<one-of>
+							<item>
+								<ruleref uri="#distance_unit_meters"/>
+							</item>
+							<item>
+								<ruleref uri="#distance_unit_kilometers"/>
+							</item>
+						</one-of>
+					</item>
+				</one-of>
+				<item repeat="0-1">
+					<one-of>
+						<item>
+							<ruleref uri="#direction_relative"/>
+						</item>
+						<item>
+							<ruleref uri="#direction_compass"/>
+						</item>
+					</one-of>
+				</item>
+			</item>
+
+			<!-- Move to grid call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<item>
+					move to
+					<tag>out="move to[move_grid]:{grid_position}";</tag>
+					<item repeat="0-1">
+						grid
+						<tag>out="move to grid[move_grid]:{grid_position}";</tag>
+						<item repeat="0-1">
+							ref
+							<tag>out="move to grid ref[move_grid]:{grid_position}";</tag>
+						</item>
+					</item>
+				</item>
+				<ruleref uri="#grid_position"/>
+			</item>
+
+			<!-- Watch direction call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						watch
+						<tag>out="watch[watch_direction]:{direction}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#direction_relative"/>
+							</item>
+							<item>
+								<ruleref uri="#direction_compass"/>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						watch there
+						<tag>out="watch there[watch_cursor]";</tag>
+					</item>
+					<item>
+						watch here
+						<tag>out="watch here[watch_cursor]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Suppressive fire call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						suppressive fire
+						<tag>out="suppressive fire[suppressive_fire]";</tag>
+					</item>
+					<item>
+						suppress that position
+						<tag>out="suppressive fire[suppressive_fire]";</tag>
+					</item>
+					<item>
+						suppressing fire
+						<tag>out="suppressing fire[suppressive_fire]";</tag>
+					</item>
+					<item>
+						suppressing fire at that position
+						<tag>out="suppressing fire at that position[suppressive_fire]";</tag>
+					</item>
+					<item>
+						suppress that
+						<tag>out="suppress that[suppressive_fire]:{type}";</tag>
+						<ruleref uri="#object_selection"/>
+					</item>
+					<item>
+						<one-of>
+							<item>
+								suppressing fire at that
+								<tag>out="suppressing fire at that[suppressive_fire]:{type}";</tag>
+							</item>
+							<item>
+								suppressing fire that
+								<tag>out="suppressing fire that[suppressive_fire]:{type}";</tag>
+							</item>
+						</one-of>
+						<ruleref uri="#object_selection"/>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Get out call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						disembark
+						<tag>out="disembark[get_out]";</tag>
+					</item>
+					<item>
+						dismount
+						<tag>out="dismount[get_out]";</tag>
+					</item>
+					<item>
+						get out
+						<tag>out="get out[get_out]";</tag>
+					</item>
+					<item>
+						out
+						<tag>out="out[get_out]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Get in call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						mount up
+						<tag>out="mount up[get_in_player]";</tag>
+					</item>
+					<item>
+						in
+						<tag>out="in[get_in_player]";</tag>
+					</item>
+					<item>
+						get in
+						<tag>out="get in[get_in_player]";</tag>
+					</item>
+					<item>
+						get in my vehicle
+						<tag>out="get in my vehicle[get_in_player]";</tag>
+					</item>
+					<item>
+						get in that
+						<tag>out="get in that[get_in]:{type}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+							</item>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+								as
+								<ruleref uri="#vehicle_role"/>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						board that
+						<tag>out="board that[get_in]:{type}";</tag>
+						<one-of>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+							</item>
+							<item>
+								<ruleref uri="#object_selection_vehicle"/>
+								as
+								<ruleref uri="#vehicle_role"/>
+							</item>
+						</one-of>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Formation call -->
+			<item>
+				<one-of>
+					<item>
+						<ruleref uri="#selection"/>
+						form
+						<one-of>
+							<item>
+								column
+								<tag>out="form column[formation_column]";</tag>
+							</item>
+							<item>
+								staggered column
+								<tag>out="form staggered column[formation_staggered_column]";</tag>
+							</item>
+							<item>
+								wedge
+								<tag>out="form wedge[formation_wedge]";</tag>
+							</item>
+							<item>
+								echelon left
+								<tag>out="form echelon left[formation_echelon_left]";</tag>
+							</item>
+							<item>
+								echelon right
+								<tag>out="form echelon right[formation_echelon_right]";</tag>
+							</item>
+							<item>
+								vee
+								<tag>out="form vee[formation_vee]";</tag>
+							</item>
+							<item>
+								line
+								<tag>out="form line[formation_line]";</tag>
+							</item>
+							<item>
+								file
+								<tag>out="form file[formation_file]";</tag>
+							</item>
+							<item>
+								diamond
+								<tag>out="form diamond[formation_diamond]";</tag>
+							</item>
+						</one-of>
+					</item>
+					<item>
+						<ruleref uri="#selection"/>
+						formation
+						<one-of>
+							<item>
+								column
+								<tag>out="form column[formation_column]";</tag>
+							</item>
+							<item>
+								staggered column
+								<tag>out="form staggered column[formation_staggered_column]";</tag>
+							</item>
+							<item>
+								wedge
+								<tag>out="form wedge[formation_wedge]";</tag>
+							</item>
+							<item>
+								echelon left
+								<tag>out="form echelon left[formation_echelon_left]";</tag>
+							</item>
+							<item>
+								echelon right
+								<tag>out="form echelon right[formation_echelon_right]";</tag>
+							</item>
+							<item>
+								vee
+								<tag>out="form vee[formation_vee]";</tag>
+							</item>
+							<item>
+								line
+								<tag>out="form line[formation_line]";</tag>
+							</item>
+							<item>
+								file
+								<tag>out="form file[formation_file]";</tag>
+							</item>
+							<item>
+								diamond
+								<tag>out="form diamond[formation_diamond]";</tag>
+							</item>
+						</one-of>
+					</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+
+
+
+
+
+
+
+
+
+
+	<!-- Specific phrases -->
+	<!-- All possible digit grid position selections -->
+	<rule id="grid_position" scope="public">
+		<!-- Can select 6-8 digits for each grid position -->
+		<item repeat="6-8"><ruleref uri="#digits"/></item>
+	</rule>
+
+	<!-- All possible selections -->
+	<rule id="selection" scope="public">
+		<!-- Can select as many units in a single call as needed -->
+		<one-of>
+			<item></item>
+			<item><ruleref uri="#unit_selection"/></item>
+			<item><ruleref uri="#group_selection"/></item>
+		</one-of>
+	</rule>
+	<rule id="unit_selection" scope="public">
+		<!-- Can select as many units in a single call as needed -->
+		<item repeat="1-"><ruleref uri="#unit_number"/></item>
+	</rule>
+	<rule id="group_selection" scope="public">
+		<!-- Can select as many groups in a single call as needed -->
+		<item repeat="1-"><ruleref uri="#group_name"/></item>
+	</rule>
+
+	<!-- Select a type of target -->
+	<rule id="object_selection" scope="public">
+		<!-- Select from a list of possible targets that the mod can convert -->
+		<one-of>
+			<item>
+				<one-of>
+					<item>enemy,</item>
+					<item>character,</item>
+					<item>soldier,</item>
+					<item>man,</item>
+					<item>guy,</item>
+					<item>woman,</item>
+					<item>girl,</item>
+					<item>unit,</item>
+					<item>person,</item>
+				</one-of>
+			</item>
+			<item>
+				<ruleref uri="#object_selection_vehicle"/>
+			</item>
+			<item>cancel,</item>
+		</one-of>
+
+	</rule>
+	<rule id="object_selection_vehicle" scope="public">
+		<!-- Select from a list of possible targets that the mod can convert -->
+		<one-of>
+			<item>vehicle,</item>
+			<item>car,</item>
+			<item>truck,</item>
+			<item>boat,</item>
+			<item>ship,</item>
+			<item>submarine,</item>
+			<item>tank,</item>
+			<item>armor,</item>
+			<item>apc,</item>
+			<item>plane,</item>
+			<item>helicopter,</item>
+			<item>heli,</item>
+			<item>chopper,</item>
+			<item>aircraft,</item>
+
+			<!-- Cancel command -->
+			<item>cancel,</item>
+		</one-of>
+	</rule>
+
+	<!-- Vehicle roles -->
+	<rule id="vehicle_role" scope="public">
+		<one-of>
+			<item>driver,</item>
+			<item>pilot,</item>
+			<item>commander,</item>
+			<item>gunner,</item>
+			<item>turret,</item>
+			<item>gun,</item>
+			<item>cargo,</item>
+			<item>passenger,</item>
+		</one-of>
+	</rule>
+
+	<!-- Multiple selections have a comma at the end to allow easy separation in code -->
+	<!-- Relative directions from the player -->
+	<rule id="direction_relative" scope="public">
+		<one-of>
+			<!-- Directions -->
+			<item>forwards,</item>
+			<item>backwards,</item>
+			<item>front,</item>
+			<item>right,</item>
+			<item>back,</item>
+			<item>left,</item>
+		</one-of>
+	</rule>
+
+	<!-- Relative cardinal directions from a compass -->
+	<rule id="direction_compass" scope="public">
+		<one-of>
+			<!-- Directions -->
+			<item>north,</item>
+			<item>north east,</item>
+			<item>east,</item>
+			<item>south east,</item>
+			<item>south,</item>
+			<item>south west,</item>
+			<item>west,</item>
+			<item>north west,</item>
+		</one-of>
+	</rule>
+
+	<!-- Distance units (thousand) -->
+	<rule id="distance_unit_thousand" scope="public">
+		<one-of>
+			<!-- Units -->
+			<item>thousand,</item>
+		</one-of>
+	</rule>
+
+	<!-- Distance units (hundred) -->
+	<rule id="distance_unit_hundred" scope="public">
+		<one-of>
+			<!-- Units -->
+			<item>hundred,</item>
+		</one-of>
+	</rule>
+
+	<!-- Distance units (kilometers) -->
+	<rule id="distance_unit_kilometers" scope="public">
+		<one-of>
+			<!-- Units -->
+			<item>kilometer,</item>
+			<item>kilometers,</item>
+			<item>clicks,</item>
+			<item>click,</item>
+		</one-of>
+	</rule>
+
+	<!-- Distance units (meters) -->
+	<rule id="distance_unit_meters" scope="public">
+		<one-of>
+			<!-- Units -->
+			<item>meters,</item>
+			<item>meter,</item>
+		</one-of>
+	</rule>
+
+	<!-- All possible digits -->
+	<rule id="digits" scope="public">
+		<one-of>
+			<!-- Digits -->
+			<item>0,</item>
+			<item>1,</item>
+			<item>2,</item>
+			<item>3,</item>
+			<item>4,</item>
+			<item>5,</item>
+			<item>6,</item>
+			<item>7,</item>
+			<item>8,</item>
+			<item>9,</item>
+		</one-of>
+	</rule>
+	<rule id="digits_text" scope="public">
+		<one-of>
+			<!-- Digits -->
+			<item>zero,</item>
+			<item>one,</item>
+			<item>two,</item>
+			<item>three,</item>
+			<item>four,</item>
+			<item>five,</item>
+			<item>six,</item>
+			<item>seven,</item>
+			<item>eight,</item>
+			<item>nine,</item>
+		</one-of>
+	</rule>
+
+	<!-- Separator -->
+	<rule id="separator" scope="public">
+		<one-of>
+			<item>point,</item>
+			<item>dot,</item>
+			<item>comma,</item>
+		</one-of>
+	</rule>
+
+	<!-- All possible tens -->
+	<rule id="tens" scope="public">
+		<one-of>
+			<!-- Digits -->
+			<item>ten,</item>
+			<item>twenty,</item>
+			<item>thirty,</item>
+			<item>forty,</item>
+			<item>fifty,</item>
+			<item>sixty,</item>
+			<item>seventy,</item>
+			<item>eighty,</item>
+			<item>ninety,</item>
+		</one-of>
+	</rule>
+
+	<!-- All possible group names -->
+	<rule id="team_colors" scope="public">
+		<one-of>
+			<!-- Colors -->
+			<!-- Allows 'red', 'team red' or 'red team' -->
+			<item>
+				red,
+			</item>
+			<item>
+				red team,
+			</item>
+			<item>
+				team red,
+			</item>
+			<item>
+				green,
+			</item>
+			<item>
+				green team,
+			</item>
+			<item>
+				team green,
+			</item>
+			<item>
+				blue,
+			</item>
+			<item>
+				blue team,
+			</item>
+			<item>
+				team blue,
+			</item>
+			<item>
+				yellow,
+			</item>
+			<item>
+				yellow team,
+			</item>
+			<item>
+				team yellow,
+			</item>
+			<item>
+				white,
+			</item>
+			<item>
+				white team,
+			</item>
+			<item>
+				team white,
+			</item>
+		</one-of>
+	</rule>
+
+	<!-- All possible group names -->
+	<rule id="group_name" scope="public">
+		<one-of>
+			<!-- Colors -->
+			<!-- Allows 'red' or 'team red' -->
+			<item>
+				<item repeat="0-1">team</item>
+				red,
+			</item>
+			<item>
+				<item repeat="0-1">team</item>
+				green,
+			</item>
+			<item>
+				<item repeat="0-1">team</item>
+				blue,
+			</item>
+			<item>
+				<item repeat="0-1">team</item>
+				yellow,
+			</item>
+			<item>
+				<item repeat="0-1">team</item>
+				white,
+			</item>
+			<item>
+				red team,
+			</item>
+			<item>
+				green team,
+			</item>
+			<item>
+				blue team,
+			</item>
+			<item>
+				yellow team,
+			</item>
+			<item>
+				white team,
+			</item>
+
+			<!-- Group calls -->
+			<item>all,</item>
+			<item>group,</item>
+			<item>squad,</item>
+			<item>everybody,</item>
+		</one-of>
+	</rule>
+
+	<!-- All possible unit names -->
+	<rule id="unit_number" scope="public">
+		<one-of>
+			<!-- Numbers -->
+			<item>1,</item>
+			<item>2,</item>
+			<item>3,</item>
+			<item>4,</item>
+			<item>5,</item>
+			<item>6,</item>
+			<item>7,</item>
+			<item>8,</item>
+			<item>9,</item>
+			<item>10,</item>
+			<item>11,</item>
+			<item>12,</item>
+			<item>13,</item>
+			<item>14,</item>
+			<item>15,</item>
+			<item>16,</item>
+			<item>17,</item>
+			<item>18,</item>
+			<item>19,</item>
+			<item>20,</item>
+			<item>21,</item>
+			<item>22,</item>
+			<item>23,</item>
+			<item>24,</item>
+			<item>25,</item>
+			<item>26,</item>
+			<item>27,</item>
+			<item>28,</item>
+			<item>29,</item>
+			<item>30,</item>
+		</one-of>
+	</rule>
+</grammar>
