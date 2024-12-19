@@ -1,28 +1,35 @@
+using RGiesecke.DllExport;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Speech.Recognition;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sentry;
+using System.Reflection;
+using System.Net;
+using System.Net.Http;
+using System.Activities;
+using System.Diagnostics;
+using System.Security.Authentication;
+using Microsoft.Win32;
+using System.Threading.Tasks;
 
-namespace IVCS
+namespace ivcs
 {
     internal class Functions
     {
         internal static double opacity = 0.5;
         internal static double confidence = 0.8;
-        internal static double initial_silence = 5.0;
+        internal static double inital_silence = 5.0;
         internal static double end_silence_finished = 0.5;
         internal static double end_silence = 0.15;
-        internal static double end_babble = 0.0;
+        internal static double end_babbel = 0.0;
 
         internal static string language = "english";
         internal static string culture = "en-US";
@@ -41,36 +48,10 @@ namespace IVCS
 
         internal static Dictionary<string, long> numbers_dictionary = new Dictionary<string, long>
         {
-            { "zero", 0 },
-            { "one", 1 },
-            { "two", 2 },
-            { "three", 3 },
-            { "four", 4 },
-            { "five", 5 },
-            { "six", 6 },
-            { "seven", 7 },
-            { "eight", 8 },
-            { "nine", 9 },
-            { "ten", 10 },
-            { "eleven", 11 },
-            { "twelve", 12 },
-            { "thirteen", 13 },
-            { "fourteen", 14 },
-            { "fifteen", 15 },
-            { "sixteen", 16 },
-            { "seventeen", 17 },
-            { "eighteen", 18 },
-            { "nineteen", 19 },
-            { "twenty", 20 },
-            { "thirty", 30 },
-            { "forty", 40 },
-            { "fifty", 50 },
-            { "sixty", 60 },
-            { "seventy", 70 },
-            { "eighty", 80 },
-            { "ninety", 90 },
-            { "hundred", 100 },
-            { "thousand", 1000 }
+            {"zero",0},{"one",1},{"two",2},{"three",3},{"four",4},{"five",5},{"six",6},{"seven",7},{"eight",8},{"nine",9},{"ten",10},
+            {"eleven",11},{"twelve",12},{"thirteen",13},{"fourteen",14},{"fifteen",15},{"sixteen",16},{"seventeen",17},{"eighteen",18},
+            {"nineteen",19},{"twenty",20},{"thirty",30},{"forty",40},{"fifty",50},{"sixty",60},{"seventy",70},{"eighty",80},{"ninety",90},
+            {"hundred",100},{"thousand",1000}
         };
 
         internal static string Info()
@@ -89,11 +70,11 @@ namespace IVCS
                 {
                     string output = await client.GetStringAsync("http://raw.githubusercontent.com/Asaayu/integrated-voice-control-system/main/version_check.txt");
 
-                    // Check if a new version is available
+                    // Check if a new version is avaliable
                     if (!output.Contains(Assembly.GetExecutingAssembly().GetName().Version.ToString()))
                     {
-                        MessageBox.Show($"A new version of Integrated AI Voice Control System is available to download.\nClick on the three dots under the mod in your Arma 3 launcher then click 'Repair' to update the mod.", "Mod Update Available", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-                        SentrySdk.AddBreadcrumb("User informed new version available", "Update Popup", "info", null, BreadcrumbLevel.Info);
+                        MessageBox.Show($"A new version of Integrated AI Voice Control System is avaliable to download.\nClick on the three dots under the mod in your Arma 3 launcher then click 'Repair' to update the mod.", "Mod Update Avaliable", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                        //SentrySdk.AddBreadcrumb("User informed new version avaliable", "Update Popup", "info", null, BreadcrumbLevel.Info);
                     }
                 }
             }
@@ -103,18 +84,18 @@ namespace IVCS
             }
             catch (HttpRequestException)
             {
-                // This is probably related to a user who's firewall is blocking the connection, don't do anything
+                // This is probably related to a user who's firewall is blockign the connection, don't do anything
             }
             catch (Exception e)
             {
                 SentrySdk.AddBreadcrumb("Version Check Error", "Version Check Error", "error", null, BreadcrumbLevel.Error);
-                SentrySdk.CaptureException(e);
+                //SentrySdk.CaptureException(e);
             };
         }
 
         internal static void MissionStart()
         {
-            Log.Info("Game started, starting main speech engine.");
+            Logger.Info("Game started, starting main speech engine.");
 
             try
             {
@@ -122,23 +103,23 @@ namespace IVCS
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
 
-                // Setup the decimal character
+                // Setup the decial character                
                 nfi.NumberDecimalSeparator = ".";
                 nfi.NumberGroupSeparator = "";
 
                 try
                 {
                     if (recognizer == null)
-                        throw new Exception("Couldn't find en-US or en-GB speech recognizer on the system.");
+                        throw new Exception("Couldn't find en-US or en-GB speech recogniser on the system.");
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                    Log.Error("Couldn't find en-US or en-GB speech recognizer on the system.", e);
+                    Logger.Error("Couldn't find en-US or en-GB speech recogniser on the system.", e);
                     return;
                 };
 
-                // Get the grammar for the test
+                // Get the grammer for the test
                 Grammar grammar = GetGrammar();
 
                 // Make sure it exists
@@ -155,21 +136,21 @@ namespace IVCS
                             {
                                 if (!speech_engine.Grammars.Contains(grammar))
                                 {
-                                    // Load the custom grammar into the engine
+                                    // Load the custom grammer into the engine
                                     speech_engine.LoadGrammar(grammar);
                                 }
 
-                                // Add a handler for the speech recognized event.
+                                // Add a handler for the speech recognized event.  
                                 speech_engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
                                 speech_engine.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(SpeechHypothesized);
                                 speech_engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(SpeechRecognitionRejected);
                                 speech_engine.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(SpeechDetected);
                                 speech_engine.RecognizeCompleted += new EventHandler<RecognizeCompletedEventArgs>(RecognizeCompleted);
 
-                                speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(initial_silence);
+                                speech_engine.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
                                 speech_engine.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
                                 speech_engine.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                                speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babble);
+                                speech_engine.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
                                 try
                                 {
@@ -181,11 +162,11 @@ namespace IVCS
                                     MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                                 }
 
-                                Log.Info("Main speech recognition engine is now running...");
+                                Logger.Info("Main speech recognition engine is now running...");
                             }
                             catch (InvalidOperationException ioe)
                             {
-                                Log.Error("Something's gone wrong when attempting to use the grammar file!", ioe);
+                                Logger.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
                             }
                         }
                     }
@@ -197,7 +178,7 @@ namespace IVCS
                 }
                 else
                 {
-                    Log.Error("Could not find main grammar file...", new Exception("Could not find main grammar file"));
+                    Logger.Error("Could not find main grammer file...", new Exception("Could not find main grammer file"));
                 }
             }
             catch (CultureNotFoundException)
@@ -207,16 +188,16 @@ namespace IVCS
             }
             catch (ThreadAbortException)
             {
-                Log.Info("Mission start main thread aborted...");
+                Logger.Info("Mission start main thread aborted...");
             }
             catch (NullReferenceException nre)
             {
                 MessageBox.Show($"Your operating system does not have the required language installed.\nGo in to your operating system's language settings and install \"English (United States)\", then change your operating systems speech language to \"English (United States)\".\n\nThis mod will not work until the required language is installed and the game is restarted.", "Missing Required Language", MessageBoxButtons.OK);
-                Log.Error("NullReferenceException in mission start function thread", nre);
+                Logger.Error("NullReferenceException in mission start function thread", nre);
             }
             catch (Exception e)
             {
-                Log.Error("Encountered error with speech recognition engine call...", e);
+                Logger.Error("Encountered error with speech recognition engine call...", e);
             };
 
             // Set that the thread has reached it's end
@@ -227,8 +208,8 @@ namespace IVCS
         {
             if (!mission_start_complete)
             {
-                Log.Info("Attempted to reload grammar before the mission start thread could run!");
-                SentrySdk.AddBreadcrumb("Attempted to reload grammar before the mission start thread could run", "Log Message", "error", null, BreadcrumbLevel.Error);
+                Logger.Info("Attempted to reload grammer before the mission start thread could run!");
+                SentrySdk.AddBreadcrumb("Attempted to reload grammer before the mission start thread could run", "Log Message", "error", null, BreadcrumbLevel.Error);
                 return "false";
             }
             else
@@ -247,19 +228,19 @@ namespace IVCS
                         {
                             if (!speech_engine.Grammars.Contains(grammar))
                             {
-                                // Load the custom grammar into the engine
+                                // Load the custom grammer into the engine
                                 speech_engine.LoadGrammar(grammar);
                             }
                         }
                         catch (InvalidOperationException ioe)
                         {
-                            Log.Error("Something's gone wrong when attempting to use the grammar file!", ioe);
+                            Logger.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
                             return "false";
                         }
                     }
                     else
                     {
-                        Log.Error("Cannot reload grammar as none was found!", new Exception("Could not find main grammar file when attempting to reload the grammar"));
+                        Logger.Error("Cannot reload grammar as none was found!", new Exception("Could not find main grammer file when attempting to reload the grammer"));
                         return "false";
                     }
                 }
@@ -286,7 +267,7 @@ namespace IVCS
 
         internal static void PttDown()
         {
-            Log.Info("PTT key pressed, enabling speech recognition...");
+            Logger.Info("PTT key pressed, enabling speech recognition...");
 
             if (!ptt && speech_engine != null)
             {
@@ -295,7 +276,7 @@ namespace IVCS
 
                 try
                 {
-                    // Sometimes it doesn't load any grammars?
+                    // Sometimes it dosen't load any grammars?
                     if (speech_engine.Grammars.Count <= 0)
                     {
                         ReloadGrammar();
@@ -310,22 +291,22 @@ namespace IVCS
                         MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                     }
 
-                    // Start asynchronous, continuous speech recognition.
+                    // Start asynchronous, continuous speech recognition. 
                     speech_engine.RecognizeAsync(RecognizeMode.Multiple);
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Something went wrong when trying to activate the speech engine.", e);
+                    Logger.Error("Something went wrong when trying to activate the speech engine.", e);
                 }
 
                 for (int i = 0; i <= 4; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlShow", $"['ivcs_ptt_display', {500 + i}, true]");
+                    Master.callback.Invoke("IVCS", "ctrlshow", $"['ivcs_ptt_display', {500 + i}, true]");
                 }
             }
             else
             {
-                Log.Info("PTT key is already down and cannot call down function again...");
+                Logger.Info("PTT key is already down and cannot call down function again...");
             }
         }
 
@@ -334,26 +315,26 @@ namespace IVCS
             if (ptt && speech_engine != null)
             {
                 ptt = false;
-                Log.Info("PTT key released, disabling speech recognition...");
+                Logger.Info("PTT key released, disabling speech recognition...");
 
                 try
                 {
-                    // Stop speech recognition.
+                    // Stop speech recognition.  
                     speech_engine.RecognizeAsyncStop();
                 }
                 catch (Exception e)
                 {
-                    Log.Error("An error occurred when attempting to disable the speech engine", e);
+                    Logger.Error("An error occurred when attempting to disable the speech engine", e);
                 }
 
                 for (int i = 0; i <= 4; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlShow", $"['ivcs_ptt_display', {500 + i}, false]");
+                    Master.callback.Invoke("IVCS", "ctrlshow", $"['ivcs_ptt_display', {500 + i}, false]");
                 }
             }
             else
             {
-                Log.Info("PTT key is already up and cannot call up function again...");
+                Logger.Info("PTT key is already up and cannot call up function again...");
             }
         }
 
@@ -364,18 +345,18 @@ namespace IVCS
             // Reset the background to black
             for (int i = 0; i <= 1; i++)
             {
-                Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_ptt_display', {100 + i}, [0,0,0,{opacity.ToString(Functions.nfi).Replace(",", ".")}]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0,0,0,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
             }
 
             // Fade display in
-            Master.callback.Invoke("IVCS", "fadeDisplay", $"['ivcs_ptt_display', 0.2, 0]");
+            Master.callback.Invoke("IVCS", "fadedisplay", $"['ivcs_ptt_display', 0.2, 0]");
         }
 
         static void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
         {
             // Set the text in the display box
-            Master.callback.Invoke("IVCS", "ctrlSetText_readable", $"['ivcs_ptt_display', 1000, '{e.Result.Text.Replace(",", "")}']");
-            Master.callback.Invoke("IVCS", "ctrlSetText", $"['ivcs_ptt_display', 1001, '{Math.Round(e.Result.Confidence, 2) * 100}% confident']");
+            Master.callback.Invoke("IVCS", "ctrlsettext_readable", $"['ivcs_ptt_display', 1000, '{e.Result.Text.Replace(",", "")}']");
+            Master.callback.Invoke("IVCS", "ctrlsettext", $"['ivcs_ptt_display', 1001, '{Math.Round(e.Result.Confidence, 2) * 100}% confident']");
         }
 
         static void SpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
@@ -383,25 +364,25 @@ namespace IVCS
             // Set the background red to notify the user the phrase is not valid
             for (int i = 0; i <= 1; i++)
             {
-                Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Functions.nfi).Replace(",", ".")}]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
             }
         }
 
         static void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             // Log the input text
-            Log.Input($"Recondensed text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
-            Log.Input($"Semantics: '{e.Result.Semantics.Value}'");
-            Log.Input($"Culture: '{speech_engine.RecognizerInfo.Culture}'");
+            Logger.Input($"Reconginsed text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
+            Logger.Input($"Semantics: '{e.Result.Semantics.Value}'");
+            Logger.Input($"Culture: '{speech_engine.RecognizerInfo.Culture}'");
 
             foreach (KeyValuePair<string, SemanticValue> value in e.Result.Semantics)
             {
-                Log.Input($"Semantic: '{value.Key}':'{value.Value}'");
+                Logger.Input($"Semantic: '{value.Key}':'{value.Value}'");
             }
 
-            Log.Input($"Semantics: '{e.Result.Semantics.Value}'");
+            Logger.Input($"Semantics: '{e.Result.Semantics.Value}'");
 
-            Master.callback.Invoke("IVCS", "ctrlSetText_readable", $"['ivcs_ptt_display', 1000, '{e.Result.Text.Replace(",", "")}']");
+            Master.callback.Invoke("IVCS", "ctrlsettext_readable", $"['ivcs_ptt_display', 1000, '{e.Result.Text.Replace(",", "")}']");
 
             // Make sure the confidence value is above the user defined value
             if (e.Result.Confidence >= confidence)
@@ -411,19 +392,19 @@ namespace IVCS
                     // Set the background red to notify the user the phrase is not valid
                     for (int i = 0; i <= 1; i++)
                     {
-                        Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Functions.nfi).Replace(",", ".")}]]");
+                        Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.8,0.063,0.063,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                     }
                     return;
                 }
                 // Set the background green to notify the user the phrase is valid and confidence was high enough
                 for (int i = 0; i <= 1; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_ptt_display', {100 + i}, [0.13,0.54,0.21,{opacity.ToString(Functions.nfi).Replace(",", ".")}]]");
+                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.13,0.54,0.21,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                 }
 
                 //string data = ConvertSemantic((string)e.Result.Semantics.Value, e.Result.Text);
                 string data = ConvertSemantic((string)e.Result.Semantics.Value, ReadableNumbers(e.Result.Text, true));
-                Log.Debug(data);
+                Logger.Debug(data);
 
                 Master.callback.Invoke("IVCS", "call_function", data);
             }
@@ -432,7 +413,7 @@ namespace IVCS
                 // Set the background orange to notify the user that the phrase is valid, but confidence was not high enough.
                 for (int i = 0; i <= 1; i++)
                 {
-                    Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_ptt_display', {100 + i}, [0.988,0.518,0.012,{opacity.ToString(Functions.nfi).Replace(",", ".")}]]");
+                    Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_ptt_display', {100 + i}, [0.988,0.518,0.012,{opacity.ToString(Function.nfi).Replace(",", ".")}]]");
                 }
             }
         }
@@ -445,13 +426,13 @@ namespace IVCS
                 Thread.Sleep(1_000);
 
                 // Fade display
-                Master.callback.Invoke("IVCS", "fadeDisplay", $"['ivcs_ptt_display', 0.2, 1]");
+                Master.callback.Invoke("IVCS", "fadedisplay", $"['ivcs_ptt_display', 0.2, 1]");
             }
         }
 
         internal static string ConvertSemantic(string semantic, string text)
         {
-            Log.Info($"Converting semantic '{semantic}' with '{text}'.");
+            Logger.Info($"Converting semantic '{semantic}' with '{text}'.");
 
             try
             {
@@ -510,14 +491,14 @@ namespace IVCS
             }
             catch (Exception e)
             {
-                Log.Error($"Exception encountered while attempting to convert semantics...", e);
+                Logger.Error($"Exception encountered while attempting to convert semantics...", e);
             }
             return "[[], '', []]";
         }
 
         internal static void Test()
         {
-            Log.Info("Starting speech recognition engine test...");
+            Logger.Info("Starting speech recognition engine test...");
 
             try
             {
@@ -526,7 +507,7 @@ namespace IVCS
 
                 if (speech_testing != null)
                 {
-                    // Get the grammar for the test
+                    // Get the grammer for the test
                     Grammar grammar = GetGrammar($"testing_{culture}");
 
                     // Make sure it exists
@@ -537,7 +518,7 @@ namespace IVCS
 
                             if (!speech_testing.Grammars.Contains(grammar))
                             {
-                                // Load the custom grammar into the engine
+                                // Load the custom grammer into the engine
                                 speech_testing.LoadGrammar(grammar);
                             }
 
@@ -545,12 +526,12 @@ namespace IVCS
                         catch (InvalidOperationException ioe)
                         {
                             // This user does not have the correct culture installed
-                            Log.Error("Something's gone wrong when attempting to use the grammar file!", ioe);
+                            Logger.Error("Something's gone wrong when attempting to use the grammer file!", ioe);
                         }
 
                         try
                         {
-                            // Add a handler for the speech recognized event.
+                            // Add a handler for the speech recognized event.  
                             speech_testing.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Testing_SpeechRecognized);
                             speech_testing.SpeechHypothesized += new EventHandler<SpeechHypothesizedEventArgs>(Testing_SpeechHypothesized);
                             speech_testing.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(Testing_SpeechRecognitionRejected);
@@ -560,12 +541,12 @@ namespace IVCS
                                 // Configure input to the speech recognizer.
                                 speech_testing.SetInputToDefaultAudioDevice();
 
-                                speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(initial_silence);
+                                speech_testing.InitialSilenceTimeout = TimeSpan.FromSeconds(inital_silence);
                                 speech_testing.EndSilenceTimeoutAmbiguous = TimeSpan.FromSeconds(end_silence);
                                 speech_testing.EndSilenceTimeout = TimeSpan.FromSeconds(end_silence_finished);
-                                speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babble);
+                                speech_testing.BabbleTimeout = TimeSpan.FromSeconds(end_babbel);
 
-                                // Start asynchronous, continuous speech recognition.
+                                // Start asynchronous, continuous speech recognition.  
                                 speech_testing.RecognizeAsync(RecognizeMode.Multiple);
                             }
                             catch (InvalidOperationException)
@@ -573,16 +554,16 @@ namespace IVCS
                                 MessageBox.Show($"The mod can't connect to your microphone, make sure it's set as the default input device in your sound settings and try again.", "Cannot connect to microphone", MessageBoxButtons.OK);
                             }
 
-                            Log.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
-                            Log.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
-                            Log.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
-                            Log.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
+                            Logger.Info($"Initial Silence: {speech_testing.InitialSilenceTimeout.TotalSeconds}");
+                            Logger.Info($"End Silence Timeout: {speech_testing.EndSilenceTimeout.TotalSeconds}");
+                            Logger.Info($"End Silence Timeout Ambiguous: {speech_testing.EndSilenceTimeoutAmbiguous.TotalSeconds}");
+                            Logger.Info($"Babble Timeout: {speech_testing.BabbleTimeout.TotalSeconds}");
 
-                            Log.Info("Speech recognition engine test is now running...");
+                            Logger.Info("Speech recognition engine test is now running...");
                         }
                         catch (NullReferenceException nre)
                         {
-                            Log.Error("NullReferenceException error with speech recognition engine testing...", nre);
+                            Logger.Error("NullReferenceException error with speech recognition engine testing...", nre);
                             SentrySdk.CaptureException(nre);
                         }
                     };
@@ -595,11 +576,11 @@ namespace IVCS
             }
             catch (ThreadAbortException)
             {
-                Log.Info("Testing thread aborted...");
+                Logger.Info("Testing thread aborted...");
             }
             catch (Exception e)
             {
-                Log.Error("Encountered error with speech recognition engine testing...", e);
+                Logger.Error("Encountered error with speech recognition engine testing...", e);
             };
         }
 
@@ -616,30 +597,30 @@ namespace IVCS
                     speech_testing.Dispose();
                 }
 
-                Log.Info("Speech recognition engine test has finished running...");
+                Logger.Info("Speech recognition engine test has finished running...");
             }
             catch (Exception e)
             {
-                Log.Error("Encountered error when attempting to stop the speech test...", e);
+                Logger.Error("Encountered error when attempting to stop the speech test...", e);
             }
         }
 
         static void Testing_SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
         {
             // Set the text in the display box
-            Master.callback.Invoke("IVCS", "ctrlSetText", $"['ivcs_test_display', 5000, '<t font=\"RobotoCondensed\">{e.Result.Text}</t> - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%']");
+            Master.callback.Invoke("IVCS", "ctrlsettext", $"['ivcs_test_display', 5000, '<t font=\"RobotoCondensed\">{e.Result.Text}</t> - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%']");
         }
 
         static void Testing_SpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
         {
             // Reset the text in the display box on rejection
-            Master.callback.Invoke("IVCS", "ctrlSetText", $"['ivcs_test_display', 5000, '']");
+            Master.callback.Invoke("IVCS", "ctrlsettext", $"['ivcs_test_display', 5000, '']");
         }
 
         static void Testing_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             // Log the input text
-            Log.Input($"Recognized text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
+            Logger.Input($"Reconginsed text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
 
             // Make sure the confidence value is above the user defined value
             if (e.Result.Confidence >= confidence)
@@ -648,7 +629,7 @@ namespace IVCS
                 string[] data = ((string)e.Result.Semantics.Value).Split(':');
 
                 // Set the text color for the specific ctrl based on the users input
-                Master.callback.Invoke("IVCS", "ctrlSetTextColor", $"['ivcs_test_display', {int.Parse(data[1], nfi) + 1000}, [0,1,0,1]]");
+                Master.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_test_display', {int.Parse(data[1], nfi) + 1000}, [0,1,0,1]]");
             }
         }
 
@@ -659,12 +640,12 @@ namespace IVCS
 
             try
             {
-                Log.Info("Loading grammar file");
+                Logger.Info("Loading grammer file");
 
                 if (filename != "")
                     grammar_file = location + $@"\grammar\{filename}.xml";
 
-                Log.Debug($"Grammar file: {grammar_file}");
+                Logger.Debug($"Grammer file: {grammar_file}");
 
                 if (!File.Exists(grammar_file))
                     throw new FileNotFoundException();
@@ -672,14 +653,14 @@ namespace IVCS
                 Grammar grammar = new Grammar(grammar_file);
                 return grammar;
             }
-            catch (FileNotFoundException fileNotFoundError)
+            catch (FileNotFoundException fnfe)
             {
-                Log.Error("Grammar file not found!", fileNotFoundError);
+                Logger.Error("Grammer file not found!", fnfe);
                 return null;
             }
             catch (Exception e)
             {
-                Log.Error("Encountered error getting grammar file!", e);
+                Logger.Error("Encountered errror getting grammar file!", e);
                 return null;
             };
         }
@@ -703,13 +684,13 @@ namespace IVCS
                     if (first_index < start_str)
                     {
                         start_str = first_index;
-                        Log.Info($"Setting start index:{start_str}");
+                        Logger.Info($"Setting start index:{start_str}");
                     }
 
                     if (last_index > end_str)
                     {
                         end_str = last_index;
-                        Log.Info($"Setting end index:{end_str}");
+                        Logger.Info($"Setting end index:{end_str}");
                     }
                 }
             }
@@ -761,9 +742,9 @@ namespace IVCS
                     return input;
 
                 if (add_comma)
-                    return input.Substring(0, start_str) + (total_l + acc_l).ToString(Functions.nfi) + "." + (total_r + acc_r).ToString(Functions.nfi) + "," + input.Substring(end_str, input.Length - end_str);
+                    return input.Substring(0, start_str) + (total_l + acc_l).ToString(Function.nfi) + "." + (total_r + acc_r).ToString(Function.nfi) + "," + input.Substring(end_str, input.Length - end_str);
 
-                return input.Substring(0, start_str) + (total_l + acc_l).ToString(Functions.nfi) + "." + (total_r + acc_r).ToString(Functions.nfi) + input.Substring(end_str, input.Length - end_str);
+                return input.Substring(0, start_str) + (total_l + acc_l).ToString(Function.nfi) + "." + (total_r + acc_r).ToString(Function.nfi) + input.Substring(end_str, input.Length - end_str);
             }
             else
             {
@@ -790,9 +771,9 @@ namespace IVCS
                     return input;
 
                 if (add_comma)
-                    return input.Substring(0, start_str) + (total + acc).ToString(Functions.nfi) + "," + input.Substring(end_str, input.Length - end_str);
+                    return input.Substring(0, start_str) + (total + acc).ToString(Function.nfi) + "," + input.Substring(end_str, input.Length - end_str);
 
-                return input.Substring(0, start_str) + (total + acc).ToString(Functions.nfi) + input.Substring(end_str, input.Length - end_str);
+                return input.Substring(0, start_str) + (total + acc).ToString(Function.nfi) + input.Substring(end_str, input.Length - end_str);
             }
         }
     }

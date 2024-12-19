@@ -9,3 +9,9 @@ hemtt.exe
 *.dll
 *.dll.config
 *.pdb
+/extension/packages
+System.Threading.Tasks.Extensions.xml
+System.Numerics.Vectors.xml
+System.IO.Pipelines.xml
+System.Buffers.xml
+Sentry.xml
