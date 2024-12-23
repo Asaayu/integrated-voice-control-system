@@ -21,6 +21,12 @@
             <Key ID="STR_IVCS_SETTINGS_CONFIDENCE_TOOLTIP">
                 <Original>The result from the speech recognition engine comes with a confidence value based on how confident it is between the originally spoken words and the generated text it has created.\nThe engine will attempt to find the closest word from the list of available words that it is expecting, you can then use the confidence value as a fail safe to stop badly translated values from being processed.\nMay require a game restart to take effect.</Original>
             </Key>
+            <Key ID="STR_IVCS_SETTINGS_DUCKING_NAME">
+                <Original>Reduce Game Volume When Speaking</Original>
+            </Key>
+            <Key ID="STR_IVCS_SETTINGS_DUCKING_TOOLTIP">
+                <Original>Reduces the game volume when speaking to the speech recognition engine to prevent the engine from picking up game sounds as input.</Original>
+            </Key>
             <Key ID="STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_NAME">
                 <Original>End Background Noise Timeout</Original>
             </Key>
@@ -94,6 +100,9 @@
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_RESULT_NAME">
                 <Original>Results</Original>
             </Key>
+            <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_SOUND_NAME">
+                <Original>Gameplay Audio</Original>
+            </Key>
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_USER_FEEDBACK_NAME">
                 <Original>Feedback to the User</Original>
             </Key>
@@ -154,8 +163,23 @@
             <Key ID="STR_IVCS_SYSTEMCHAT_CROUCH_1">
                 <Original>%1 - Crouch</Original>
             </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_ENGINE_OFF_1">
+                <Original>%1 - Engine Off</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_ENGINE_ON_1">
+                <Original>%1 - Engine On</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_FIRE_1">
+                <Original>%1 - Fire</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_GARRISON_1">
+                <Original>%1 - Garrison</Original>
+            </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_GET_OUT_1">
                 <Original>%1 - Get Out</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_LAND_HELICOPTER_1">
+                <Original>%1 - Land Helicopter</Original>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LASER_OFF_1">
                 <Original>%1 - Laser Pointers Off</Original>
@@ -191,6 +215,12 @@
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SALUTE_1">
                 <Original>%1 - Salute</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_SENSORS_OFF_1">
+                <Original>%1 - Sensors Off</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_SENSORS_ON_1">
+                <Original>%1 - Sensors On</Original>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SIT_1">
                 <Original>%1 - Sit</Original>

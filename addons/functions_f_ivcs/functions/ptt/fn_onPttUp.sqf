@@ -23,3 +23,10 @@
 
 "ivcs_ptt" cutText ["", "PLAIN"];
 uiNamespace setVariable ["ivcs_ptt_down", false];
+
+private _duckingEnabled = uiNamespace getVariable ["ivcs_ducking", false];
+if (_duckingEnabled) then
+{
+	private _soundVolume = uiNamespace getVariable ["ivcs_ducking_volume", 1];
+	0.5 fadeSound _soundVolume;
+};

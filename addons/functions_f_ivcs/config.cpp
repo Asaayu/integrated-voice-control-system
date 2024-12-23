@@ -53,15 +53,16 @@ class CfgFunctions
 			class convertRole {};
 			class convertFormation {};
 		};
-		// class ivcs_ai
-		// {
-		// 	file = "\z\ivcs\addons\functions_f_ivcs\functions\ai";
-		// 	class cover {};
-		// };
-		// class ivcs_player
-		// {
-		// 	file = "\z\ivcs\addons\functions_f_ivcs\functions\player";
-		// 	class speak {};
-		// };
+		class ivcs_ai
+		{
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\ai";
+			class cover {};
+			class garrison {};
+		};
+		class ivcs_player
+		{
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\player";
+			class speak {};
+		};
 	};
 };

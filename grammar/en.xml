@@ -29,8 +29,12 @@
 						<tag>out="hold fire[hold_fire]";</tag>
 					</item>
 					<item>
-						fire
-						<tag>out="fire[open_fire]";</tag>
+						disengage
+						<tag>out="disengage[hold_fire]";</tag>
+					</item>
+					<item>
+						cease fire
+						<tag>out="cease fire[hold_fire]";</tag>
 					</item>
 					<item>
 						open fire
@@ -53,8 +57,20 @@
 						<tag>out="free to engage[open_fire_red]";</tag>
 					</item>
 					<item>
+						fire when fired upon
+						<tag>out="fire when fired upon[open_fire_white]";</tag>
+					</item>
+					<item>
+						return fire
+						<tag>out="return fire[open_fire_white]";</tag>
+					</item>
+					<item>
 						weapons free
 						<tag>out="weapons free[open_fire]";</tag>
+					</item>
+					<item>
+						fire
+						<tag>out="fire[fire]";</tag>
 					</item>
 				</one-of>
 			</item>
@@ -234,6 +250,14 @@
 					<item>
 						crouch
 						<tag>out="crouch[pos_middle]";</tag>
+					</item>
+					<item>
+						kneel
+						<tag>out="kneel[pos_middle]";</tag>
+					</item>
+					<item>
+						take a knee
+						<tag>out="take a knee[pos_middle]";</tag>
 					</item>
 					<item>
 						stay low
@@ -448,6 +472,14 @@
 					<item>
 						get to cover
 						<tag>out="get to cover[find_cover]";</tag>
+					</item>
+					<item>
+						garrison
+						<tag>out="garrison[garrison_nearby]";</tag>
+					</item>
+					<item>
+						garrison nearby
+						<tag>out="garrison nearby[garrison_nearby]";</tag>
 					</item>
 				</one-of>
 			</item>
@@ -740,6 +772,18 @@
 						out
 						<tag>out="out[get_out]";</tag>
 					</item>
+					<item>
+						eject
+						<tag>out="eject[eject]";</tag>
+					</item>
+					<item>
+						bail out
+						<tag>out="bail out[eject]";</tag>
+					</item>
+					<item>
+						out out out
+						<tag>out="out out out[eject]";</tag>
+					</item>
 				</one-of>
 			</item>
 
@@ -880,6 +924,55 @@
 								<tag>out="form diamond[formation_diamond]";</tag>
 							</item>
 						</one-of>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Vehicle engine call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						engine on
+						<tag>out="engine on[engine_on]";</tag>
+					</item>
+					<item>
+						engine off
+						<tag>out="engine off[engine_off]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Vehicle sensors call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						sensors on
+						<tag>out="sensors on[sensors_on]";</tag>
+					</item>
+					<item>
+						radar on
+						<tag>out="radar on[sensors_on]";</tag>
+					</item>
+					<item>
+						sensors off
+						<tag>out="engine off[sensors_off]";</tag>
+					</item>
+					<item>
+						radar off
+						<tag>out="radar off[sensors_off]";</tag>
+					</item>
+				</one-of>
+			</item>
+
+			<!-- Helicopter land call -->
+			<item>
+				<ruleref uri="#selection"/>
+				<one-of>
+					<item>
+						land
+						<tag>out="land[land_helicopter]";</tag>
 					</item>
 				</one-of>
 			</item>

@@ -51,61 +51,69 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 {
 	private _text = switch _function do
 	{
-		case "regroup": {("ivcs" callExtension ["replace", [localize "STR_A3___1___REGROUP", "%1.1", "%1"]])#0};
-		case "stop": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___STOP", "%1.1", "%1"]])#0};
-		case "cancel_target": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___CANCEL_TARGET", "%1.1", "%1"]])#0};
-		case "target_object": {("ivcs" callExtension ["replace", [localize "STR_A3_TARGET____1", "%1", "%2"]])#0};
-		case "hold_fire": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___HOLD_FIRE", "%1.1", "%1"]])#0};
-		case "open_fire": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___OPEN_FIRE", "%1.1", "%1"]])#0};
 		case "assign_color": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
-		case "find_cover": {localize "STR_A3___1___TAKE_COVER"};
-		case "move_grid": {localize "STR_A3__MUNIT___MOVE___GRID___MGRID"};
-		case "flank_left_quick";
-		case "move_left_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_180_0"]};
-		case "flank_right_quick";
-		case "move_right_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_90_0"]};
-		case "flank_front_quick";
-		case "move_front_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_0_0"]};
-		case "flank_back_quick";
-		case "move_back_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_270_0"]};
-		case "move_distance_point";
-		case "move_distance_and";
-		case "move_object";
-		case "move_distance": {("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0};
-		case "open_fire_red": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
-		case "salute": {localize "STR_IVCS_SYSTEMCHAT_SALUTE_1"};
-		case "sit": {localize "STR_IVCS_SYSTEMCHAT_SIT_1"};
-		case "drop_bag": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___DROP_PACK", "%1.1", "%1"]])#0};
-		case "pos_up": {localize "STR_IVCS_SYSTEMCHAT_STAND_1"};
-		case "pos_middle": {localize "STR_IVCS_SYSTEMCHAT_CROUCH_1"};
-		case "pos_down": {localize "STR_IVCS_SYSTEMCHAT_PRONE_1"};
-		case "pos_auto": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___COPY_MY_STANCE", "%1.1", "%1"]])#0};
-		case "combat_stealth": {localize "STR_A3___1___STEALTH"};
-		case "combat_combat": {localize "STR_A3___1___COMBAT"};
+		case "cancel_target": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___CANCEL_TARGET", "%1.1", "%1"]])#0};
 		case "combat_aware": {localize "STR_A3___1___AWARE"};
+		case "combat_combat": {localize "STR_A3___1___COMBAT"};
 		case "combat_safe": {localize "STR_A3___1___RELAX"};
-		case "formation_wedge": {localize "STR_A3_FORMATION___WEDGE"};
-		case "formation_vee": {localize "STR_A3_FORMATION___VEE"};
-		case "formation_staggered_column": {localize "STR_A3_FORMATION___STAGGERED_COL_"};
-		case "formation_line": {localize "STR_A3_FORMATION___LINE"};
-		case "formation_file": {localize "STR_A3_FORMATION___FILE"};
-		case "formation_echelon_right": {localize "STR_A3_FORMATION___ECHELON_R_"};
-		case "formation_echelon_left": {localize "STR_A3_FORMATION___ECHELON_L_"};
-		case "formation_diamond": {localize "STR_A3_FORMATION___DIAMOND"};
+		case "combat_stealth": {localize "STR_A3___1___STEALTH"};
+		case "drop_bag": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___DROP_PACK", "%1.1", "%1"]])#0};
+		case "eject": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___EJECT", "%1"]])#0};
+		case "engine_off": {localize "STR_IVCS_SYSTEMCHAT_ENGINE_OFF_1"};
+		case "engine_on": {localize "STR_IVCS_SYSTEMCHAT_ENGINE_ON_1"};
+		case "find_cover": {localize "STR_A3___1___TAKE_COVER"};
+		case "fire": {localize "STR_IVCS_SYSTEMCHAT_FIRE_1"};
+		case "flank_back_quick";
+		case "flank_front_quick";
+		case "flank_left_quick";
+		case "flank_right_quick";
 		case "formation_column": {localize "STR_A3_FORMATION___COLUMN"};
+		case "formation_diamond": {localize "STR_A3_FORMATION___DIAMOND"};
+		case "formation_echelon_left": {localize "STR_A3_FORMATION___ECHELON_L_"};
+		case "formation_echelon_right": {localize "STR_A3_FORMATION___ECHELON_R_"};
+		case "formation_file": {localize "STR_A3_FORMATION___FILE"};
+		case "formation_line": {localize "STR_A3_FORMATION___LINE"};
+		case "formation_staggered_column": {localize "STR_A3_FORMATION___STAGGERED_COL_"};
+		case "formation_vee": {localize "STR_A3_FORMATION___VEE"};
+		case "formation_wedge": {localize "STR_A3_FORMATION___WEDGE"};
+		case "garrison_nearby": {localize "STR_IVCS_SYSTEMCHAT_GARRISON_1"};
 		case "get_in_player";
 		case "get_in": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___GET_IN", "%1.1", "%1"]])#0};
-		case "get_out": {localize "STR_IVCS_SYSTEMCHAT_GET_OUT_1"};
-		case "scan_horizon": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SCAN_HORIZON", "%1.1", "%1"]])#0};
+		case "get_out": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___DISMOUNT", "%1.1", "%1"]])#0};
+		case "hold_fire": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___HOLD_FIRE", "%1.1", "%1"]])#0};
+		case "land_helicopter": {localize "STR_IVCS_SYSTEMCHAT_LAND_HELICOPTER_1"};
+		case "lasers_off": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___POINTERS_OFF", "%1.1", "%1"]])#0};
+		case "lasers_on": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___POINTERS_ON", "%1.1", "%1"]])#0};
+		case "lights_off": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___FLASHLIGHTS_OFF", "%1.1", "%1"]])#0};
+		case "lights_on": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___FLASHLIGHTS_ON", "%1.1", "%1"]])#0};
+		case "move_back_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_270_0"]};
 		case "move_cursor": {localize "STR_IVCS_SYSTEMCHAT_MOVE_1"};
+		case "move_distance_and";
+		case "move_distance_point";
+		case "move_distance": {("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0};
+		case "move_front_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_0_0"]};
+		case "move_grid": {localize "STR_A3__MUNIT___MOVE___GRID___MGRID"};
+		case "move_left_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_180_0"]};
+		case "move_object";
+		case "move_right_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_90_0"]};
+		case "open_fire_red": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
+		case "open_fire": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___OPEN_FIRE", "%1.1", "%1"]])#0};
+		case "pos_auto": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___COPY_MY_STANCE", "%1.1", "%1"]])#0};
+		case "pos_down": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___PRONE", "%1.1", "%1"]])#0};
+		case "pos_middle": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___CROUCH", "%1.1", "%1"]])#0};
+		case "pos_up": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___STAND", "%1.1", "%1"]])#0};
+		case "regroup": {("ivcs" callExtension ["replace", [localize "STR_A3___1___REGROUP", "%1.1", "%1"]])#0};
+		case "salute": {localize "STR_IVCS_SYSTEMCHAT_SALUTE_1"};
+		case "scan_horizon": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SCAN_HORIZON", "%1.1", "%1"]])#0};
+		case "sensors_off": {localize "STR_IVCS_SYSTEMCHAT_SENSORS_OFF_1"};
+		case "sensors_on": {localize "STR_IVCS_SYSTEMCHAT_SENSORS_ON_1"};
+		case "sit": {localize "STR_IVCS_SYSTEMCHAT_SIT_1"};
 		case "sitrep": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___SITREP", "%1.1", "%1"]])#0};
-		case "lights_off": {localize "STR_IVCS_SYSTEMCHAT_LIGHTS_OFF_1"};
-		case "lights_on": {localize "STR_IVCS_SYSTEMCHAT_LIGHTS_ON_1"};
-		case "lasers_off": {localize "STR_IVCS_SYSTEMCHAT_LASER_OFF_1"};
-		case "lasers_on": {localize "STR_IVCS_SYSTEMCHAT_LASER_ON_1"};
-		case "watch_direction": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___WATCH____2", "%1.1", "%1"]])#0};
-		case "watch_cursor": {localize "STR_IVCS_SYSTEMCHAT_WATCH_1"};
+		case "stop": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___STOP", "%1.1", "%1"]])#0};
 		case "suppressive_fire": {localize "STR_IVCS_SYSTEMCHAT_MOVE_1"};
+		case "target_object": {("ivcs" callExtension ["replace", [localize "STR_A3_TARGET____1", "%1", "%2"]])#0};
+		case "watch_cursor": {localize "STR_IVCS_SYSTEMCHAT_WATCH_1"};
+		case "watch_direction": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___WATCH____2", "%1.1", "%1"]])#0};
 		default {""};
 	};
 
@@ -371,6 +379,14 @@ switch (toLower _function) do
 			} forEach _units;
 		};
 	};
+	case "fire":
+	{
+		// Force the units to fire a single shot
+		{
+			[_x, "currentMuzzle _x"] call BIS_fnc_fire;
+
+		} forEach _units;
+	};
 	case "open_fire":
 	{
 		// Tell the units to fire at will, but not leave formation
@@ -399,6 +415,20 @@ switch (toLower _function) do
 			} forEach _units;
 		};
 	};
+	case "open_fire_white":
+	{
+		// Tell the units to only fire at will if fired upon
+		if (_units isEqualTo _full_group) then
+		{
+			_player setCombatMode "WHITE";
+		}
+		else
+		{
+			{
+				_x setUnitCombatMode "WHITE";
+			} forEach _units;
+		};
+	};
 	case "assign_color":
 	{
 		// Get units to join the color team
@@ -417,8 +447,28 @@ switch (toLower _function) do
 	};
 	case "find_cover":
 	{
-		// Get units to move to a cover position
+		["100_Commands", "TakeCover.ogg"] call IVCS_fnc_speak;
+
 		private _positions = [_player, 20] call IVCS_fnc_cover;
+		{
+			private _pos = selectRandom _positions;
+			if (count _positions <= 0) then
+			{
+				_pos = _x getPos [20, random 360];
+			}
+			else
+			{
+				_positions deleteAt (_positions findIf {_x isEqualTo _pos});
+			};
+
+			_x commandMove AGLToASL _pos;
+		} forEach _units;
+	};
+	case "garrison_nearby":
+	{
+		["100_Commands", "TakeCover.ogg"] call IVCS_fnc_speak;
+
+		private _positions = [_player, 20] call IVCS_fnc_garrison;
 		{
 			private _pos = selectRandom _positions;
 			if (count _positions <= 0) then
@@ -639,8 +689,15 @@ switch (toLower _function) do
 	};
 	case "get_out":
 	{
-		// Tell all units to get out of their vehicles
+		// Tell all units to get out of their current vehicle
 		commandGetOut _units;
+	};
+	case "eject":
+	{
+		// Tell all units to eject out of their current vehicle
+		{
+			_x action ["Eject", vehicle _x];
+		} forEach _units;
 	};
 	case "get_in_player";
 	case "get_in":
@@ -863,6 +920,45 @@ switch (toLower _function) do
 	case "formation_column":
 	{
 		(group player) setFormation "COLUMN";
+	};
+	case "engine_on":
+	{
+		{
+			if (alive _x && {!isNull objectParent _x && {driver (vehicle _x) == _x}}) then
+			{
+				_x action ["engineOn", vehicle _x];
+			};
+		} forEach _units;
+	};
+	case "engine_off":
+	{
+		{
+			if (alive _x && {!isNull objectParent _x && {driver (vehicle _x) == _x}}) then
+			{
+				_x action ["engineOff", vehicle _x];
+			};
+		} forEach _units;
+	};
+	case "sensors_on":
+	{
+		{
+			_x action ["ActiveSensorsOn", vehicle _x];
+		} forEach _units;
+	};
+	case "sensors_off":
+	{
+		{
+			_x action ["ActiveSensorsOff", vehicle _x];
+		} forEach _units;
+	};
+	case "land_helicopter":
+	{
+		{
+			if ((vehicle _x) isKindOf "Helicopter") then
+			{
+				_x land "LAND";
+			};
+		} forEach _units;
 	};
 	default
 	{

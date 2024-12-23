@@ -126,3 +126,17 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 		uiNamespace setVariable ["ivcs_output_group_chat", _value];
 	}
 ] call CBA_fnc_addSetting;
+
+// If the game should use ducking when push to talk is active
+[
+	"ivcs_ducking",
+	"CHECKBOX",
+	["STR_IVCS_SETTINGS_DUCKING_NAME", "STR_IVCS_SETTINGS_DUCKING_TOOLTIP"],
+	["STR_IVCS_MOD_NAME", "STR_IVCS_SETTINGS_SUBCATEGORY_SOUND_NAME"],
+	true,
+	2,
+	{
+		_this params ["_value"];
+		uiNamespace setVariable ["ivcs_ducking", _value];
+	}
+] call CBA_fnc_addSetting;

@@ -18,6 +18,13 @@
 	This function is called by the CBA keybind system when the PTT key is pressed, this function should not be called directly.
 */
 
+private _duckingEnabled = uiNamespace getVariable ["ivcs_ducking", false];
+if (_duckingEnabled) then
+{
+	uiNamespace setVariable ["ivcs_ducking_volume", soundVolume];
+	0.5 fadeSound 0.1;
+};
+
 "ivcs_ptt" cutRsc ["ivcs_ptt_display", "PLAIN", 0, true, false];
 uiNamespace setVariable ["ivcs_ptt_down", true];
 
