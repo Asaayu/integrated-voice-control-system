@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using System.Linq;
 
 namespace IntegratedVoiceControlSystem
 {
@@ -47,9 +46,10 @@ namespace IntegratedVoiceControlSystem
             {
                 // OPEN_EXTERNAL_PROGRAM: Open one of the white-listed external programs
                 case "open_external_program":
-                    if (parameters.Length >= 1 && Enum.TryParse(parameters[0], out Types.ExternalProgram program))
+                    Logger.Debug($"Opening external program '{parameters[0]}'");
+                    if (parameters.Length >= 1)
                     {
-                        Common.OpenExternalProgram(program);
+                        Common.OpenExternalProgram(parameters[0].Replace("\"", ""));
                         return (1, null);
                     }
                     return (0, null);

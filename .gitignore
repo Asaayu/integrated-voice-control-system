@@ -11,3 +11,4 @@ hemtt.exe
 *.dll.config
 *.pdb
 *.xml
+!/grammar/*.xml

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Speech.Recognition;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace IntegratedVoiceControlSystem
@@ -16,28 +15,15 @@ namespace IntegratedVoiceControlSystem
             try
             {
                 string executingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string grammarFilePath = string.Empty;
+                string grammarFilePath = $"{executingDirectory}\\grammar\\{culture.Name}{(testGrammar ? "_test" : "")}.xml";
 
-                string[] cultures = { culture.Name, culture.TwoLetterISOLanguageName, "en" };
-
-                for (int i = 0; i < cultures.Length; i++)
-                {
-                    string grammarTestPath = $"{executingDirectory}\\grammar\\{cultures[i]}{(testGrammar ? "_test" : "")}.xml";
-                    Logger.Debug($"Checking if grammar file '{cultures[i]}' exists.");
-                    if (File.Exists(grammarTestPath))
-                    {
-                        Logger.Debug($"Grammar file found for culture '{cultures[i]}'.");
-                        grammarFilePath = grammarTestPath;
-                        break;
-                    }
-                }
-
-                // Throw if no file was found
-                if (string.IsNullOrEmpty(grammarFilePath))
+                Logger.Debug($"Checking if grammar file '{culture.Name}' exists.");
+                if (!File.Exists(grammarFilePath))
                 {
                     throw new FileNotFoundException();
                 }
 
+                Logger.Debug($"Grammar file found for culture '{culture.Name}'.");
                 return new Grammar(grammarFilePath);
             }
             catch (FileNotFoundException fileNotFoundException)
@@ -63,8 +49,7 @@ namespace IntegratedVoiceControlSystem
             try
             {
                 var installedRecognizers = SpeechRecognitionEngine.InstalledRecognizers();
-                Logger.Debug($"Found {installedRecognizers.Count} installed recognizers on the system.");
-                Logger.Debug($"[{string.Join(", ", installedRecognizers.Select(recognizer => recognizer.Culture.EnglishName))}]");
+                Logger.Debug($"Found {installedRecognizers.Count} installed recognizers on the system - [{string.Join(", ", installedRecognizers.Select(recognizer => recognizer.Culture.EnglishName))}]");
 
                 foreach (RecognizerInfo recognizer in installedRecognizers)
                 {

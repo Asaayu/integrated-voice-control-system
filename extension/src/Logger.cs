@@ -65,11 +65,6 @@ namespace IntegratedVoiceControlSystem
             });
         }
 
-        internal static void DisplayMessageBox(string message, string title, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None, string helpFilePath = null)
-        {
-            MessageBox.Show(message, title, buttons, icon, MessageBoxDefaultButton.Button1, 0, helpFilePath);
-        }
-
         internal static void Error(string message, Exception exception, bool skipMessageBox = false)
         {
             OutputConsoleLine($"{message}\n{exception.Message}\n{exception.StackTrace}", "ERROR");

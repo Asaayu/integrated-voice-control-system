@@ -52,7 +52,7 @@ namespace IntegratedVoiceControlSystem
 #endif
         public static void RvExtension(StringBuilder output, int outputSize, [MarshalAs(UnmanagedType.LPStr)] string argument)
         {
-            Logger.Debug($"Received argument: '{argument}'");           
+            Logger.Info($"Received argument: '{argument}'");           
 
             // Process the input and output the result
             output.Append(InputHandler.ProcessInput(argument));

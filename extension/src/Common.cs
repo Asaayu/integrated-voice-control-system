@@ -41,7 +41,7 @@ namespace IntegratedVoiceControlSystem
             };
         }
 
-        internal static void OpenExternalProgram(ExternalProgram externalProgram)
+        internal static void OpenExternalProgram(string externalProgram)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace IntegratedVoiceControlSystem
 
                 switch (externalProgram)
                 {
-                    case ExternalProgram.SpeechTraining:
+                    case "speechTraining":
                         string speechTrainingPath = Path.Combine(systemDirectory, "Speech", "SpeechUX", "SpeechUXWiz.exe");
                         if (!File.Exists(speechTrainingPath))
                         {
@@ -60,7 +60,7 @@ namespace IntegratedVoiceControlSystem
                         break;
 
                     // OPEN_SPEECH_SETTINGS: Opens the speech language settings
-                    case ExternalProgram.SpeechSettings:
+                    case "speechSettings":
                         string currentWindowsVersion = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString();
                         if (currentWindowsVersion != "10" && currentWindowsVersion != "11")
                         {
@@ -72,7 +72,7 @@ namespace IntegratedVoiceControlSystem
                         break;
 
                     // OPEN_SOUND_CONTROL_PANEL_SETTINGS: Opens the sound control panel settings
-                    case ExternalProgram.SoundControlPanel:
+                    case "soundControlPanel":
                         string soundControlPanelPath = Path.Combine(systemDirectory, "control.exe");
                         Process.Start(soundControlPanelPath, "/name Microsoft.Sound");
                         return;
@@ -96,8 +96,6 @@ namespace IntegratedVoiceControlSystem
         {
             try
             {
-                Logger.Debug($"Converting semantic '{semantic}' with '{text}'.");
-
                 string command = "";
                 string key = "";
 
@@ -177,8 +175,6 @@ namespace IntegratedVoiceControlSystem
 
                     startIndex = Math.Min(startIndex, firstIndex);
                     endIndex = Math.Max(endIndex, lastIndex);
-
-                    Logger.Debug($"Updated indices: start={startIndex}, end={endIndex}");
                 }
             }
 
@@ -252,7 +248,6 @@ namespace IntegratedVoiceControlSystem
 
             return total + accumulator;
         }
-
     }
 
 

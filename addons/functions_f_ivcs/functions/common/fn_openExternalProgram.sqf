@@ -24,4 +24,4 @@ params [["_parentDisplay", displayNull], ["_program", ""]];
 if (isNil "_program" || isNil "_parentDisplay") exitWith {};
 
 _parentDisplay closeDisplay 0;
-"ivcs" callExtension ["open_external_program", _program];
+"ivcs" callExtension ["open_external_program", [_program]];

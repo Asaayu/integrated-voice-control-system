@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Speech.Recognition;
@@ -139,19 +138,14 @@ namespace IntegratedVoiceControlSystem
 
         private static void SpeechDetected(object sender, SpeechDetectedEventArgs speechDetectedEventArgs)
         {
-            Logger.Debug("[1] Speech detected...");
-
             speech = true;
 
             UiManager.SetPttBackgroundColor(PttBackgroundColorState.Listening);
-
             UiManager.SetPttBackgroundDisplay(true);
         }
 
         private static void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs speechHypothesizedEventArgs)
         {
-            Logger.Input($"[2] Hypothesized text: '{speechHypothesizedEventArgs.Result.Text}' - Confidence: {Math.Round(speechHypothesizedEventArgs.Result.Confidence, 2) * 100}%");
-
             if (!usingTestGrammar)
             {
                 UiManager.SetPttText(speechHypothesizedEventArgs.Result.Text.Replace(",", ""), Math.Round(speechHypothesizedEventArgs.Result.Confidence, 2) * 100);
@@ -164,7 +158,7 @@ namespace IntegratedVoiceControlSystem
 
         private static void SpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs speechRecognitionRejectedEventArgs)
         {
-            Logger.Debug("[3] Speech recognition rejected...");
+            Logger.Debug("Speech recognition rejected...");
 
             if (!usingTestGrammar)
             {
@@ -178,17 +172,7 @@ namespace IntegratedVoiceControlSystem
 
         private static void SpeechRecognized(object sender, SpeechRecognizedEventArgs speechRecognizedEventArgs)
         {
-            Logger.Input($"[4] Recognized text: '{speechRecognizedEventArgs.Result.Text}' - Confidence: {Math.Round(speechRecognizedEventArgs.Result.Confidence, 2) * 100}%");
-            Logger.Debug($"[4] Semantic value: '{speechRecognizedEventArgs.Result.Semantics.Value}'");
-            Logger.Debug($"[4] Culture: '{speechEngine.RecognizerInfo.Culture}'");
-
-            foreach (KeyValuePair<string, SemanticValue> value in speechRecognizedEventArgs.Result.Semantics)
-            {
-                Logger.Input($"Semantic: '{value.Key}':'{value.Value}'");
-            }
-
-            Logger.Input($"Semantics: '{speechRecognizedEventArgs.Result.Semantics.Value}'");
-
+            Logger.Input($"Recognized Text: '{speechRecognizedEventArgs.Result.Text}' - Confidence: {Math.Round(speechRecognizedEventArgs.Result.Confidence, 2) * 100}% - Semantic value: '{speechRecognizedEventArgs.Result.Semantics.Value}'");
             UiManager.SetPttText(speechRecognizedEventArgs.Result.Text.Replace(",", ""), Math.Round(speechRecognizedEventArgs.Result.Confidence, 2) * 100);
 
             // Make sure the confidence value is above the user defined value
@@ -205,14 +189,11 @@ namespace IntegratedVoiceControlSystem
                     UiManager.SetPttBackgroundColor(PttBackgroundColorState.Recognized);
 
                     string data = Common.ConvertSemanticToArmaCompatible(speechRecognizedEventArgs.Result.Semantics.Value.ToString(), Common.ConvertNumberToHumanString(speechRecognizedEventArgs.Result.Text, true));
-                    Logger.Debug($"Sending data to Arma: '{data}'");
-
                     Main.callback.Invoke("IVCS", "speech_recognition_result", data);
                 }
                 else
                 {
                     string[] data = speechRecognizedEventArgs.Result.Semantics.Value.ToString().Split(':');
-
                     UiManager.SetTestTextColor(int.Parse(data[1]) + 1000);
                 }
             }
