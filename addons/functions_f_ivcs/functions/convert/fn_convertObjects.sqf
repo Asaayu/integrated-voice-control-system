@@ -1,18 +1,54 @@
-params [["_input","",[""]],["_ff",false,[false]]];
+/*
+    Integrated AI Voice Control System
+	File: fn_convertObjects.sqf
+	Function: IVCS_fnc_convertObjects
+    Author: Asaayu
+    Date: 2024-12-25
 
-private _search_fnc =
+    Description:
+	Converts an object string into an object.
+
+    Parameters:
+	_input: String - The object to convert
+	_friendlyAllowed: Boolean - Whether to allow friendly objects to be selected
+
+	Returns:
+	Object - The object
+
+    Notes:
+	Selected object is sorted by distance and direction the player is facing, if cancel is selected, it will return objNull to fail intentionally.
+*/
+
+params [["_input","",[""]],["_friendlyAllowed",false,[false]]];
+
+private _fnc_type =
 {
-	params ["_types","_ff"];
+	params ["_unit","_types","_friendlyAllowed"];
+
+	private _pass = false;
+	{
+		if (_unit isKindOf _x) exitWith
+		{
+			_pass = true;
+		};
+	} forEach _types;
+
+	[_pass, false] select (_friendlyAllowed && {_unit isKindOf "Man" && {(side player) getFriend (side _unit) >= 0.6}});
+};
+
+private _fnc_search =
+{
+	params ["_types","_friendlyAllowed"];
 
 	private _target = cursorTarget;
-	if (alive _target && {[_target, _types,_ff] call _type_fnc}) then
+	if (alive _target && {[_target, _types, _friendlyAllowed] call _fnc_type}) then
 	{
 		_target
 	}
 	else
 	{
 		private _target_object = cursorObject;
-		if (alive _target_object && {[_target_object, _types, _ff] call _type_fnc}) then
+		if (alive _target_object && {[_target_object, _types, _friendlyAllowed] call _fnc_type}) then
 		{
 			_target_object
 		}
@@ -22,7 +58,7 @@ private _search_fnc =
 
 			{
 				// Only return objects that are alive, non-hidden, and of the correct type
-				if (alive _x  && {!(isObjectHidden _x) && {simulationEnabled _x && {[_x, _types, _ff] call _type_fnc}}}) then
+				if (alive _x  && {!(isObjectHidden _x) && {simulationEnabled _x && {[_x, _types, _friendlyAllowed] call _fnc_type}}}) then
 				{
 					private _direction = player getDir _x;
 					private _diff = abs (_direction - (getDir player));
@@ -66,21 +102,6 @@ private _search_fnc =
 	};
 };
 
-private _type_fnc =
-{
-	params ["_unit","_types","_ff"];
-
-	private _pass = false;
-	{
-		if (_unit isKindOf _x) exitWith
-		{
-			_pass = true;
-		};
-	} forEach _types;
-
-	[_pass, false] select (_ff && {_unit isKindOf "Man" && {(side player) getFriend (side _unit) >= 0.6}});
-};
-
 private _object = switch _input do
 {
 	// Characters
@@ -94,44 +115,44 @@ private _object = switch _input do
 	case "unit";
 	case "person":
 	{
-		[["Man"],_ff] call _search_fnc;
+		[["Man"],_friendlyAllowed] call _fnc_search;
 	};
 
 	// All Vehicles
 	case "vehicle":
 	{
-		[["Land","Air","Ship"],_ff] call _search_fnc;
+		[["Land","Air","Ship"],_friendlyAllowed] call _fnc_search;
 	};
 
 	// Vehicles - Land
 	case "car":
 	{
-		[["Car"],_ff] call _search_fnc;
+		[["Car"],_friendlyAllowed] call _fnc_search;
 	};
 	case "truck":
 	{
-		[["Truck_F"],_ff] call _search_fnc;
+		[["Truck_F"],_friendlyAllowed] call _fnc_search;
 	};
 	case "kart":
 	{
-		[["Kart_01_Base_F"],_ff] call _search_fnc;
+		[["Kart_01_Base_F"],_friendlyAllowed] call _fnc_search;
 	};
 	case "quadbike":
 	{
-		[["Quadbike_01_base_F"],_ff] call _search_fnc;
+		[["Quadbike_01_base_F"],_friendlyAllowed] call _fnc_search;
 	};
 	case "suv":
 	{
-		[["SUV_01_base_F"],_ff] call _search_fnc;
+		[["SUV_01_base_F"],_friendlyAllowed] call _fnc_search;
 	};
 	case "armor";
 	case "tank":
 	{
-		[["Tank_F"],_ff] call _search_fnc;
+		[["Tank_F"],_friendlyAllowed] call _fnc_search;
 	};
 	case "apc":
 	{
-		[["Wheeled_APC_F", "APC_Tracked_01_base_F"],_ff] call _search_fnc;
+		[["Wheeled_APC_F", "APC_Tracked_01_base_F"],_friendlyAllowed] call _fnc_search;
 	};
 
 	// Vehicles - Water
@@ -139,23 +160,23 @@ private _object = switch _input do
 	case "ship";
 	case "submarine":
 	{
-		[["Ship"],_ff] call _search_fnc;
+		[["Ship"],_friendlyAllowed] call _fnc_search;
 	};
 
 	// Vehicles - Air
 	case "plane":
 	{
-		[["Plane"],_ff] call _search_fnc;
+		[["Plane"],_friendlyAllowed] call _fnc_search;
 	};
 	case "helicopter";
 	case "chopper";
 	case "heli":
 	{
-		[["Helicopter"],_ff] call _search_fnc;
+		[["Helicopter"],_friendlyAllowed] call _fnc_search;
 	};
 	case "aircraft":
 	{
-		[["Air"],_ff] call _search_fnc;
+		[["Air"],_friendlyAllowed] call _fnc_search;
 	};
 
 	// Can't determine the type of object

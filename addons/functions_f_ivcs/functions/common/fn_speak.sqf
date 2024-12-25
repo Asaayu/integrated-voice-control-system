@@ -11,7 +11,7 @@
     Parameters:
 	_folder: String - The folder containing the voice file
 	_file: String - The voice file to play
-	_force_normal: Boolean - Forces the voice line to be played in the normal state
+	_forceNormal: Boolean - Forces the voice line to be played in the normal state
 	_unit: Object - The unit to play the voice line for
 
 	Returns:
@@ -21,25 +21,25 @@
 	Due to limitations with the Arma 3 engine, the voice line will be played using playSound3D, rather then say3D.
 */
 
-params [["_folder", "", [""]], ["_file", "", [""]], ["_force_normal", false, [false]], ["_unit", player, [objNull]]];
+params [["_folder", "", [""]], ["_file", "", [""]], ["_forceNormal", false, [false]], ["_unit", player, [objNull]]];
 
 private _voice = configFile >> "CfgVoice" >> (speaker _unit);
-private _voice_directory = (getArray (_voice >> "directories"))#0;
+private _voiceDirectory = (getArray (_voice >> "directories"))#0;
 
 // Remove the first backslash
-_voice_directory = _voice_directory select [1, 999];
+_voiceDirectory = _voiceDirectory select [1, 999];
 
-if (_voice_directory isEqualTo "") exitWith {false};
+if (_voiceDirectory isEqualTo "") exitWith {false};
 
 // "\A3\Dubbing_Radio_F\data\ENG\Male01ENG\"
 // Make sure there is a black slash at the end of the string
-if !((_voice_directory select [count _voice_directory - 1,1]) isEqualTo "\") then
+if !((_voiceDirectory select [count _voiceDirectory - 1,1]) isEqualTo "\") then
 {
-	_voice_directory = _voice_directory + "\";
+	_voiceDirectory = _voiceDirectory + "\";
 };
 
 // Add the protocol to the voice directory
-_voice_directory = _voice_directory + (getText (_voice >> "protocol")) + "\";
+_voiceDirectory = _voiceDirectory + (getText (_voice >> "protocol")) + "\";
 
 // Add the current unit state
 private _mode = switch (behaviour _unit) do
@@ -51,8 +51,8 @@ private _mode = switch (behaviour _unit) do
 	case "COMBAT": {"Combat"};
 	case "STEALTH": {"Stealth"};
 };
-if _force_normal then {_mode = "Normal"};
-_voice_directory = _voice_directory + _mode + "\";
+if _forceNormal then {_mode = "Normal"};
+_voiceDirectory = _voiceDirectory + _mode + "\";
 
-playSound3D [_voice_directory + _folder + "\" + _file, vehicle _unit, false, eyePos _unit, 1, 1, 0];
+playSound3D [_voiceDirectory + _folder + "\" + _file, vehicle _unit, false, eyePos _unit, 1, 1, 0];
 true;

@@ -1,3 +1,23 @@
+/*
+    Integrated AI Voice Control System
+	File: fn_convertGroups.sqf
+	Function: IVCS_fnc_convertGroups
+    Author: Asaayu
+    Date: 2024-12-25
+
+    Description:
+	Converts a group string into a group of units.
+
+    Parameters:
+	_groups: Array - An array of group strings
+
+	Returns:
+	Array - An array of units
+
+    Notes:
+	Group strings can be either color teams (red, green, yellow, blue, white) or all units (group, squad, everybody, everyone, every1, all).
+*/
+
 params [["_groups",[],[[]]]];
 
 private _all = false;

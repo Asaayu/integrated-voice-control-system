@@ -1,7 +1,7 @@
 /*
     Integrated AI Voice Control System
-	File: fn_garrison.sqf
-	Function: IVCS_fnc_garrison
+	File: fn_garrisonPositions.sqf
+	Function: IVCS_fnc_garrisonPositions
     Author: Asaayu
     Date: 2024-12-24
 

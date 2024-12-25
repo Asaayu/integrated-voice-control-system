@@ -1,6 +1,27 @@
-params [["_direction","",[""]],["_relative_object",objNull,[objNull]]];
+/*
+    Integrated AI Voice Control System
+	File: fn_convertDirection.sqf
+	Function: IVCS_fnc_convertDirection
+    Author: Asaayu
+    Date: 2024-12-25
 
-private _direction_final = switch (toLower _direction) do
+    Description:
+	Converts a direction string into a direction in degrees.
+
+    Parameters:
+	_direction: String - The direction to convert
+	_relativeObject: Object - The object to use as a reference for relative directions
+
+	Returns:
+	Number - The direction in degrees
+
+    Notes:
+	Direction strings can be either compass ordinals (north, north east, east, etc.) or relative directions (front, back, left, right).
+*/
+
+params [["_direction","",[""]],["_relativeObject",objNull,[objNull]]];
+
+private _directionFinal = switch (toLower _direction) do
 {
 	// Compass Directions
 	case ("north"):
@@ -40,15 +61,15 @@ private _direction_final = switch (toLower _direction) do
 	case ("back");
 	case ("backwards"):
 	{
-		(getDir _relative_object) + 180
+		(getDir _relativeObject) + 180
 	};
 	case ("right"):
 	{
-		(getDir _relative_object) + 90
+		(getDir _relativeObject) + 90
 	};
 	case ("left"):
 	{
-		(getDir _relative_object) - 90
+		(getDir _relativeObject) - 90
 	};
 
 	case ("front");
@@ -56,8 +77,8 @@ private _direction_final = switch (toLower _direction) do
 	case ("forwards");
 	default
 	{
-	    (getDir _relative_object) + 0
+	    (getDir _relativeObject) + 0
 	};
 };
 
-_direction_final
+_directionFinal

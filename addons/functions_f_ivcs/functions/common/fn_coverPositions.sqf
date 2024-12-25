@@ -1,7 +1,7 @@
 /*
     Integrated AI Voice Control System
-	File: fn_cover.sqf
-	Function: IVCS_fnc_cover
+	File: fn_coverPositions.sqf
+	Function: IVCS_fnc_coverPositions
     Author: Asaayu
     Date: 2024-12-24
 
