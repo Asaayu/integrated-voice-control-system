@@ -25,16 +25,23 @@ class CfgFunctions
 	class functions_f_ivcs
 	{
 		tag = "IVCS";
-		class ivcs_common
+		class ivcs_ai
 		{
-			file = "\z\ivcs\addons\functions_f_ivcs\functions\common";
-			class openExternalProgram {};
-		};
-		class ivcs_ptt
-		{
-			file = "\z\ivcs\addons\functions_f_ivcs\functions\ptt";
-			class onPttDown {};
-			class onPttUp {};
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\ai";
+			class assignTeamColor {};
+			class getIn {};
+			class gunLights {};
+			class gunPointers {};
+			class healSelf {};
+			class moveToCover {};
+			class moveToGarrison {};
+			class moveToObject {};
+			class regroup {};
+			class scanHorizon {};
+			class setCombatMode {};
+			class sitrep {};
+			class suppressiveFire {};
+			class targetObject {};
 		};
 		class ivcs_callback
 		{
@@ -43,26 +50,33 @@ class CfgFunctions
 			class handleSpeechRecognitionResult {};
 			class handleUiCallback {};
 		};
+		class ivcs_common
+		{
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\common";
+			class confirmationSpeak {};
+			class coverPositions {};
+			class garrisonPositions {};
+			class getCursorWorldPosition {};
+			class hasMedicalItem {};
+			class openExternalProgram {};
+			class player {};
+			class speak {};
+		};
 		class ivcs_convert
 		{
 			file = "\z\ivcs\addons\functions_f_ivcs\functions\convert";
-			class convertUnits {};
-			class convertGroups {};
 			class convertDirection {};
+			class convertFormation {};
+			class convertGroups {};
 			class convertObjects {};
 			class convertRole {};
-			class convertFormation {};
+			class convertUnits {};
 		};
-		class ivcs_ai
+		class ivcs_ptt
 		{
-			file = "\z\ivcs\addons\functions_f_ivcs\functions\ai";
-			class cover {};
-			class garrison {};
-		};
-		class ivcs_player
-		{
-			file = "\z\ivcs\addons\functions_f_ivcs\functions\player";
-			class speak {};
+			file = "\z\ivcs\addons\functions_f_ivcs\functions\ptt";
+			class onPttDown {};
+			class onPttUp {};
 		};
 	};
 };

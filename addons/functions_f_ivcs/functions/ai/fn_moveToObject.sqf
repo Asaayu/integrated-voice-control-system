@@ -1,7 +1,7 @@
 /*
     Integrated AI Voice Control System
-	File: fn_moveObject.sqf
-	Function: IVCS_fnc_moveObject
+	File: fn_moveToObject.sqf
+	Function: IVCS_fnc_moveToObject
     Author: Asaayu
     Date: 2024-12-25
 

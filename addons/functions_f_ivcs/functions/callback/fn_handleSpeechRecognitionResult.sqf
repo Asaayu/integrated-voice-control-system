@@ -198,7 +198,7 @@ switch (toLower _function) do
 	};
 	case "move_object":
 	{
-		[_units, _right#0] call IVCS_fnc_moveObject;
+		[_units, _right#0] call IVCS_fnc_moveToObject;
 	};
 	case "fire":
 	{
