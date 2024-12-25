@@ -24,11 +24,10 @@ params [["_unit",objNull,[objNull]]];
 if (isNull _unit) exitWith {false};
 if (isPlayer _unit) exitWith {false};
 if !(alive _unit) exitWith {false};
-if ((vehicle _unit) == _unit) exitWith {false};
-if ((damage _unit) <= 0.1) exitWith {false};
+if (isNull objectParent _unit) exitWith {false};
+if ((damage _unit) <= 0.15) exitWith {false};
 
 // Check if the unit has a medical item in its inventory
 if (!([_unit] call IVCS_fnc_hasMedicalItem)) exitWith {false};
 
-
-// player action ["HealSoldier", soldier1];
+_unit action ["HealSoldierSelf", _unit]; // May try 'HealSoldier' instead to see what the difference is
