@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<grammar version="1.0" xml:lang="en-GB" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
+<grammar version="1.0" xml:lang="xx-XX" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
 	<lexicon uri="en.pls" />
 
 	<rule id="main">
@@ -124,7 +124,6 @@
 
 			<!-- Laser/Lights call -->
 			<item>
-				<ruleref uri="#selection"/>
 				<one-of>
 					<item>
 						lights
