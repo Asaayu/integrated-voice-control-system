@@ -43,7 +43,7 @@ The **Integrated AI Voice Control System** enables players to issue voice comman
 4. Files other then the two `.dll` files above can be ignored.
 
 ### Building the Arma 3 Mod
-Note: The C# extension must be built first to be automatically included in the mod.
+The C# extension must be built first to be automatically included in the mod.
 1. Open command prompt in the root directory of the repository.
 2. Run the following command to build the mod:
     ```bash
@@ -59,13 +59,15 @@ Note: The C# extension must be built first to be automatically included in the m
 4. Use the mod as you would normally to test changes.
 
 ### Adding New Commands
-Note: Use the already existing commands and how they are implemented as a reference when adding new commands.
+Use the already existing commands and how they are implemented as a reference when adding new commands.
 
-1. Add the new command to the grammar XML files in the `grammar` directory for your desired language.
+1. Add the new command to the grammar XML template files in the `grammar` directory for your desired language.
 2. Add the phonetic pronunciation for the new command to the PLS file in the `grammar` directory.
 3. Add the localized group chat output for the new command to the first switch block in the `fn_handleSpeechRecognitionResult.sqf` file in the `\addons\functions_f_ivcs\functions\callback` directory.
 4. Add the functionality for the new command in the second switch block in the `fn_handleSpeechRecognitionResult.sqf` file.
 5. Build the Arma 3 mod and test that the new command is recognized and functions as expected.
+
+*Note: The grammar files are setup as templates based on each language. When built, HEMTT will automatically generate the necessary grammar files for each language supported by Windows Speech Recognition.*
 
 ---
 
