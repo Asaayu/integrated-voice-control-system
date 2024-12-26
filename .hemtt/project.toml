@@ -10,12 +10,13 @@ signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
 major = 2
 minor = 0
 patch = 0 # Automatically incremented when a successful release is completed
-build = 0 # Automatically incremented when a successful build is completed
+build = 4 # Automatically incremented when a successful build is completed
 
 [files]
 include = [
     "grammar/*.pls",
     "grammar/*.xml",
+    "version_check.txt",
     "*.dll",
     "*.so",
     "LICENSE",

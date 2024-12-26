@@ -27,8 +27,8 @@ namespace IntegratedVoiceControlSystem
             // Setup the logging system
             Logger.Setup();
 
-            // Check for a new version of the mod
-            VersionManager.CheckModVersion();
+            // Setup the version manager
+            VersionManager.Setup();
 
             // Setup the speech recognition engine
             SpeechEngineHandler.Setup();

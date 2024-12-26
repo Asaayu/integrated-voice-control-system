@@ -34,6 +34,3 @@ HEMTT_RFS
     .write(projectData);
 
 print("Incremented future build version from " + current.to_string() + " to " + next.to_string());
-
-// If this is not a release build, also update the extension version, as the release build will do this too
-if (!HEMTT.is_release()) { HEMTT.script("update_extension_version"); }

@@ -25,6 +25,3 @@ projectData.replace(prefix + current.to_string(), prefix + next.to_string());
 // Write the modified contents to the real file system
 HEMTT_RFS.join(".hemtt").join("project.toml").create_file().write(projectData);
 print("Incremented future patch version from " + current.to_string() + " to " + next.to_string());
-
-// Also update the extension version to match the new project version
-HEMTT.script("update_extension_version");

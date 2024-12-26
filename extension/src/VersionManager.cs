@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Speech.Recognition;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace IntegratedVoiceControlSystem
@@ -10,10 +13,42 @@ namespace IntegratedVoiceControlSystem
     {
         private static readonly string GIT_REPO = "Asaayu/integrated-voice-control-system/main";
         private static readonly string GIT_VERSION_CHECK_URL = $"http://raw.githubusercontent.com/{GIT_REPO}/version_check.txt";
+        private static Version version;
+
+        internal static void Setup()
+        {
+            try
+            {
+                string executingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string versionFilePath = $"{executingDirectory}\\version_check.txt";
+
+                Logger.Debug($"Checking if version file exists.");
+                if (!File.Exists(versionFilePath))
+                {
+                    throw new FileNotFoundException();
+                }
+
+                // Load the version from the file
+                version = Version.Parse(File.ReadAllText(versionFilePath).ToLower().Trim());
+
+                // Once the version has been loaded, check if there is a new version available
+                CheckModVersion();
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                Logger.Error("The version file could not be found.", fileNotFoundException);
+                version = Version.Parse("0.0.0.0");
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("An error occurred while attempting to get the mod version.", exception);
+                version = Version.Parse("0.0.0.0");
+            }
+        }
 
         internal static Version GetModVersion()
         {
-            return Assembly.GetExecutingAssembly().GetName().Version;
+            return version;
         }
 
         internal static async void CheckModVersion()
