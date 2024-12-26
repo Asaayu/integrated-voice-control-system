@@ -41,7 +41,7 @@ I tasti possono essere personalizzati nelle opzioni di CBA sotto:
 [code]Opzioni > Controlli > Configura Addon > Sistema di Controllo Vocale AI Integrato[/code]
 
 [hr][/hr]
-[h1]Iniziare</h1]
+[h1]Iniziare[/h1]
 [b]Preparazione Prima della Partita[/b]:
 Installa un pacchetto lingua supportato e imposta il tuo microfono come dispositivo di input predefinito nelle impostazioni audio.
 
