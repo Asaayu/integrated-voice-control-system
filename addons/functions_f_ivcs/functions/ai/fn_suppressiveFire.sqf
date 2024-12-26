@@ -24,7 +24,7 @@ params [["_units",[],[[]]], ["_rightData", [], [[]]]];
 // Get units to suppress a position
 _rightData params ["_type"];
 
-private _object = [_type] call ivcs_fnc_convertObjects;
+private _object = [_type] call IVCS_fnc_convertObjects;
 
 // Only command units to watch the target if the object actually exists
 if !(isNull _object) then

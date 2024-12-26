@@ -27,12 +27,12 @@ params [
 ];
 
 private _player = call IVCS_fnc_player;
-private _units = [_left] call ivcs_fnc_convertUnits;
+private _units = [_left] call IVCS_fnc_convertUnits;
 
 // If no units are found, then try to convert the group
 if (count _units <= 0) then
 {
-    _units = [_left] call ivcs_fnc_convertGroups;
+    _units = [_left] call IVCS_fnc_convertGroups;
 
     // If no groups are found, then fallback to the entire group
     if (count _units <= 0) then
@@ -109,6 +109,10 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
         case "target_object": {("ivcs" callExtension ["replace", [localize "STR_A3_TARGET____1", "%1", "%2"]])#0};
         case "watch_cursor": {localize "STR_IVCS_SYSTEMCHAT_WATCH_1"};
         case "watch_direction": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___WATCH____2", "%1.1", "%1"]])#0};
+        case "take_position": {localize "STR_IVCS_SYSTEMCHAT_TAKE_POSITION_1"};
+        case "heal_self": {localize "STR_IVCS_SYSTEMCHAT_HEAL_SELF_1"};
+        case "heal_find": {localize "STR_IVCS_SYSTEMCHAT_HEAL_FIND_1"};
+        case "heal_other": {("ivcs" callExtension ["replace", [localize "str_a3___1_1___heal____2", "%1.1", "%1"]])#0};
         default {""};
     };
 
@@ -150,6 +154,9 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
 
     private _frameHandles = _x getVariable ["ivcs_frame_handles", []];
     { [_x] call CBA_fnc_removePerFrameHandler; } forEach ivcs_frame_handles;
+
+    // "PATH" needs to be enabled as it may have been disabled by the HealOther or HealFind functions
+    _x enableAI "PATH";
 
     _x setVariable ["ivcs_handles", []];
     _x setVariable ["ivcs_frame_handles", []];
@@ -301,7 +308,7 @@ switch (toLower _function) do
 
         private _distance = parseNumber _distance;
         private _unit = [1000, 1] select (_unit find "meter" == 0);
-        private _direction = [_direction, _player] call ivcs_fnc_convertDirection;
+        private _direction = [_direction, _player] call IVCS_fnc_convertDirection;
         private _end_pos = (getPosATL _player) getPos [_distance * _unit, _direction];
         _units commandMove _end_pos;
     };
@@ -309,7 +316,7 @@ switch (toLower _function) do
     {
         _right params ["_direction"];
 
-        private _direction = [_direction, _player] call ivcs_fnc_convertDirection;
+        private _direction = [_direction, _player] call IVCS_fnc_convertDirection;
         _units commandWatch (_player getPos [10000, _direction]);
     };
     case "watch_cursor":
@@ -494,6 +501,30 @@ switch (toLower _function) do
                 _x land "LAND";
             };
         } forEach _units;
+    };
+    case "take_position":
+    {
+        {
+            _unit doMove ASLToATL getPosASL _player;
+        } forEach _units;
+    };
+    case "heal_self":
+    {
+        {
+            private _success = [_x] call IVCS_fnc_healSelf;
+            if (_success) then
+            {
+                [_x] call IVCS_fnc_confirmationSpeak;
+            };
+        } forEach _units;
+    };
+    case "heal_find":
+    {
+        [_units] call IVCS_fnc_healFind;
+    };
+    case "heal_other":
+    {
+        [_units] call IVCS_fnc_healOther;
     };
     default
     {

@@ -157,6 +157,9 @@
             <Key ID="STR_IVCS_FEEDBACK_TARGET_TEXT">
                 <Original>Target</Original>
             </Key>
+            <Key ID="STR_IVCS_FEEDBACK_TARGET_UNIT_NOT_FOUND">
+                <Original>No target unit could be found</Original>
+            </Key>
             <Key ID="STR_IVCS_FEEDBACK_VEHICLE_OBJECT_NOT_FOUND">
                 <Original>No vehicle object could be found</Original>
             </Key>
@@ -177,6 +180,12 @@
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_GET_OUT_1">
                 <Original>%1 - Get Out</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_FIND_1">
+                <Original>%1 - Find Treatment</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_SELF_1">
+                <Original>%1 - Treat Yourself</Original>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LAND_HELICOPTER_1">
                 <Original>%1 - Land Helicopter</Original>
@@ -227,6 +236,9 @@
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_STAND_1">
                 <Original>%1 - Stand</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_TAKE_POSITION_1">
+                <Original>%1 - Take Position</Original>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_WATCH_1">
                 <Original>%1 - Watch</Original>

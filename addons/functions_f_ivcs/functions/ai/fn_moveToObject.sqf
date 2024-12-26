@@ -21,7 +21,7 @@
 
 params [["_units",[],[[]]], ["_objectText", "", [""]]];
 
-private _object = [_objectText, true] call ivcs_fnc_convertObjects;
+private _object = [_objectText, true] call IVCS_fnc_convertObjects;
 
 if !(isNull _object) then
 {

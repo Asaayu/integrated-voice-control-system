@@ -22,7 +22,7 @@ params [["_units",[],[[]]], ["_right", [], [[]]]];
 
 _right params [["_type","",[""]], "_as", ["_role","",[""]]];
 
-private _object = [_type] call ivcs_fnc_convertObjects;
+private _object = [_type] call IVCS_fnc_convertObjects;
 if (_function == "get_in_player" && {!(vehicle _player isEqualTo player)}) then
 {
     _object = vehicle _player;
@@ -30,7 +30,7 @@ if (_function == "get_in_player" && {!(vehicle _player isEqualTo player)}) then
 
 if !(isNull _object) then
 {
-    private _roleText = [_role] call ivcs_fnc_convertRole;
+    private _roleText = [_role] call IVCS_fnc_convertRole;
 
     ["100_Commands", selectRandom["BoardThatVehicle.ogg","GetInThatVehicle.ogg"]] call IVCS_fnc_speak;
 

@@ -975,6 +975,91 @@
                     </item>
                 </one-of>
             </item>
+
+            <!-- Take position call -->
+            <item>
+                <ruleref uri="#selection"/>
+                <one-of>
+                    <item>
+                        take my position
+                        <tag>out="take my position[take_position]";</tag>
+                    </item>
+                    <item>
+                        move to my spot
+                        <tag>out="move to my spot[take_position]";</tag>
+                    </item>
+                </one-of>
+            </item>
+
+            <!-- Heal self call -->
+            <item>
+                <ruleref uri="#selection"/>
+                <one-of>
+                    <item>
+                        tend to yourself
+                        <tag>out="tend to yourself[heal_self]";</tag>
+                    </item>
+                    <item>
+                        heal up
+                        <tag>out="heal up[heal_self]";</tag>
+                    </item>
+                    <item>
+                        heal yourself
+                        <tag>out="heal yourself[heal_self]";</tag>
+                    </item>
+                    <item>
+                        patch yourself
+                        <tag>out="patch yourself[heal_self]";</tag>
+                    </item>
+                </one-of>
+            </item>
+
+            <!-- Heal other call -->
+            <item>
+                <ruleref uri="#selection"/>
+                <one-of>
+                    <item>
+                        tend to
+                        <tag>out="tend to[heal_other]:{unit}";</tag>
+                    </item>
+                    <item>
+                        treat
+                        <tag>out="treat[heal_other]:{unit}";</tag>
+                    </item>
+                    <item>
+                        heal
+                        <tag>out="heal[heal_other]:{unit}";</tag>
+                    </item>
+                    <item>
+                        patch up
+                        <tag>out="patch up[heal_other]:{unit}";</tag>
+                    </item>
+                    <item>
+                        medic
+                        <tag>out="medic[heal_other]:{unit}";</tag>
+                    </item>
+                </one-of>
+                <ruleref uri="#single_unit_selection"/>
+            </item>
+
+            <!-- Find heal call -->
+            <item>
+                <ruleref uri="#selection"/>
+                <one-of>
+                    <item>
+                        get some medical
+                        <tag>out="get some medical[heal_find]";</tag>
+                    </item>
+                    <item>
+                        find some medical
+                        <tag>out="find some medical[heal_find]";</tag>
+                    </item>
+                    <item>
+                        find treatment
+                        <tag>out="find treatment[heal_find]";</tag>
+                    </item>
+                </one-of>
+            </item>
         </one-of>
     </rule>
 
@@ -1010,6 +1095,12 @@
     <rule id="group_selection" scope="public">
         <!-- Can select as many groups in a single call as needed -->
         <item repeat="1-"><ruleref uri="#group_name"/></item>
+    </rule>
+
+    <rule id="single_unit_selection" scope="public">
+        <item>
+            <ruleref uri="#unit_number"/>
+        </item>
     </rule>
 
     <!-- Select a type of target -->
