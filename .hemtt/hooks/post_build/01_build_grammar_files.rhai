@@ -11,19 +11,25 @@
     Builds the grammar files for each supported language code from the template base grammar files.
 */
 
-// All the language codes that are supported by Windows Speech Recognition
+// All the language codes that have 'Speech Recognition' support in Windows Language installation
 const languageCodes = [
-    "en-US",  //# English (United States)
-    "en-GB",  //# English (United Kingdom)
-    "en-CA",  //# English (Canada)
-    "en-IN",  //# English (India)
-    "en-AU",  //# English (Australia)
-    "fr-FR",  //# French (France)
-    "de-DE",  //# German (Germany)
-    "ja-JP",  //# Japanese (Japan)
-    "zh-CN",  //# Chinese Simplified (China)
-    "zh-TW",  //# Chinese Traditional (Taiwan)
-    "es-ES",  //# Spanish (Spain)
+    "da-DK",  // Danish (Denmark)
+    "de-DE",  // German (Germany)
+    "en-AU",  // English (Australia)
+    "en-CA",  // English (Canada)
+    "en-GB",  // English (United Kingdom)
+    "en-IN",  // English (India)
+    "en-US",  // English (United States)
+    "es-ES",  // Spanish (Spain)
+    "es-MX",  // Spanish (Mexico)
+    "fr-CA",  // French (Canada)
+    "fr-FR",  // French (France)
+    "it-IT",  // Italian (Italy)
+    "ja-JP",  // Japanese (Japan)
+    "pt-BR",  // Portuguese (Brazil)
+    "zh-CN",  // Chinese Simplified (China)
+    "zh-HK",  // Chinese Traditional (Hong Kong)
+    "zh-TW",  // Chinese Traditional (Taiwan)
 ];
 
 // Get all the template grammar files
