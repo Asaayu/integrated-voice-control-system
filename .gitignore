@@ -1,14 +1,21 @@
-*.pbo
-.hemttout
-hemtt
+# Ignored Files
+**/*.biprivatekey
+**/*.dll
+**/*.dll.config
+**/*.pbo
+**/*.pdb
+**/*.xml
+
+# Ignored Directories
+**/.hemttout/
+**/.vs/
+**/.vscode/
+**/hemtt/
+**/obj/
+**/packages/
+
+# Allowed Directories
+!/addons/**/*
+
+# Ignored Executables
 hemtt.exe
-*.biprivatekey
-**/*.vscode
-**/*.vs
-/extension/obj
-/extension/packages
-*.dll
-*.dll.config
-*.pdb
-*.xml
-!/grammar/*.xml

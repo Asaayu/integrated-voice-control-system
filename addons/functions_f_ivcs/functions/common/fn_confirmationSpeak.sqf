@@ -1,21 +1,21 @@
 /*
     Integrated AI Voice Control System
-	File: fn_confirmationSpeak.sqf
-	Function: IVCS_fnc_confirmationSpeak
+    File: fn_confirmationSpeak.sqf
+    Function: IVCS_fnc_confirmationSpeak
     Author: Asaayu
     Date: 2024-12-25
 
     Description:
-	Plays a confirmation sound for the unit passed through the parameter.
+    Plays a confirmation sound for the unit passed through the parameter.
 
     Parameters:
-	_unit: Object - The unit to play the confirmation sound for
+    _unit: Object - The unit to play the confirmation sound for
 
-	Returns:
-	NONE
+    Returns:
+    NONE
 
     Notes:
-	The confirmation sound is a random sound from the Confirmation soundset.
+    The confirmation sound is a random sound from the Confirmation soundset.
 */
 
 params [["_unit",objNull,[objNull]]];

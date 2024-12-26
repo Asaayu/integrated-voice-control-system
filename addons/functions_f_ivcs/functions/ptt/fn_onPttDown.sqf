@@ -1,28 +1,28 @@
 /*
     Integrated AI Voice Control System
-	File: fn_onPttDown.sqf
-	Function: IVCS_fnc_onPttDown
+    File: fn_onPttDown.sqf
+    Function: IVCS_fnc_onPttDown
     Author: Asaayu
     Date: 2024-12-22
 
     Description:
-	Called when the PTT key is pressed, displays the PTT overlay, as well as sending an event to the extension to start listening for voice input.
+    Called when the PTT key is pressed, displays the PTT overlay, as well as sending an event to the extension to start listening for voice input.
 
     Parameters:
-	NONE
+    NONE
 
-	Returns:
-	NONE
+    Returns:
+    NONE
 
     Notes:
-	This function is called by the CBA keybind system when the PTT key is pressed, this function should not be called directly.
+    This function is called by the CBA keybind system when the PTT key is pressed, this function should not be called directly.
 */
 
 private _duckingEnabled = uiNamespace getVariable ["ivcs_ducking", false];
 if (_duckingEnabled) then
 {
-	uiNamespace setVariable ["ivcs_ducking_volume", soundVolume];
-	0.5 fadeSound 0.1;
+    uiNamespace setVariable ["ivcs_ducking_volume", soundVolume];
+    0.5 fadeSound 0.1;
 };
 
 "ivcs_ptt" cutRsc ["ivcs_ptt_display", "PLAIN", 0, true, false];

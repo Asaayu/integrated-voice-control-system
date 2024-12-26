@@ -1,6 +1,6 @@
 /*
     Integrated AI Voice Control System
-	File: 01_build_functions_config.rhai
+    File: 01_build_functions_config.rhai
     Author: Asaayu
     Date: 2024-12-26
 

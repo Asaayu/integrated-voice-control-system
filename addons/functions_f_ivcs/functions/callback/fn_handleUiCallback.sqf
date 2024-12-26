@@ -1,28 +1,28 @@
 /*
     Integrated AI Voice Control System
-	File: fn_handleUiCallback.sqf
-	Function: IVCS_fnc_handleUiCallback
+    File: fn_handleUiCallback.sqf
+    Function: IVCS_fnc_handleUiCallback
     Author: Asaayu
     Date: 2024-12-22
 
     Description:
-	Handles callbacks from the extension that are requesting UI changes.
+    Handles callbacks from the extension that are requesting UI changes.
 
     Parameters:
-	_left: ARRAY - The prefix of the speech recognition result
-	_function: STRING - The function that the speech recognition result is for
-	_right: ARRAY - The arguments of the speech recognition result
+    _left: ARRAY - The prefix of the speech recognition result
+    _function: STRING - The function that the speech recognition result is for
+    _right: ARRAY - The arguments of the speech recognition result
 
-	Returns:
-	NONE
+    Returns:
+    NONE
 
     Notes:
-	This function is called by the extension callback handler when a callback is received, and should not be called directly.
+    This function is called by the extension callback handler when a callback is received, and should not be called directly.
 */
 
 params [
-	["_function","",[""]],
-	["_data",[],[[]]]
+    ["_function","",[""]],
+    ["_data",[],[[]]]
 ];
 
 // Helper function to update the text of a list of controls
@@ -31,11 +31,11 @@ private _updateControlText = {
     {
         private _ctrl = _display displayCtrl _x;
         if (ctrlType _ctrl == 13) then
-		{
+        {
             _ctrl ctrlSetStructuredText parseText _text;
         }
-		else
-		{
+        else
+        {
             _ctrl ctrlSetText _text;
         };
     } forEach _ctrls;
@@ -87,19 +87,19 @@ switch (_function) do {
         _data params [["_textInput",""]];
 
         private _display = uiNamespace getVariable ["ivcs_test_display", displayNull];
-		private _ctrls = [5000];
+        private _ctrls = [5000];
 
-		if (_textInput != "") then
-		{
+        if (_textInput != "") then
+        {
             (_textInput splitString(":")) params [["_text",""], ["_confidence",""]]; // formatted as "text:confidence"
-			private _localizedConfidence = format[localize "STR_IVCS_SETTINGS_TESTING_CONFIDENCE_TEXT", _confidence];
-       	 	private _finalText = format["<t font='RobotoCondensed'>%1</t> - %2", _text, _localizedConfidence];
-        	[_display, _ctrls, _finalText] call _updateControlText;
-		}
-		else
-		{
-			[_display, _ctrls, ""] call _updateControlText;
-		};
+            private _localizedConfidence = format[localize "STR_IVCS_SETTINGS_TESTING_CONFIDENCE_TEXT", _confidence];
+                private _finalText = format["<t font='RobotoCondensed'>%1</t> - %2", _text, _localizedConfidence];
+            [_display, _ctrls, _finalText] call _updateControlText;
+        }
+        else
+        {
+            [_display, _ctrls, ""] call _updateControlText;
+        };
     };
     case "set_test_text_color":
     {

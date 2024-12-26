@@ -5,7 +5,7 @@
 
 class RscTitles
 {
-	#include "displays\ivcs_ptt_display.hpp"
+    #include "displays\ivcs_ptt_display.hpp"
 };
 
 #include "displays\ivcs_mod_test_display.hpp"

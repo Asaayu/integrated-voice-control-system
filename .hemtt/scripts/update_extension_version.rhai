@@ -1,3 +1,13 @@
+/*
+    Integrated AI Voice Control System
+    File: update_extension_version.rhai
+    Author: Asaayu
+    Date: 2024-12-26
+
+    Description:
+    Updates the extension version in the AssemblyInfo.cs file, incrementing the build and patch versions if necessary.
+*/
+
 // Read the extension assembly information from the real file system
 let assemblyInfoTemplate = HEMTT_RFS
     .join("extension")
