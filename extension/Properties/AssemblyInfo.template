@@ -17,13 +17,13 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Asaayu")]
 [assembly: AssemblyProduct("Integrated AI Voice Control System")]
-[assembly: AssemblyCopyright("Copyright © 2021 - 2024 Asaayu")]
+[assembly: AssemblyCopyright("Copyright © 2021 - __HEMTT_INSERT_YEAR__ Asaayu")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("d0a23689-f3bd-434b-b341-3e99eefd46cd")]
 
-[assembly: AssemblyVersion("2.0.5.23")]
-[assembly: AssemblyFileVersion("2.0.5.23")]
+[assembly: AssemblyVersion("__HEMTT_INSERT_VERSION__")]
+[assembly: AssemblyFileVersion("__HEMTT_INSERT_VERSION__")]
 [assembly: NeutralResourcesLanguage("en")]
