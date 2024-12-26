@@ -14,8 +14,8 @@ build = 0 # Automatically incremented when a successful build is completed
 
 [files]
 include = [
-    "grammar/**/*.pls",
-    "grammar/**/*.xml",
+    "grammar/*.pls",
+    "grammar/*.xml",
     "*.dll",
     "*.so",
     "LICENSE",
@@ -25,4 +25,4 @@ exclude = [
 ]
 
 [hemtt.release]
-archive = false # Automatically done via git
+archive = false

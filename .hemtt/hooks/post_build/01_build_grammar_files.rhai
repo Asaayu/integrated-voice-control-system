@@ -1,14 +1,14 @@
 /*
     Integrated AI Voice Control System
-	File: 02_convert_grammars.rhai
+    File: 01_build_grammar_files.rhai
     Author: Asaayu
     Date: 2024-12-26
 
     Position:
-    PRE-BUILD
+    POST-BUILD
 
     Description:
-    Converts the base language grammar files into the required language-specific for Windows Speech Recognition.
+    Builds the grammar files for each supported language code from the template base grammar files.
 */
 
 // All the language codes that are supported by Windows Speech Recognition
@@ -28,7 +28,7 @@ const languageCodes = [
 
 // Get all the template grammar files
 const grammarTemplateDir = HEMTT_VFS.join("grammar");
-const currentGrammarFiles = grammarTemplateDir.list().filter(|x| x.file_name().contains(".xml"));
+const currentGrammarFiles = grammarTemplateDir.list().filter(|x| x.file_name().contains(".template"));
 
 print("Found " + currentGrammarFiles.len() + " template grammar files");
 
@@ -37,12 +37,14 @@ for currentGrammarFile in currentGrammarFiles {
     const isTestingGrammar = currentGrammarFile.file_name().contains("_test");
     const validLanguageCodes = languageCodes.filter(|x| currentGrammarFile.file_name().starts_with(x.split("-")[0]));
 
-    print(currentGrammarFile.file_name() + " -> " + validLanguageCodes.len() + " language files");
+    let currentGrammarFileNameNoExt = currentGrammarFile.file_name();
+    currentGrammarFileNameNoExt.replace(".template", "");
+    print(currentGrammarFileNameNoExt + " -> " + validLanguageCodes.len() + " language files");
     print(validLanguageCodes);
 
     for languageCode in validLanguageCodes {
         let grammarData = currentGrammarFile.open_file().read();
-        grammarData.replace("xml:lang=\"xx-XX\"", "xml:lang=\"" + languageCode + "\"");
+        grammarData.replace("__HEMTT_INSERT_LANGUAGE__", languageCode);
 
         const outGrammarFileName = languageCode + if (isTestingGrammar) { "_test" } + ".xml";
         const outGrammarPath = grammarTemplateDir.join(outGrammarFileName);

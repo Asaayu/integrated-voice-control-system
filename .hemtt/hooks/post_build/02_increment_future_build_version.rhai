@@ -1,14 +1,14 @@
 /*
     Integrated AI Voice Control System
-	File: 01_increment_patch_version.rhai
+    File: 02_increment_future_build_version.rhai
     Author: Asaayu
     Date: 2024-12-26
 
     Position:
-    POST-RELEASE
+    POST-BUILD
 
     Description:
-    Increments the project patch version by one
+    Increments the future build version by one after a successful release process is completed.
 */
 
 // Read the project.toml file from the real file system
@@ -19,11 +19,11 @@ let projectData = HEMTT_RFS
     .read();
 
 // Get the current and next build version
-let prefix = "patch = ";
-let current = HEMTT.project().version().patch();
+let prefix = "build = ";
+let current = HEMTT.project().version().build();
 let next = current + 1;
 
-// Replace the current patch version with the incremented patch version
+// Replace the current build version with the incremented build version
 projectData.replace(prefix + current.to_string(), prefix + next.to_string());
 
 // Write the modified contents to the real file system
@@ -33,7 +33,7 @@ HEMTT_RFS
     .create_file()
     .write(projectData);
 
-print("Incremented future patch version from " + current.to_string() + " to " + next.to_string());
+print("Incremented future build version from " + current.to_string() + " to " + next.to_string());
 
-// Also update the extension version to match the new project version
-HEMTT.script("update_extension_version");
+// If this is not a release build, also update the extension version, as the release build will do this too
+if (!HEMTT.is_release()) { HEMTT.script("update_extension_version"); }
