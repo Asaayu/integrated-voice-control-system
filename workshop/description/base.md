@@ -1,15 +1,11 @@
 [img]https://i.imgur.com/3NIA8mR.png[/img]
 [url=https://steamcommunity.com/id/asaayu/myworkshopfiles/][img]https://i.imgur.com/u4A7TLR.png[/img][/url]
 
-[hr][/hr]
-[h1]Integrated AI Voice Control System[/h1]
-The [b]Integrated AI Voice Control System (IVCS)[/b] allows players to issue commands to AI units within their group using voice commands. Powered by Windows' built-in voice recognition engine, this mod works seamlessly without requiring any third-party programs.
+[b]This description has been translated from English using machine learning and may not be entirely accurate. If you notice any errors or inaccuracies, please report them in the comments below.[/b]
 
 [hr][/hr]
-[h1]Features[/h1]
-[b]Voice Commands[/b]: Control AI units using natural language.
-[b]Ease of Use[/b]: Leverages Windows' built-in tools; no additional software required.
-[b]Compatibility[/b]: Designed for single-player gameplay as a squad leader.
+[h1]Integrated AI Voice Control System[/h1]
+The [b]Integrated AI Voice Control System (IVCS)[/b] allows players to issue commands to AI units within their group using voice commands. Powered by Windows' built-in speech recognition engine, this mod works seamlessly without requiring any third-party programs.
 
 [hr][/hr]
 [h1]Voice Commands[/h1]
@@ -32,7 +28,7 @@ To use this mod, you need the following:
 [*] [b]A Supported Windows Language Pack[/b]
 - The mod currently only supports the following languages: English. If you would like to assist in adding support for additional languages, please refer to the [b][url=https://steamcommunity.com/workshop/filedetails/discussion/2582780947/591758483838316620/]Localization Assistance Discussion Thread[/url][/b].
 - For assistance installing a supported language pack, please refer to Microsoft Support's [b][url=https://support.microsoft.com/windows/language-packs-for-windows-a5094319-a92d-18de-5b53-1cfc697cfca8]Language Packs for Windows[/url][/b] article.
-- For assistance setting up Voice Recognition, please refer to Microsoft Support's [b][url=https://support.microsoft.com/windows/use-voice-recognition-in-windows-83ff75bd-63eb-0b6c-18d4-6fae94050571]Use Voice Recognition in Windows[/url][/b] article.
+- For assistance setting up Speech Recognition, please refer to Microsoft Support's [b][url=https://support.microsoft.com/windows/use-voice-recognition-in-windows-83ff75bd-63eb-0b6c-18d4-6fae94050571]Use Voice Recognition in Windows[/url][/b] article.
 - After installing or switching to a supported language, you may need to restart your computer for the language to appear in your settings or for any changes to take effect.
 [/list]
 
@@ -47,19 +43,13 @@ Keybindings can be customized in the CBA options under:
 [hr][/hr]
 [h1]Getting Started[/h1]
 [b]Pre-Game Setup[/b]:
-Install the an English language pack and set up your microphone as the default input device in sound settings.
+Install a supported language pack and set up your microphone as the default input device in your sound settings.
 
 [b]In-Game Setup[/b]:
 Start a mission in the editor as a group leader with AI units, then open the [b]ESC[/b] menu, navigate to [b]Addon Options[/b], and select [b]IVCS Audio Test[/b]. Follow the on-screen instructions to verify functionality.
 
 [b]Using Commands[/b]:
 Press [b]CTRL + `[/b] (or your custom keybind) to enable voice input. A green outline around your screen indicates that the system is listening. Speak commands using the appropriate prefixes and affixes as listed in the command reference sheet.
-
-The mod will display the recognized text along with its confidence levels:
-[i]Black Background[/i]: Listening.
-[i]Red Background[/i]: Invalid sentence.
-[i]Orange Background[/i]: Valid sentence, but confidence is too low.
-[i]Green Background[/i]: Valid sentence with high confidence, the command will execute.
 
 [hr][/hr]
 [h1]Troubleshooting[/h1]
@@ -94,6 +84,4 @@ The mod and extension's source code is available on [b][url=https://github.com/A
 [h1]Important Privacy Information[/h1]
 This mod uses Sentry, a third-party error tracking service provided by Functional Software, Inc., to help monitor and diagnose technical issues with the mod. When an error occurs, Sentry collects information about the error, such as the error message, stack trace, and the user's IP, as well as certain device, program, and account information, and sends it to our Sentry ingest. This information is used solely for the purpose of identifying and fixing technical issues with our service and is not used for any other purposes or shared with any other parties.
 
-Sentry's privacy policy can be found at [b][url=sentry.io/privacy]sentry.io/privacy[/url][/b].
-
-By using this mod, you acknowledge and agree to the collection and processing of data by Sentry as described in their privacy policy.
+By using this mod, you acknowledge and agree to the collection and processing of data by Sentry as described in their privacy policy. Sentry's privacy policy can be found at [b][url=sentry.io/privacy]sentry.io/privacy[/url][/b].
