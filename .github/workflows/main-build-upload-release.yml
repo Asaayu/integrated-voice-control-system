@@ -47,17 +47,7 @@ jobs:
 
       # Step: Install SteamCMD (only if not cached)
       - name: Install SteamCMD
-        if: steps.cache-steamcmd.outputs.cache-hit != 'true'
         uses: cyberandrii/setup-steamcmd@v1
-
-      # Step: Add SteamCMD to PATH
-      - name: Add SteamCMD to PATH
-        if: steps.cache-steamcmd.outputs.cache-hit == 'true'
-        run: |
-          Write-Host "Adding SteamCMD to PATH..."
-          $steamcmdPath = "C:\hostedtoolcache\windows\steamcmd\latest\i386"
-          $env:Path += ";$steamcmdPath"
-          Write-Host "SteamCMD added to PATH"
 
       # Step: Restore SteamCMD Session
       - name: Restore SteamCMD Session
@@ -75,6 +65,16 @@ jobs:
       # Step: Setup MSBuild
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
+
+      # Step: Cache HEMTT
+      - name: Cache HEMTT
+        id: cache-hemtt
+        uses: actions/cache@v3
+        with:
+          path: ./hemtt
+          key: hemtt-${{ runner.os }}-${{ hashFiles('hemtt/**') }}
+          restore-keys: |
+            hemtt-${{ runner.os }}-
 
       # Step: Setup HEMTT
       - name: Setup HEMTT
