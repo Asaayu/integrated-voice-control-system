@@ -140,7 +140,7 @@ jobs:
           }
           $contentfolder = ".hemttout\release"
           $templateContent = Get-Content -Path $templateFilePath -Raw
-          $changeNote = "Automated update to v${{ steps.get_version.outputs.VERSION }} (${{ github.sha }}) by GitHub Actions"
+          $changeNote = "GitHub Actions: v${{ steps.get_version.outputs.VERSION }}-${{ github.sha }}"
           $updatedContent = $templateContent -replace "{{contentfolder}}", "$repo/$contentfolder"
           $updatedContent = $updatedContent -replace "{{changenote}}", $changeNote
           Set-Content -Path $templateFilePath -Value $updatedContent -Encoding utf8
