@@ -67,19 +67,8 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
 
-      # Step: Cache HEMTT
-      - name: Cache HEMTT
-        id: cache-hemtt
-        uses: actions/cache@v3
-        with:
-          path: C:\hostedtoolcache\windows\hemtt
-          key: hemtt-${{ runner.os }}-${{ hashFiles('**/.hemtt/**') }}
-          restore-keys: |
-            hemtt-${{ runner.os }}-
-
       # Step: Setup HEMTT
       - name: Setup HEMTT
-        if: steps.cache-hemtt.outputs.cache-hit != 'true'
         uses: arma-actions/hemtt@v1
 
       # Step: Cache NuGet packages
@@ -101,7 +90,7 @@ jobs:
         id: cache-build-tools
         uses: actions/cache@v3
         with:
-          path: C:\Program Files\Visual Studio\2015\BuildTools
+          path: C:\Program Files (x86)\Microsoft Visual Studio
           key: build-tools-${{ runner.os }}-${{ hashFiles('**/BuildTools_Full.exe') }}
           restore-keys: |
             build-tools-${{ runner.os }}-
