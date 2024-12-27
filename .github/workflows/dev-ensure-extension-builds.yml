@@ -1,0 +1,43 @@
+name: Ensure Extension Builds on Changes
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - "extension/**"
+      - "grammar/**"
+      - ".github/workflows/dev-ensure-extension-builds.yml"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install Microsoft Build Tools 2015 if not cached
+      - name: Install Microsoft Build Tools 2015
+        run: |
+          Write-Host "Installing Microsoft Build Tools 2015..."
+            $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
+            Invoke-WebRequest -Uri $buildToolsUrl -OutFile "BuildTools_Full.exe"
+            Start-Process -FilePath ".\BuildTools_Full.exe" -ArgumentList "/quiet /norestart" -NoNewWindow -Wait
+            Remove-Item -Path ".\BuildTools_Full.exe" -Force
+
+      # Step: Setup MSBuild
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      # Step: Install NuGet packages
+      - name: Install NuGet packages
+        run: nuget restore extension/IntegratedVoiceControlSystem.sln
+
+      # Step: Build x64 Configuration
+      - name: Build x64 Configuration
+        run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x64
+
+      # Step: Build x86 Configuration
+      - name: Build x86 Configuration
+        run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x86
