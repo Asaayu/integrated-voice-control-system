@@ -1,0 +1,104 @@
+name: Build Mod, Upload to Steam Workshop, and Create GitHub Release
+
+on:
+  push:
+    branches:
+      - main-action-test
+    paths:
+      # When extension data changes, trigger this workflow
+      - "extension/**"
+      - "grammar/**"
+      # When mod data changes, trigger this workflow
+      - ".hemtt/**"
+      - "addons/**"
+      - "include/**"
+      - "mod.cpp"
+      # When important file data changes, trigger this workflow
+      - "LICENSE"
+      - "version_check.txt"
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step: Read version from version_check.txt and set as environment variable
+      - name: Get version from version_check.txt
+        id: get_version
+        run: |
+          VERSION=$(cat version_check.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      # Step: Get the last Git tag
+      - name: Get last Git tag
+        id: get_last_tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0)
+          echo "LAST_TAG=${LAST_TAG}" >> $GITHUB_ENV
+
+      # Step: Generate changelog from commits since last tag
+      - name: Generate changelog
+        id: generate_changelog
+        run: |
+          CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s")
+          echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
+
+      # Step: Install Microsoft Build Tools 2015
+      - name: Install Microsoft Build Tools 2015
+        run: |
+          $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
+          Invoke-WebRequest -Uri $buildToolsUrl -OutFile "BuildTools_Full.exe"
+          Start-Process -FilePath "./BuildTools_Full.exe" -ArgumentList "/quiet /norestart" -NoNewWindow -Wait
+          Remove-Item -Path "./BuildTools_Full.exe" -Force
+
+      # Step: Setup MSBuild
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      # Step: Install NuGet packages
+      - name: Install NuGet packages
+        run: nuget restore extension/IntegratedVoiceControlSystem.sln
+
+      # Step: Build x64 Configuration
+      - name: Build x64 Configuration
+        run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x64
+
+      # Step: Build x86 Configuration
+      - name: Build x86 Configuration
+        run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x86
+
+      # Step: Build Release Candidate using HEMTT
+      - name: Build Release Candidate
+        run: hemtt release
+
+      # Step: Upload to Steam Workshop
+      - name: Upload to Steam Workshop
+        uses: arma-actions/workshop-upload@v1
+        with:
+          appId: '107410'  # Arma 3
+          itemId: '3393276343' # Workshop Item ID
+          contentPath: '.hemttout\\release'
+          changelog: ${{ env.CHANGELOG }}
+        env:
+          STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+          STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+
+      # Step: Create Git tag based on version
+      - name: Create Git tag
+        run: |
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
+
+      # Step: Create GitHub release for the created tag
+      - name: Create GitHub release and upload ZIP files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          body: ${{ env.CHANGELOG }}
+          files: |
+            ./releases/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,60 +1,23 @@
-# Prerequisites
-*.d
+# Ignored Files
+**/*.biprivatekey
+**/*.dll
+**/*.dll.config
+**/*.pbo
+**/*.pdb
+**/*.xml
+**/*.zip
 
-# Visual Studio
-*.suo
-*.user
-_ReSharper.*
-bin
-obj
-packages
+# Ignored Directories
+**/.hemttout/
+**/.vs/
+**/.vscode/
+**/hemtt/
+**/obj/
+**/bin/
+**/packages/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Allowed Directories
+!/addons/**/*
 
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Ignored Executables
+hemtt.exe

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" xml:lang="__HEMTT_INSERT_LANGUAGE__" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" root="main">
+    <lexicon uri="en.pls" />
+
+    <rule id="main">
+        <one-of>
+            <!-- Testing calls -->
+            <item>
+                integrated voice control system
+                <tag>out="test:1";</tag>
+            </item>
+            <item>
+                team yellow regroup
+                <tag>out="test:2";</tag>
+            </item>
+            <item>
+                1 hold fire
+                <tag>out="test:3";</tag>
+            </item>
+            <item>
+                1 2 3 4 5 return to formation
+                <tag>out="test:4";</tag>
+            </item>
+            <item>
+                everybody stop
+                <tag>out="test:5";</tag>
+            </item>
+        </one-of>
+    </rule>
+</grammar>
