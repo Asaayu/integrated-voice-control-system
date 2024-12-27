@@ -15,6 +15,7 @@
 **/obj/
 **/bin/
 **/packages/
+**/steamcmd/
 
 # Allowed Directories
 !/addons/**/*
