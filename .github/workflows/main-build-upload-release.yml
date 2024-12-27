@@ -16,6 +16,7 @@ on:
       # When important file data changes, trigger this workflow
       - "LICENSE"
       - "version_check.txt"
+      - ".github/workflows/main-build-upload-release.yml"
 
 jobs:
   build-and-upload:
@@ -25,80 +26,142 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step: Read version from version_check.txt and set as environment variable
-      - name: Get version from version_check.txt
+      # Step: Read version from version_check.txt
+      - name: Read version from version_check.txt
         id: get_version
         run: |
-          VERSION=$(cat version_check.txt)
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          # Read the version from the file
+          $VERSION = Get-Content -Path version_check.txt -Raw
+          # Set the VERSION as an output variable for the next step
+          echo "::set-output name=VERSION::$VERSION"
+          Write-Host "Version: $VERSION"
+        shell: pwsh
 
-      # Step: Get the last Git tag
-      - name: Get last Git tag
-        id: get_last_tag
-        run: |
-          LAST_TAG=$(git describe --tags --abbrev=0)
-          echo "LAST_TAG=${LAST_TAG}" >> $GITHUB_ENV
+      # Step: Install SteamCMD
+      - name: Install SteamCMD
+        uses: cyberandrii/setup-steamcmd@v1
 
-      # Step: Generate changelog from commits since last tag
-      - name: Generate changelog
-        id: generate_changelog
+      # Step: Restore SteamCMD Session
+      - name: Restore SteamCMD Session
+        shell: pwsh
         run: |
-          CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s")
-          echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
+          # Define the SteamCMD config directory
+          $ConfigDir = "C:\hostedtoolcache\windows\steamcmd\latest\i386\config"
 
-      # Step: Install Microsoft Build Tools 2015
-      - name: Install Microsoft Build Tools 2015
-        run: |
-          $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
-          Invoke-WebRequest -Uri $buildToolsUrl -OutFile "BuildTools_Full.exe"
-          Start-Process -FilePath "./BuildTools_Full.exe" -ArgumentList "/quiet /norestart" -NoNewWindow -Wait
-          Remove-Item -Path "./BuildTools_Full.exe" -Force
+          # Create the config directory if it doesn't exist
+          if (-Not (Test-Path -Path $ConfigDir)) {
+              New-Item -ItemType Directory -Path $ConfigDir | Out-Null
+          }
+
+          # Decode the Base64-encoded VDF file and write to config.vdf
+          $Base64 = "${{ secrets.STEAM_CONFIG_VDF }}"
+          $Bytes = [Convert]::FromBase64String($Base64)
+          [System.IO.File]::WriteAllBytes("$ConfigDir\config.vdf", $Bytes)
+
+          Write-Host "Restored SteamCMD session to $ConfigDir\config.vdf"
 
       # Step: Setup MSBuild
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
 
+      # Step: Setup HEMTT
+      - name: Setup HEMTT
+        uses: arma-actions/hemtt@v1
+
       # Step: Install NuGet packages
       - name: Install NuGet packages
         run: nuget restore extension/IntegratedVoiceControlSystem.sln
 
-      # Step: Build x64 Configuration
-      - name: Build x64 Configuration
+      # Step: Install Microsoft Build Tools 2015
+      - name: Install Microsoft Build Tools 2015
+        run: |
+          Write-Host "Downloading Microsoft Build Tools 2015..."
+          $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
+          Invoke-WebRequest -Uri $buildToolsUrl -OutFile "BuildTools_Full.exe"
+          Start-Process -FilePath "./BuildTools_Full.exe" -ArgumentList "/quiet /norestart" -NoNewWindow -Wait
+          Remove-Item -Path "./BuildTools_Full.exe" -Force
+
+      # Step: Build x64 Extension Configuration
+      - name: Build x64 Extension Configuration
         run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x64
 
-      # Step: Build x86 Configuration
-      - name: Build x86 Configuration
+      # Step: Build x86 Extension Configuration
+      - name: Build x86 Extension Configuration
         run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x86
 
       # Step: Build Release Candidate using HEMTT
       - name: Build Release Candidate
         run: hemtt release
 
+      # Step: Generate VDF File for Steam Workshop
+      - name: Generate VDF file for Steam Workshop
+        shell: pwsh
+        run: |
+          # Get the current repository path
+          $repo = "${{ github.workspace }}"
+
+          # Set the path for the template file
+          $templateFilePath = "$repo\workshop_template.vdf"  # Path to the template in the root directory
+
+          # Ensure the template file exists
+          if (-Not (Test-Path -Path $templateFilePath)) {
+              Write-Host "Template VDF file not found at $templateFilePath"
+              exit 1
+          }
+
+          # Define the contentfolder path (relative to the repo)
+          $contentfolder = ".hemttout\release"  # Adjust as needed
+
+          # Read the template file content
+          $templateContent = Get-Content -Path $templateFilePath -Raw
+
+          # Replace the contentfolder placeholder with the actual path
+          $updatedContent = $templateContent -replace "{{contentfolder}}", "$repo/$contentfolder"
+
+          # Write the modified content back to the template file
+          Set-Content -Path $templateFilePath -Value $updatedContent -Encoding utf8
+
+          # Output the path of the updated template file
+          Write-Host "Template file updated at: $templateFilePath"
+
       # Step: Upload to Steam Workshop
-      - name: Upload to Steam Workshop
-        uses: arma-actions/workshop-upload@v1
-        with:
-          appId: '107410'  # Arma 3
-          itemId: '3393276343' # Workshop Item ID
-          contentPath: '.hemttout\\release'
-          changelog: ${{ env.CHANGELOG }}
+      - name: Upload mod to Steam Workshop
+        run: |
+          @echo off
+          echo Uploading mod to Steam Workshop...
+          steamcmd +login %STEAM_USERNAME% +workshop_build_item "${{ github.workspace }}\workshop_template.vdf" +quit
+
+          echo Checking mod upload status...
+          if %ERRORLEVEL% neq 0 (
+              echo Mod upload failed.
+              exit /b 1
+          )
+
+          echo Mod uploaded successfully.
+        shell: cmd
         env:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
 
       # Step: Create Git tag based on version
-      - name: Create Git tag
-        run: |
-          git tag ${{ env.VERSION }}
-          git push origin ${{ env.VERSION }}
+      - name: Create Git tag based on version
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.get_version.outputs.VERSION }}',
+              sha: context.sha
+            })
 
       # Step: Create GitHub release for the created tag
       - name: Create GitHub release and upload ZIP files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.VERSION }}
-          body: ${{ env.CHANGELOG }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
           files: |
             ./releases/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

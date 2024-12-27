@@ -33,10 +33,10 @@ jobs:
       - name: Install NuGet packages
         run: nuget restore extension/IntegratedVoiceControlSystem.sln
 
-      # Step: Build x64 Configuration
-      - name: Build x64 Configuration
+      # Step: Build x64 Extension Configuration
+      - name: Build x64 Extension Configuration
         run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x64
 
-      # Step: Build x86 Configuration
-      - name: Build x86 Configuration
+      # Step: Build x86 Extension Configuration
+      - name: Build x86 Extension Configuration
         run: msbuild extension/IntegratedVoiceControlSystem.sln /p:Configuration=Release /p:Platform=x86
