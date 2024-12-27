@@ -14,13 +14,18 @@
 // Read the project.toml file from the real file system
 let projectData = HEMTT_RFS.join(".hemtt").join("project.toml").open_file().read();
 
-// Get the current and next build version
-let prefix = "patch = ";
-let current = HEMTT.project().version().patch();
-let next = current + 1;
+// Increment both the future build and patch version
+const buildPrefix = "build = ";
+const buildCurrent = HEMTT.project().version().build();
+const buildNext = buildCurrent + 1;
 
-// Replace the current patch version with the incremented patch version
-projectData.replace(prefix + current.to_string(), prefix + next.to_string());
+const patchPrefix = "patch = ";
+const patchCurrent = HEMTT.project().version().patch();
+const patchNext = patchCurrent + 1;
+
+// Replace the current version with the incremented version
+projectData.replace(buildPrefix + buildCurrent.to_string(), buildPrefix + buildNext.to_string());
+projectData.replace(patchPrefix + patchCurrent.to_string(), patchPrefix + patchNext.to_string());
 
 // Write the modified contents to the real file system
 HEMTT_RFS.join(".hemtt").join("project.toml").create_file().write(projectData);
