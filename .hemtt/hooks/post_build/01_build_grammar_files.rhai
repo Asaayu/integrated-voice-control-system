@@ -45,7 +45,7 @@ for currentGrammarFile in currentGrammarFiles {
 
     let currentGrammarFileNameNoExt = currentGrammarFile.file_name();
     currentGrammarFileNameNoExt.replace(".template", "");
-    print(currentGrammarFileNameNoExt + " -> " + validLanguageCodes.len() + " language files");
+    print(currentGrammarFileNameNoExt + " -> " + validLanguageCodes.len() + " compatible language code" + if (validLanguageCodes.len() > 1) { "s" } else { "" });
     print(validLanguageCodes);
 
     for languageCode in validLanguageCodes {

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
-using static IntegratedVoiceControlSystem.Types;
 
 namespace IntegratedVoiceControlSystem
 {

@@ -10,20 +10,19 @@ signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
 major = 2
 minor = 0
 patch = 0 # Automatically incremented when a successful release is completed
-build = 7 # Automatically incremented when a successful build is completed
+build = 25 # Automatically incremented when a successful build is completed
 
 [files]
 include = [
     "grammar/*.pls",
     "grammar/*.xml",
     "version_check.txt",
-    "*.dll",
-    "*.so",
     "LICENSE",
 ]
 exclude = [
-    "**/*.psd"
+    "**/*.psd",
+    "**/*.png",
 ]
 
 [hemtt.release]
-archive = false
+archive = false # Do not archive the release files
