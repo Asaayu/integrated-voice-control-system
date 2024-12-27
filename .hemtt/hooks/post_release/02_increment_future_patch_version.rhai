@@ -29,4 +29,6 @@ projectData.replace(patchPrefix + patchCurrent.to_string(), patchPrefix + patchN
 
 // Write the modified contents to the real file system
 HEMTT_RFS.join(".hemtt").join("project.toml").create_file().write(projectData);
-print("Incremented future patch version from " + current.to_string() + " to " + next.to_string());
+
+const finalVersion = HEMTT.project().version().to_string().split("-")[0].split(".");
+print("Incremented future build version to " + finalVersion[0].to_string() + "." + finalVersion[1].to_string() + "." + patchNext.to_string() + "." + buildNext.to_string());

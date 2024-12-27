@@ -9,8 +9,8 @@ signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
 [version]
 major = 2
 minor = 0
-patch = 3 # Automatically incremented when a successful release is completed
-build = 44 # Automatically incremented when a successful build is completed
+patch = 7 # Automatically incremented when a successful release is completed
+build = 49 # Automatically incremented when a successful build is completed
 
 [files]
 include = [

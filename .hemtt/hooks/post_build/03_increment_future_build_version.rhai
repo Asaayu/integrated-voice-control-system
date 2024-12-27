@@ -37,6 +37,6 @@ if (!HEMTT.is_release()) {
 
     print("Incremented future build version from " + current.to_string() + " to " + next.to_string());
 } else {
-    print("Skipping incrementing the future build version because this is a release build");
+    print("Skipping incrementing build version for release build");
 }
 
