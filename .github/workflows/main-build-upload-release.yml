@@ -5,19 +5,16 @@ on:
     branches:
       - main-action-test
     paths:
-      # When extension data changes, trigger this workflow
       - "extension/**"
       - "grammar/**"
-      # When mod data changes, trigger this workflow
       - ".hemtt/**"
       - "addons/**"
       - "include/**"
       - "mod.cpp"
-      # When important file data changes, trigger this workflow
       - "LICENSE"
       - "version_check.txt"
       - ".github/workflows/main-build-upload-release.yml"
-    if: github.actor != 'github-actions' # Don't trigger on commits made by the GitHub Actions bot
+    if: github.actor != 'github-actions'
 
 jobs:
   build-and-upload:
@@ -31,34 +28,37 @@ jobs:
       - name: Read version from version_check.txt
         id: get_version
         run: |
-          # Read the version from the file
           $VERSION = Get-Content -Path version_check.txt -Raw
-          # Set the VERSION as an output variable for the next step
           echo "::set-output name=VERSION::$VERSION"
           Write-Host "Version: $VERSION"
         shell: pwsh
 
-      # Step: Install SteamCMD
+      # Step: Cache SteamCMD
+      - name: Cache SteamCMD
+        id: cache-steamcmd
+        uses: actions/cache@v3
+        with:
+          path: C:\hostedtoolcache\windows\steamcmd
+          key: steamcmd-${{ runner.os }}-${{ hashFiles('**/steamcmd/**') }}
+          restore-keys: |
+            steamcmd-${{ runner.os }}-
+
+      # Step: Install SteamCMD (only if not cached)
       - name: Install SteamCMD
+        if: steps.cache-steamcmd.outputs.cache-hit != 'true'
         uses: cyberandrii/setup-steamcmd@v1
 
       # Step: Restore SteamCMD Session
       - name: Restore SteamCMD Session
         shell: pwsh
         run: |
-          # Define the SteamCMD config directory
           $ConfigDir = "C:\hostedtoolcache\windows\steamcmd\latest\i386\config"
-
-          # Create the config directory if it doesn't exist
           if (-Not (Test-Path -Path $ConfigDir)) {
               New-Item -ItemType Directory -Path $ConfigDir | Out-Null
           }
-
-          # Decode the Base64-encoded VDF file and write to config.vdf
           $Base64 = "${{ secrets.STEAM_CONFIG_VDF }}"
           $Bytes = [Convert]::FromBase64String($Base64)
           [System.IO.File]::WriteAllBytes("$ConfigDir\config.vdf", $Bytes)
-
           Write-Host "Restored SteamCMD session to $ConfigDir\config.vdf"
 
       # Step: Setup MSBuild
@@ -69,12 +69,33 @@ jobs:
       - name: Setup HEMTT
         uses: arma-actions/hemtt@v1
 
+      # Step: Cache NuGet packages
+      - name: Cache NuGet packages
+        id: cache-nuget
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\.nuget\packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('extension/IntegratedVoiceControlSystem.sln') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
       # Step: Install NuGet packages
       - name: Install NuGet packages
         run: nuget restore extension/IntegratedVoiceControlSystem.sln
 
-      # Step: Install Microsoft Build Tools 2015
+      # Step: Cache Microsoft Build Tools 2015
+      - name: Cache Microsoft Build Tools 2015
+        id: cache-build-tools
+        uses: actions/cache@v3
+        with:
+          path: C:\BuildTools
+          key: build-tools-${{ runner.os }}-${{ hashFiles('**/BuildTools_Full.exe') }}
+          restore-keys: |
+            build-tools-${{ runner.os }}-
+
+      # Step: Install Microsoft Build Tools 2015 (only if not cached)
       - name: Install Microsoft Build Tools 2015
+        if: steps.cache-build-tools.outputs.cache-hit != 'true'
         run: |
           Write-Host "Downloading Microsoft Build Tools 2015..."
           $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
@@ -98,35 +119,18 @@ jobs:
       - name: Generate VDF file for Steam Workshop
         shell: pwsh
         run: |
-          # Get the current repository path
           $repo = "${{ github.workspace }}"
-
-          # Set the path for the template file
-          $templateFilePath = "$repo\workshop_template.vdf"  # Path to the template in the root directory
-
-          # Ensure the template file exists
+          $templateFilePath = "$repo\workshop_template.vdf"
           if (-Not (Test-Path -Path $templateFilePath)) {
               Write-Host "Template VDF file not found at $templateFilePath"
               exit 1
           }
-
-          # Define the contentfolder path (relative to the repo)
-          $contentfolder = ".hemttout\release"  # Adjust as needed
-
-          # Read the template file content
+          $contentfolder = ".hemttout\release"
           $templateContent = Get-Content -Path $templateFilePath -Raw
-
-          # Generate a change note for the VDF file
           $changeNote = "Automated update to v${{ steps.get_version.outputs.VERSION }} (${{ github.sha }}) by GitHub Actions"
-
-          # Replace the content placeholders with the actual data
           $updatedContent = $templateContent -replace "{{contentfolder}}", "$repo/$contentfolder"
           $updatedContent = $updatedContent -replace "{{changenote}}", $changeNote
-
-          # Write the modified content back to the template file
           Set-Content -Path $templateFilePath -Value $updatedContent -Encoding utf8
-
-          # Output the path of the updated template file
           Write-Host "Template file updated at: $templateFilePath"
 
       # Step: Upload to Steam Workshop
@@ -135,13 +139,11 @@ jobs:
           @echo off
           echo Uploading mod to Steam Workshop...
           steamcmd +login %STEAM_USERNAME% +workshop_build_item "${{ github.workspace }}\workshop_template.vdf" +quit
-
           echo Checking mod upload status...
           if %ERRORLEVEL% neq 0 (
               echo Mod upload failed.
               exit /b 1
           )
-
           echo Mod uploaded successfully.
         shell: cmd
         env:
@@ -175,18 +177,9 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-
-          # Add all modified files
           git add .
-
-          # Remove the template file from the commit
           git reset -- workshop_template.vdf
-
-          # Commit the changes
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
-
-          # Push changes back to the repository
           git push origin main-action-test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
