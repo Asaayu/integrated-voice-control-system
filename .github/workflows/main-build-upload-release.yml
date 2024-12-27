@@ -33,18 +33,6 @@ jobs:
           Write-Host "Version: $VERSION"
         shell: pwsh
 
-      # Step: Cache SteamCMD
-      - name: Cache SteamCMD
-        id: cache-steamcmd
-        uses: actions/cache@v3
-        with:
-          path: |
-            C:\hostedtoolcache\windows\steamcmd\**\*
-            !C:\hostedtoolcache\windows\steamcmd\latest\i386\config\config.vdf
-          key: steamcmd-${{ runner.os }}-${{ hashFiles('**/steamcmd/**') }}
-          restore-keys: |
-            steamcmd-${{ runner.os }}-
-
       # Step: Install SteamCMD (only if not cached)
       - name: Install SteamCMD
         uses: cyberandrii/setup-steamcmd@v1
@@ -66,16 +54,6 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
 
-      # Step: Cache HEMTT
-      - name: Cache HEMTT
-        id: cache-hemtt
-        uses: actions/cache@v3
-        with:
-          path: ./hemtt
-          key: hemtt-${{ runner.os }}-${{ hashFiles('hemtt/**') }}
-          restore-keys: |
-            hemtt-${{ runner.os }}-
-
       # Step: Setup HEMTT
       - name: Setup HEMTT
         uses: arma-actions/hemtt@v1
@@ -93,16 +71,6 @@ jobs:
       # Step: Install NuGet packages
       - name: Install NuGet packages
         run: nuget restore extension/IntegratedVoiceControlSystem.sln
-
-      # Step: Cache Microsoft Build Tools 2015
-      - name: Cache Microsoft Build Tools 2015
-        id: cache-build-tools
-        uses: actions/cache@v3
-        with:
-          path: C:\Program Files (x86)\Microsoft Visual Studio
-          key: build-tools-${{ runner.os }}-${{ hashFiles('**/BuildTools_Full.exe') }}
-          restore-keys: |
-            build-tools-${{ runner.os }}-
 
       # Step: Install Microsoft Build Tools 2015 (only if not cached)
       - name: Install Microsoft Build Tools 2015
