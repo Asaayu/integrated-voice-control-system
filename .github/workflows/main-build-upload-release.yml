@@ -74,7 +74,6 @@ jobs:
 
       # Step: Install Microsoft Build Tools 2015 (only if not cached)
       - name: Install Microsoft Build Tools 2015
-        if: steps.cache-build-tools.outputs.cache-hit != 'true'
         run: |
           Write-Host "Downloading Microsoft Build Tools 2015..."
           $buildToolsUrl = "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe"
