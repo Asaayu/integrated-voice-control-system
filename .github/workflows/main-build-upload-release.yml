@@ -26,17 +26,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step: Read version from version_check.txt
-      - name: Read version from version_check.txt
-        id: get_version
-        run: |
-          # Read the version from the file
-          $VERSION = Get-Content -Path version_check.txt -Raw
-          # Set the VERSION as an output variable for the next step
-          echo "::set-output name=VERSION::$VERSION"
-          Write-Host "Version: $VERSION"
-        shell: pwsh
-
       # Step: Install SteamCMD
       - name: Install SteamCMD
         uses: cyberandrii/setup-steamcmd@v1
@@ -92,6 +81,17 @@ jobs:
       # Step: Build Release Candidate using HEMTT
       - name: Build Release Candidate
         run: hemtt release
+
+      # Step: Read version from version_check.txt
+      - name: Read version from version_check.txt
+        id: get_version
+        run: |
+          # Read the version from the file
+          $VERSION = Get-Content -Path version_check.txt -Raw
+          # Set the VERSION as an output variable for the next step
+          echo "::set-output name=VERSION::$VERSION"
+          Write-Host "Version: $VERSION"
+        shell: pwsh
 
       # Step: Generate VDF File for Steam Workshop
       - name: Generate VDF file for Steam Workshop
