@@ -17,6 +17,7 @@ on:
       - "LICENSE"
       - "version_check.txt"
       - ".github/workflows/main-build-upload-release.yml"
+    if: github.actor != 'github-actions' # Don't trigger on commits made by the GitHub Actions bot
 
 jobs:
   build-and-upload:
@@ -166,6 +167,29 @@ jobs:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           files: |
             ./releases/ivcs-*.*.*.*-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step: Commit and push the changes
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Add all modified files
+          git add .
+
+          # Remove the template file from the commit
+          git reset -- workshop_template.vdf
+
+          # Remove quotes from the version string
+          $version = ${{ steps.get_version.outputs.VERSION }}
+
+          # Commit the changes
+          git commit -m "Automated update to v$version"
+
+          # Push changes back to the repository
+          git push origin main-action-test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
