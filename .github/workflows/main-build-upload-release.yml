@@ -117,7 +117,7 @@ jobs:
           $templateContent = Get-Content -Path $templateFilePath -Raw
 
           # Generate a change note for the VDF file
-          $changeNote = "Automated update to v${{ steps.get_version.outputs.VERSION }}"
+          $changeNote = "Automated update to v${{ steps.get_version.outputs.VERSION }} (${{ github.sha }}) by GitHub Actions"
 
           # Replace the content placeholders with the actual data
           $updatedContent = $templateContent -replace "{{contentfolder}}", "$repo/$contentfolder"
@@ -182,11 +182,8 @@ jobs:
           # Remove the template file from the commit
           git reset -- workshop_template.vdf
 
-          # Remove quotes from the version string
-          $version = ${{ steps.get_version.outputs.VERSION }}
-
           # Commit the changes
-          git commit -m "Automated update to v$version"
+          git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
 
           # Push changes back to the repository
           git push origin main-action-test
