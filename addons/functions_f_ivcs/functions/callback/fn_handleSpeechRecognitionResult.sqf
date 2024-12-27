@@ -429,39 +429,39 @@ switch (toLower _function) do
     };
     case "formation_wedge":
     {
-        (group player) setFormation "WEDGE";
+        (group _player) setFormation "WEDGE";
     };
     case "formation_vee":
     {
-        (group player) setFormation "VEE";
+        (group _player) setFormation "VEE";
     };
     case "formation_staggered_column":
     {
-        (group player) setFormation "STAG COLUMN";
+        (group _player) setFormation "STAG COLUMN";
     };
     case "formation_line":
     {
-        (group player) setFormation "LINE";
+        (group _player) setFormation "LINE";
     };
     case "formation_file":
     {
-        (group player) setFormation "FILE";
+        (group _player) setFormation "FILE";
     };
     case "formation_echelon_right":
     {
-        (group player) setFormation "ECH RIGHT";
+        (group _player) setFormation "ECH RIGHT";
     };
     case "formation_echelon_left":
     {
-        (group player) setFormation "ECH LEFT";
+        (group _player) setFormation "ECH LEFT";
     };
     case "formation_diamond":
     {
-        (group player) setFormation "DIAMOND";
+        (group _player) setFormation "DIAMOND";
     };
     case "formation_column":
     {
-        (group player) setFormation "COLUMN";
+        (group _player) setFormation "COLUMN";
     };
     case "engine_on":
     {

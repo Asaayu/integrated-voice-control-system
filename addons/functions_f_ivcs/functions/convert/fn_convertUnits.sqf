@@ -35,7 +35,8 @@ private _fnc_unitNum =
 };
 
 private _zero = false;
-private _units = (units group player) - [player];
+private _player = call IVCS_fnc_player;
+private _units = (units group _player) - [_player];
 private _output = [];
 {
     private _number = parseNumber _x;

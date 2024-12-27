@@ -21,7 +21,7 @@
     Due to limitations with the Arma 3 engine, the voice line will be played using playSound3D, rather then say3D.
 */
 
-params [["_folder", "", [""]], ["_file", "", [""]], ["_forceNormal", false, [false]], ["_unit", player, [objNull]]];
+params [["_folder", "", [""]], ["_file", "", [""]], ["_forceNormal", false, [false]], ["_unit", call IVCS_fnc_player, [objNull]]];
 
 private _voice = configFile >> "CfgVoice" >> (speaker _unit);
 private _voiceDirectory = (getArray (_voice >> "directories"))#0;
@@ -33,7 +33,7 @@ if (_voiceDirectory isEqualTo "") exitWith {false};
 
 // "\A3\Dubbing_Radio_F\data\ENG\Male01ENG\"
 // Make sure there is a black slash at the end of the string
-if !((_voiceDirectory select [count _voiceDirectory - 1,1]) isEqualTo "\") then
+if ((_voiceDirectory select [count _voiceDirectory - 1,1]) isNotEqualTo "\") then
 {
     _voiceDirectory = _voiceDirectory + "\";
 };

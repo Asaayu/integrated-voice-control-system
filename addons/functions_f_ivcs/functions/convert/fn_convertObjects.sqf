@@ -21,6 +21,8 @@
 
 params [["_input","",[""]],["_friendlyAllowed",false,[false]]];
 
+private _player = call IVCS_fnc_player;
+
 private _fnc_type =
 {
     params ["_unit","_types","_friendlyAllowed"];
@@ -33,7 +35,7 @@ private _fnc_type =
         };
     } forEach _types;
 
-    [_pass, false] select (_friendlyAllowed && {_unit isKindOf "Man" && {(side player) getFriend (side _unit) >= 0.6}});
+    [_pass, false] select (_friendlyAllowed && {_unit isKindOf "Man" && {(side _player) getFriend (side _unit) >= 0.6}});
 };
 
 private _fnc_search =
@@ -60,18 +62,18 @@ private _fnc_search =
                 // Only return objects that are alive, non-hidden, and of the correct type
                 if (alive _x  && {!(isObjectHidden _x) && {simulationEnabled _x && {[_x, _types, _friendlyAllowed] call _fnc_type}}}) then
                 {
-                    private _direction = player getDir _x;
-                    private _diff = abs (_direction - (getDir player));
+                    private _direction = _player getDir _x;
+                    private _diff = abs (_direction - (getDir _player));
 
                     /*
                     This is another way to do it but also accounts for distance from the player - I prefer the other method
-                    private _direction_coeff = ((getPosATL player) vectorFromTo (getPosATL _x)) vectorDotProduct (vectorDir player);
+                    private _direction_coeff = ((getPosATL _player) vectorFromTo (getPosATL _x)) vectorDotProduct (vectorDir _player);
                     if (_direction_coeff >= 0.97) then
                     */
                     if (_diff <= 10) then
                     {
                         // Make sure this unit isn't obstructed to the player
-                        if !(lineIntersects [(AGLToASL positionCameraToWorld [0,0,0]), eyePos _x, vehicle player, vehicle _x]) then
+                        if !(lineIntersects [(AGLToASL positionCameraToWorld [0,0,0]), eyePos _x, vehicle _player, vehicle _x]) then
                         {
                             _possible pushBackUnique [_diff, _x];
 

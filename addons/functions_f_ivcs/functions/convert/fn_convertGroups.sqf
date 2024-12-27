@@ -47,7 +47,8 @@ private _teams = [];
     if _all then {break;}
 } forEach _groups;
 
-private _units = (units group player) - [player];
+private _player = call IVCS_fnc_player;
+private _units = (units group _player) - [_player];
 private _output = [];
 if _all then
 {

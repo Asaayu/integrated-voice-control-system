@@ -23,7 +23,7 @@ params [["_units",[],[[]]], ["_right", [], [[]]]];
 _right params [["_type","",[""]], "_as", ["_role","",[""]]];
 
 private _object = [_type] call IVCS_fnc_convertObjects;
-if (_function == "get_in_player" && {!(vehicle _player isEqualTo player)}) then
+if (_function == "get_in_player" && {!isNull objectParent _player}) then
 {
     _object = vehicle _player;
 };

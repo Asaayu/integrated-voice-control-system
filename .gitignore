@@ -5,6 +5,7 @@
 **/*.pbo
 **/*.pdb
 **/*.xml
+**/*.zip
 
 # Ignored Directories
 **/.hemttout/
@@ -12,6 +13,7 @@
 **/.vscode/
 **/hemtt/
 **/obj/
+**/bin/
 **/packages/
 
 # Allowed Directories

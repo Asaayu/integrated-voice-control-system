@@ -30,7 +30,8 @@
     ],
     {
         private _return = false;
-        if (!is3DEN && {!isNull player}) then
+        private _player = call IVCS_fnc_player;
+        if (!is3DEN && {!isNull _player}) then
         {
             _this call IVCS_fnc_onPttDown;
             _return = true;
