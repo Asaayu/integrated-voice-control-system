@@ -115,8 +115,12 @@ jobs:
           # Read the template file content
           $templateContent = Get-Content -Path $templateFilePath -Raw
 
-          # Replace the contentfolder placeholder with the actual path
+          # Generate a change note for the VDF file
+          $changeNote = "Automated update to v${{ steps.get_version.outputs.VERSION }}"
+
+          # Replace the content placeholders with the actual data
           $updatedContent = $templateContent -replace "{{contentfolder}}", "$repo/$contentfolder"
+          $updatedContent = $updatedContent -replace "{{changenote}}", $changeNote
 
           # Write the modified content back to the template file
           Set-Content -Path $templateFilePath -Value $updatedContent -Encoding utf8

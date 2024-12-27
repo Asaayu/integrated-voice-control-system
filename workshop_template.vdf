@@ -3,5 +3,5 @@
     "appid"            "107410"
     "publishedfileid"  "3393276343"
     "contentfolder"    "{{contentfolder}}"
-    "changenote"       "Test upload"
+    "changenote"       "{{changenote}}"
 }
