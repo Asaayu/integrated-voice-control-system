@@ -24,11 +24,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step: Read version from version_check.txt
-      - name: Read version from version_check.txt
+      # Step: Read version from HEMTT project file
+      - name: Read version from HEMTT project file
         id: get_version
         run: |
-          $VERSION = Get-Content -Path version_check.txt -Raw
+          $VERSION = (Get-Content -Path .hemtt\project.toml | Select-String -Pattern 'major|minor|patch|build' | ForEach-Object { $_ -replace '.*= ' }).Trim() -join '.'
           echo "::set-output name=VERSION::$VERSION"
           Write-Host "Version: $VERSION"
         shell: pwsh
