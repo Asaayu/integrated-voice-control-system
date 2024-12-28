@@ -1,0 +1,26 @@
+name = "Integrated AI Voice Control System"
+author = "Asaayu"
+prefix = "ivcs"
+mainprefix = "z"
+
+keyname = "{{prefix}}_{{version}}"
+signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
+
+[version]
+major = 2
+minor = 0
+patch = 0 # Automatically incremented when a successful release is completed
+build = 57 # Automatically incremented when a successful build is completed
+
+[files]
+include = [
+    "grammar/*.pls",
+    "grammar/*.xml",
+    "version_check.txt",
+    "*.dll",
+    "LICENSE",
+]
+exclude = [
+    "**/*.psd",
+    "**/*.png",
+]

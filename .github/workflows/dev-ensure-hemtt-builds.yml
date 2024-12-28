@@ -1,0 +1,26 @@
+name: Ensure HEMTT Builds on Changes
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - ".hemtt/**"
+      - "addons/**"
+      - "include/**"
+      - "mod.cpp"
+      - ".github/workflows/dev-ensure-hemtt-builds.yml"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup HEMTT
+        uses: arma-actions/hemtt@v1
+
+      - name: Build
+        run: hemtt build
