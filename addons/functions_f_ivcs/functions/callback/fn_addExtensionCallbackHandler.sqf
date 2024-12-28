@@ -26,12 +26,12 @@ private _eventHandlerId = addMissionEventHandler ["ExtensionCallback", {
 
     if (_name != "IVCS") exitWith {};
 
-#ifdef __A3_DEBUG__
-    systemChat format ["Extension Callback: %1, %2, %3", _name, _function, _data];
-#endif
-
     switch (toLower _function) do
     {
+        case "log":
+        {
+            diag_log format ["IVCS: %1", _data];
+        };
         case "speech_recognition_result":
         {
             private _input = parseSimpleArray _data;

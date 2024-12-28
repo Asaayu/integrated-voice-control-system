@@ -17,7 +17,11 @@ namespace IntegratedVoiceControlSystem
 
         private static void OutputConsoleLine(string message, string prefix = "INFO")
         {
-            if (!DEBUG || string.IsNullOrEmpty(message)) return;
+            if (string.IsNullOrEmpty(message)) return;
+
+            // Always output errors to the RPT log
+            Main.callback.Invoke("IVCS", "log", $"[{prefix}] {message}");
+            if (!DEBUG) return;
 
             switch (prefix)
             {
