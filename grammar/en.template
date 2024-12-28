@@ -251,10 +251,6 @@
                         <tag>out="crouch[pos_middle]";</tag>
                     </item>
                     <item>
-                        kneel
-                        <tag>out="kneel[pos_middle]";</tag>
-                    </item>
-                    <item>
                         take a knee
                         <tag>out="take a knee[pos_middle]";</tag>
                     </item>
@@ -1011,6 +1007,10 @@
                         patch yourself
                         <tag>out="patch yourself[heal_self]";</tag>
                     </item>
+                    <item>
+                        heal
+                        <tag>out="heal[heal_self]";</tag>
+                    </item>
                 </one-of>
             </item>
 
@@ -1057,6 +1057,52 @@
                     <item>
                         find treatment
                         <tag>out="find treatment[heal_find]";</tag>
+                    </item>
+                </one-of>
+            </item>
+
+            <!-- Player needs healing call -->
+            <item>
+                <one-of>
+                    <item>
+                        medic
+                        <tag>out="medic[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        I'm hit
+                        <tag>out="I'm hit[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        I'm hurt
+                        <tag>out="I'm hurt[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        need a medic
+                        <tag>out="need a medic[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        need medical
+                        <tag>out="need medical[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        need treatment
+                        <tag>out="need treatment[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        need healing
+                        <tag>out="need healing[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        need a bandage
+                        <tag>out="need a bandage[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        heal me
+                        <tag>out="heal me[heal_find_player]";</tag>
+                    </item>
+                    <item>
+                        patch me up
+                        <tag>out="patch me up[heal_find_player]";</tag>
                     </item>
                 </one-of>
             </item>

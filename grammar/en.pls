@@ -544,4 +544,50 @@
         <grapheme>land</grapheme>
         <phoneme>lænd</phoneme>
     </lexeme>
+    <lexeme>
+        <grapheme>heal</grapheme>
+        <phoneme>hiːl</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>kneel</grapheme>
+        <phoneme>niːl</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>three</grapheme>
+        <phoneme>θriː</phoneme>
+        <phoneme>θri</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>free</grapheme>
+        <phoneme>friː</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>medic</grapheme>
+        <phoneme>ˈmɛdɪk</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>healing</grapheme>
+        <phoneme>ˈhiːlɪŋ</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>medical</grapheme>
+        <phoneme>ˈmɛdɪkəl</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>treatment</grapheme>
+        <phoneme>ˈtriːtmənt</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>bandage</grapheme>
+        <phoneme>ˈbændɪdʒ</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>patch</grapheme>
+        <phoneme>pætʃ</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>i'm</grapheme>
+        <phoneme>aɪm</phoneme>
+    </lexeme>
+    
 </lexicon>

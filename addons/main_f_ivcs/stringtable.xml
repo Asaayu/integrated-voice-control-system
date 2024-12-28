@@ -184,6 +184,9 @@
             <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_FIND_1">
                 <Original>%1 - Find Treatment</Original>
             </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_FIND_PLAYER_1">
+                <Original>%1 - Need A Medic</Original>
+            </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_SELF_1">
                 <Original>%1 - Treat Yourself</Original>
             </Key>
@@ -218,6 +221,12 @@
                 <Chinese>%1 - 移動</Chinese>
                 <Chinesesimp>%1 - 前进</Chinesesimp>
                 <Turkish>%1 - Git</Turkish>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1">
+                <Original>Negative, no medical equipment</Original>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_OPEN_FIRE_WHITE_1">
+                <Original>%1 - Fire When Fired Upon</Original>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_PRONE_1">
                 <Original>%1 - Prone</Original>

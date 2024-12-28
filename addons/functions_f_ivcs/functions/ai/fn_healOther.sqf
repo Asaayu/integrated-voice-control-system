@@ -10,7 +10,7 @@
 
     Parameters:
     _units: Array - An array of units to get in the vehicle
-    _targetText: Array - A string of the target unit to heal
+    _rightText: Array - A string of the target unit to heal
 
     Returns:
     NONE
@@ -19,15 +19,20 @@
     Only units that have a medical item in their inventory will be told to heal the target.
 */
 
-params [["_units",[],[[]]], ["_targetText", "", [""]]];
+params [["_units",[],[[]]], ["_rightText", [], [[]]]];
 
-private _targets = [_targetText] call IVCS_fnc_convertUnits;
+private _targets = [_rightText] call IVCS_fnc_convertUnits;
 
-if !(isNull _target) then
+if (!isNil "_targets" && {count _targets > 0}) then
 {
+    private _target = _targets select 0;
+    if (isNull _target || damage _target == 0) exitWith {};
+
     {
+        if (_x == _target) exitWith {};
+
         if !([_x] call IVCS_fnc_hasMedicalItem) exitWith {
-            [_x] call IVCS_fnc_negativeSpeak;
+            [_x, localize "STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1"] call IVCS_fnc_negativeSpeak;
         };
 
         private _handle = [_x, _target] spawn
@@ -38,20 +43,31 @@ if !(isNull _target) then
             private _radius = 3;
             private _startHealth = damage _target;
 
+            // Get the unit to regroup to un-do any previous orders
+            _unit doFollow (leader group _unit);
+            _unit doMove (getPosATL _target);
+
+            private _lastCall = time;
             waitUntil {
                 // Continually tell the unit to move to the target's position in-case their moving
-                _unit doMove (getPosATL _target);
+                if (time - _lastCall >= 5) then
+                {
+                    _unit doMove (getPosATL _target);
+                    _lastCall = time;
+                };
 
                 // Exit the loop if...
-                (time >= _exitTime) ||
-                (!isNull objectParent _target) ||
-                (!alive _target) ||
+                (stopped _unit) ||
+                !(isNull objectParent _target) ||
+                !(alive _target) ||
                 (damage _target == 0) ||
-                (damage _target <= _startHealth) ||
+                (damage _target < _startHealth) ||
                 (_unit distance _target <= _radius && { speed _unit <= 0.1 })
             };
-            if (time >= _time || _unit distance _target > _radius) exitWith {
+
+            if (time >= _exitTime || _unit distance _target > _radius) exitWith {
                 [_unit] call IVCS_fnc_negativeSpeak;
+                _unit doFollow (leader group _unit);
             };
 
             _target disableAI "PATH"; // Stop the target from moving away from the unit

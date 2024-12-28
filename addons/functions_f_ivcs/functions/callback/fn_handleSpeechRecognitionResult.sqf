@@ -53,7 +53,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
         case "combat_safe": {localize "STR_A3___1___RELAX"};
         case "combat_stealth": {localize "STR_A3___1___STEALTH"};
         case "drop_bag": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___DROP_PACK", "%1.1", "%1"]])#0};
-        case "eject": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___EJECT", "%1"]])#0};
+        case "eject": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___EJECT", "%1.1", "%1"]])#0};
         case "engine_off": {localize "STR_IVCS_SYSTEMCHAT_ENGINE_OFF_1"};
         case "engine_on": {localize "STR_IVCS_SYSTEMCHAT_ENGINE_ON_1"};
         case "find_cover": {localize "STR_A3___1___TAKE_COVER"};
@@ -91,7 +91,8 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
         case "move_left_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_180_0"]};
         case "move_object";
         case "move_right_quick": {format[("ivcs" callExtension ["replace", [localize "STR_A3__MUNIT___MOVE____MGRPDIR_1", "%4.1", "%2"]])#0, "%1", localize "STR_A3_ARGUMENTS_DIRECTION_RELATIVE1_90_0"]};
-        case "open_fire_red": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1____2", "%1.1", "%1"]])#0};
+        case "open_fire_red": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___FREE_TO_ENGAGE", "%1.1", "%1"]])#0};
+        case "open_fire_white": {localize "STR_IVCS_SYSTEMCHAT_OPEN_FIRE_WHITE_1"};
         case "open_fire": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___OPEN_FIRE", "%1.1", "%1"]])#0};
         case "pos_auto": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___COPY_MY_STANCE", "%1.1", "%1"]])#0};
         case "pos_down": {("ivcs" callExtension ["replace", [localize "STR_A3___1_1___PRONE", "%1.1", "%1"]])#0};
@@ -112,6 +113,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
         case "take_position": {localize "STR_IVCS_SYSTEMCHAT_TAKE_POSITION_1"};
         case "heal_self": {localize "STR_IVCS_SYSTEMCHAT_HEAL_SELF_1"};
         case "heal_find": {localize "STR_IVCS_SYSTEMCHAT_HEAL_FIND_1"};
+        case "heal_find_player": {localize "STR_IVCS_SYSTEMCHAT_HEAL_FIND_PLAYER_1"};
         case "heal_other": {("ivcs" callExtension ["replace", [localize "str_a3___1_1___heal____2", "%1.1", "%1"]])#0};
         default {""};
     };
@@ -211,7 +213,7 @@ switch (toLower _function) do
     {
         // Force the units to fire a single shot
         {
-            [_x, "currentMuzzle _x"] call BIS_fnc_fire;
+            [_x, currentMuzzle _x] call BIS_fnc_fire;
         } forEach _units;
     };
     case "hold_fire":
@@ -504,9 +506,7 @@ switch (toLower _function) do
     };
     case "take_position":
     {
-        {
-            _unit doMove ASLToATL getPosASL _player;
-        } forEach _units;
+        _units commandMove (_player getPos [1, (getDir _player)]);
     };
     case "heal_self":
     {
@@ -522,9 +522,27 @@ switch (toLower _function) do
     {
         [_units] call IVCS_fnc_healFind;
     };
+    case "heal_find_player":
+    {
+        [_units] call IVCS_fnc_healFindPlayer;
+    };
     case "heal_other":
     {
-        [_units] call IVCS_fnc_healOther;
+        // If units is everyone and _right is empty, then this was just the phrase "heal"
+        if (count _units == count (units group _player - [_player]) && count _right == 0) then
+        {
+            {
+                private _success = [_x] call IVCS_fnc_healSelf;
+                if (_success) then
+                {
+                    [_x] call IVCS_fnc_confirmationSpeak;
+                };
+            } forEach _units;
+        }
+        else
+        {
+            [_units, _right] call IVCS_fnc_healOther;
+        };
     };
     default
     {

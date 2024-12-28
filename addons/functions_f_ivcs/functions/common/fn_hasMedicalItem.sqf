@@ -23,15 +23,15 @@ params [["_unit",objNull,[objNull]], ["_includeMedikit",false,[false]]];
 
 if (isNull _unit) exitWith {false};
 
-private _medicalItems = [401 /* FirstAidKit */];
+private _medicalItemTypes = [401 /* FirstAidKit */];
 if (_includeMedikit) then
 {
-    _medicalItems pushBackUnique 619 /* Medikit */;
+    _medicalItemTypes pushBackUnique 619 /* Medikit */;
 };
 
 private _items = items _unit;
 _items findIf
 {
     private _itemType = getNumber (configFile >> "CfgWeapons" >> _x >> "ItemInfo" >> "type");
-    _medicalItems findIf _itemType > -1
+    _medicalItemTypes findIf {_x == _itemType}  > -1
 } > -1

@@ -103,15 +103,12 @@ switch (_function) do {
     };
     case "set_test_text_color":
     {
-        _data params [["_r",0,[0]], ["_g",0,[0]], ["_b",0,[0]], ["_a",0,[0]]];
+        _data params ["_ctrlId", "_color"];
+        _color params [["_r",0,[0]], ["_g",0,[0]], ["_b",0,[0]], ["_a",0,[0]]];
 
-        private _display = uiNamespace getVariable ["ivcs_ptt_display", displayNull];
-        private _ctrls = [100, 101];
-
-        {
-            private _ctrl = _display displayCtrl _x;
-            _ctrl ctrlSetTextColor [_r, _g, _b, _a];
-        } forEach _ctrls;
+        private _display = uiNamespace getVariable ["ivcs_test_display", displayNull];
+        private _ctrl = _display displayCtrl parseNumber(_ctrlId);
+        _ctrl ctrlSetTextColor [_r, _g, _b, _a];
     };
     default
     {
