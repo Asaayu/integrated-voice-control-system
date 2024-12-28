@@ -1,11 +1,11 @@
 /*
     Integrated AI Voice Control System
-    File: 01_update_version_check_file.rhai
+    File: 02_update_version_check_file.rhai
     Author: Asaayu
     Date: 2024-12-26
 
     Position:
-    POST-RELEASE
+    PRE-BUILD
 
     Description:
     Updates the 'version_check.txt' file in the root directory with the current version for the extension online version check.
