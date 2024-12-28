@@ -2,8 +2,19 @@
 [url=https://steamcommunity.com/id/asaayu/myworkshopfiles/][img]https://i.imgur.com/u4A7TLR.png[/img][/url]
 
 [hr][/hr]
+[h1]Important Information[/h1]
+- This mod is [b]not compatible[/b] with 32-bit Arma, it must be run in 64-bit.
+- BattlEye will block loading of non-whitelisted DLL files, if the mod has been recently updated you may need to disable BattlEye for a couple of days until the DLL file is whitelisted.
+
+[hr][/hr]
 [h1]Integrated AI Voice Control System[/h1]
 The [b]Integrated AI Voice Control System (IVCS)[/b] allows players to issue commands to AI units within their group using voice commands. Powered by Windows' built-in speech recognition engine, this mod works seamlessly without requiring any third-party programs.
+
+[hr][/hr]
+[h1]Features[/h1]
+[b]Voice Commands[/b]: Control AI units using natural language.
+[b]Ease of Use[/b]: Leverages built-in Windows tools, requiring no additional software.
+[b]Compatibility[/b]: Designed for single-player scenarios where the player is the squad leader.
 
 [hr][/hr]
 [h1]Voice Commands[/h1]
