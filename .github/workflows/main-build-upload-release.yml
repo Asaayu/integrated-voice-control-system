@@ -159,5 +159,16 @@ jobs:
           git reset -- workshop_template.vdf
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
           git push origin ${{ github.ref }}
+
+          # Cherry-pick the commit to the dev branch for parity
+          git fetch origin dev
+          git checkout dev
+
+          # Cherry-pick the commit
+          git cherry-pick $(git rev-parse HEAD@{1})
+
+          # Push changes to the dev branch
+          git push origin dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
