@@ -158,6 +158,6 @@ jobs:
           git add .
           git reset -- workshop_template.vdf
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
-          git push origin main
+          git push origin ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
