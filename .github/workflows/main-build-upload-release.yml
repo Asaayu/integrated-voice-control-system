@@ -152,6 +152,7 @@ jobs:
 
       # Step: Commit and push the changes
       - name: Commit and push changes
+        shell: pwsh
         run: |
           # Configure Git
           git config --global user.name "GitHub Actions"
@@ -163,7 +164,7 @@ jobs:
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
 
           # Capture the SHA of the newly created commit
-          NEW_COMMIT_SHA=$(git rev-parse HEAD)
+          $NEW_COMMIT_SHA = git rev-parse HEAD
 
           # Push changes to the current branch
           git push origin "${{ github.head_ref || github.ref_name }}"
