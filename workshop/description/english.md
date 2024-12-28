@@ -71,9 +71,14 @@ If you receive an error, follow the instructions of the error, and contact the m
 Confirm your operating system and PC meet all mod requirements.
 Report any persisting issues you encounter in the comments or discussion section.
 
-[b]Note:[/b] This mod is built for single-player gameplay. Multiplayer usage or heavily scripted missions may cause unexpected behavior and for missions to break.
+[b]Debug Mode[/b]:
+Should you run into an issue and would like to view debug information about the mod, you can enable the mods debug mode by toggling on the [b]Debug Mode[/b] option in the Arma 3 launcher's parameters. This will create a console window when the mod is loaded that will display all debug information.
+[b]Note:[/b] The console window will trigger the game to close if it is closed while the game is running, it will also halt game execution if text is selected in the console window.
 
-[b]Related Microsoft Support Articles:[/b]
+[b]Multiplayer[/b]:
+This mod is built for single-player gameplay. Multiplayer usage or heavily scripted missions may cause unexpected behavior and for missions to break.
+
+[b]Troubleshooting Related Microsoft Support Articles:[/b]
 - [b][url=https://support.microsoft.com/windows/use-voice-recognition-in-windows-83ff75bd-63eb-0b6c-18d4-6fae94050571]Use Voice Recognition in Windows[/url][/b]
 - [b][url=https://support.microsoft.com/windows/language-packs-for-windows-a5094319-a92d-18de-5b53-1cfc697cfca8]Language Packs for Windows[/url][/b]
 
