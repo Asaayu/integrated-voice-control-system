@@ -13,14 +13,14 @@ namespace IntegratedVoiceControlSystem
                 case "info":
                     return $"Integrated AI Voice Control System [{VersionManager.GetModVersion()}]";
 
-                // LOAD_BASE_GRAMMAR: Loads the base grammar for the current culture
-                case "load_base_grammar":
-                    SpeechEngineHandler.LoadBaseGrammar();
+                // START_TEST: Starts the input test mode
+                case "start_test":
+                    SpeechEngineHandler.StartTest();
                     return "true";
 
-                // LOAD_TEST_GRAMMAR: Loads the test grammar for the current culture
-                case "load_test_grammar":
-                    SpeechEngineHandler.LoadTestGrammar();
+                // END_TEST: Ends the input test mode
+                case "end_test":
+                    SpeechEngineHandler.EndTest();
                     return "true";
 
                 // PTT_DOWN: Enable voice input and start listening

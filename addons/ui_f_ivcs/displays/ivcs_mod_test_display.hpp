@@ -4,8 +4,8 @@ class ivcs_mod_test_display
     enableSimulation = 0;
 
     // Start/Stop the testing engine
-    onLoad = "uiNamespace setVariable ['ivcs_test_display',(_this#0)]; 'ivcs' callExtension 'load_test_grammar';";
-    onUnload = "uiNamespace setVariable ['ivcs_test_display',displayNull]; 'ivcs' callExtension 'load_base_grammar';";
+    onLoad = "uiNamespace setVariable ['ivcs_test_display',(_this#0)]; 'ivcs' callExtension 'start_test';";
+    onUnload = "uiNamespace setVariable ['ivcs_test_display',displayNull]; 'ivcs' callExtension 'end_test';";
 
     class controlsbackground
     {
@@ -63,7 +63,7 @@ class ivcs_mod_test_display
                 color = "#ffffff";
                 colorLink = "";
                 font = "RobotoCondensed";
-                size = 1;
+                size = 0.9;
             };
         };
         class testing_phrase_01: ctrlStatic

@@ -55,7 +55,7 @@ namespace IntegratedVoiceControlSystem
                             throw new FileNotFoundException("Windows Speech Recognition Training could not be found on your system.");
                         }
 
-                        Process.Start(speechTrainingPath);
+                        Process.Start(speechTrainingPath, "UserTraining");
                         break;
 
                     // OPEN_SPEECH_SETTINGS: Opens the speech language settings

@@ -120,7 +120,7 @@
                 <Original>Engine Hypothesis:</Original>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_DESCRIPTION">
-                <Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3.&lt;br/&gt;This menu allows you to test your microphone and built-in Windows speech recognition engine.&lt;br/&gt;Say the phrases below, they will turn green when the engine recognizes you've said the phrase.&lt;br/&gt;The engine will only recognize the following phrases as correct input when this menu is open&lt;br/&gt;&lt;t size='0.75' color='#B3B3B3'&gt;You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.&lt;/t&gt;</Original>
+                <Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3. This menu allows you to test your microphone and built-in Windows speech recognition engine. Say the phrases below, they will turn green when the engine recognizes you've said the phrase. The engine will only recognize the following phrases as correct input when this menu is open - You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.</Original>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_01">
                 <Original>Integrated Voice Control System</Original>

@@ -98,6 +98,37 @@ namespace IntegratedVoiceControlSystem
             };
         }
 
+        internal static void StartTest()
+        {
+            try
+            {
+                Logger.Debug("Starting test mode...");
+                speechEngine.SetInputToDefaultAudioDevice();
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+
+                LoadTestGrammar();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("An error occurred when attempting to start test mode", e);
+            }
+        }
+
+        internal static void EndTest()
+        {
+            try
+            {
+                Logger.Debug("Ending test mode...");
+                speechEngine.RecognizeAsyncStop();
+
+                LoadBaseGrammar();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("An error occurred when attempting to end test mode", e);
+            }
+        }
+
         internal static void LoadBaseGrammar()
         {
             try
@@ -222,8 +253,8 @@ namespace IntegratedVoiceControlSystem
                 ptt = true;
                 speech = false;
 
-                speechEngine?.SetInputToDefaultAudioDevice();
-                speechEngine?.RecognizeAsync(RecognizeMode.Multiple);
+                speechEngine.SetInputToDefaultAudioDevice();
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
             }
             catch (Exception e)
             {
