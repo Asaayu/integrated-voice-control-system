@@ -3,7 +3,7 @@ name: Build Mod, Upload to Steam Workshop, and Create GitHub Release
 on:
   push:
     branches:
-      - main-action-test
+      - main
     paths:
       - "extension/**"
       - "grammar/**"
@@ -158,6 +158,6 @@ jobs:
           git add .
           git reset -- workshop_template.vdf
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
-          git push origin main-action-test
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
