@@ -153,19 +153,27 @@ jobs:
       # Step: Commit and push the changes
       - name: Commit and push changes
         run: |
+          # Configure Git
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
+
+          # Add and commit changes
           git add .
           git reset -- workshop_template.vdf
           git commit -m "chore: Commit file changes from workflow for v${{ steps.get_version.outputs.VERSION }}"
-          git push origin ${{ github.ref }}
 
-          # Cherry-pick the commit to the dev branch for parity
+          # Capture the SHA of the newly created commit
+          NEW_COMMIT_SHA=$(git rev-parse HEAD)
+
+          # Push changes to the current branch
+          git push origin "${{ github.head_ref || github.ref_name }}"
+
+          # Fetch and switch to the dev branch
           git fetch origin dev
           git checkout dev
 
-          # Cherry-pick the commit
-          git cherry-pick $(git rev-parse HEAD@{1})
+          # Cherry-pick the captured commit SHA
+          git cherry-pick $NEW_COMMIT_SHA
 
           # Push changes to the dev branch
           git push origin dev
