@@ -6,7 +6,6 @@ namespace IntegratedVoiceControlSystem
 {
     public class Main
     {
-        // Function callback stuff
         public static ExtensionCallback callback;
         public delegate int ExtensionCallback([MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string function, [MarshalAs(UnmanagedType.LPStr)] string data);
 
