@@ -10,6 +10,7 @@ on:
       - "include/**"
       - "mod.cpp"
       - ".github/workflows/dev-ensure-hemtt-builds.yml"
+    if: github.actor != 'github-actions'
 
 jobs:
   build:

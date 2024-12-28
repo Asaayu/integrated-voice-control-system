@@ -8,6 +8,7 @@ on:
       - "extension/**"
       - "grammar/**"
       - ".github/workflows/dev-ensure-extension-builds.yml"
+    if: github.actor != 'github-actions'
 
 jobs:
   build:
