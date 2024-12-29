@@ -56,7 +56,7 @@ namespace IntegratedVoiceControlSystem
 
                 // SET_MINIMUM_REQUIRED_CONFIDENCE: Set the confidence value for the speech recognition engine
                 case "set_minimum_required_confidence":
-                    if (parameters.Length >= 1 && double.TryParse(parameters[0], out double confidence))
+                    if (parameters.Length >= 1 && double.TryParse(parameters[0], NumberStyles.Any, Common.numberFormatInfo, out double confidence))
                     {
                         SpeechEngineHandler.SetMinimumRequiredConfidence(confidence);
                         return (1, null);
@@ -65,7 +65,7 @@ namespace IntegratedVoiceControlSystem
 
                 // SET_INITIAL_SILENCE_TIMEOUT: Set the initial silence timeout
                 case "set_initial_silence_timeout":
-                    if (parameters.Length >= 1 && double.TryParse(parameters[0], out double initalSilence))
+                    if (parameters.Length >= 1 && double.TryParse(parameters[0], NumberStyles.Any, Common.numberFormatInfo, out double initalSilence))
                     {
                         SpeechEngineHandler.SetInitialSilenceTimeout(initalSilence);
                         return (1, null);
@@ -74,7 +74,7 @@ namespace IntegratedVoiceControlSystem
 
                 // SET_END_SILENCE_TIMEOUT_AMBIGUOUS: Set the end silence timeout
                 case "set_end_silence_timeout_ambiguous":
-                    if (parameters.Length >= 1 && double.TryParse(parameters[0], out double endSilenceAmbiguous))
+                    if (parameters.Length >= 1 && double.TryParse(parameters[0], NumberStyles.Any, Common.numberFormatInfo, out double endSilenceAmbiguous))
                     {
                         SpeechEngineHandler.SetEndSilenceTimeoutAmbiguous(endSilenceAmbiguous);
                         return (1, null);
@@ -83,7 +83,7 @@ namespace IntegratedVoiceControlSystem
 
                 // SET_END_SILENCE_TIMEOUT: Set the initial silence timeout
                 case "set_end_silence_timeout":
-                    if (parameters.Length >= 1 && double.TryParse(parameters[0], out double endSilenceFinished))
+                    if (parameters.Length >= 1 && double.TryParse(parameters[0], NumberStyles.Any, Common.numberFormatInfo, out double endSilenceFinished))
                     {
                         SpeechEngineHandler.SetEndSilenceTimeout(endSilenceFinished);
                         return (1, null);
@@ -92,7 +92,7 @@ namespace IntegratedVoiceControlSystem
 
                 // SET_END_BABBLE_TIMEOUT: Set the end babble timeout
                 case "set_end_babble_timeout":
-                    if (parameters.Length >= 1 && double.TryParse(parameters[0], out double endBabble))
+                    if (parameters.Length >= 1 && double.TryParse(parameters[0], NumberStyles.Any, Common.numberFormatInfo, out double endBabble))
                     {
                         SpeechEngineHandler.SetEndBabbleTimeout(endBabble);
                         return (1, null);
