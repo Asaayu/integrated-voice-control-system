@@ -1106,6 +1106,24 @@
                     </item>
                 </one-of>
             </item>
+
+            <!-- Quick attack call -->
+            <item>
+                <one-of>
+                    <item>
+                        contact
+                        <tag>out="contact[quick_attack]";</tag>
+                    </item>
+                    <item>
+                        give em hell
+                        <tag>out="give em hell[quick_attack]";</tag>
+                    </item>
+                    <item>
+                        open up
+                        <tag>out="open up[quick_attack]";</tag>
+                    </item>
+                </one-of>
+            </item>
         </one-of>
     </rule>
 

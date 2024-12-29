@@ -115,6 +115,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
         case "heal_find": {localize "STR_IVCS_SYSTEMCHAT_HEAL_FIND_1"};
         case "heal_find_player": {localize "STR_IVCS_SYSTEMCHAT_HEAL_FIND_PLAYER_1"};
         case "heal_other": {("ivcs" callExtension ["replace", [localize "str_a3___1_1___heal____2", "%1.1", "%1"]])#0};
+        case "quick_attack": {localize "STR_IVCS_SYSTEMCHAT_QUICK_ATTACK_1"};
         default {""};
     };
 
@@ -525,6 +526,14 @@ switch (toLower _function) do
     case "heal_find_player":
     {
         [_units] call IVCS_fnc_healFindPlayer;
+    };
+    case "quick_attack":
+    {
+        // Combat mode, Fire at will, Engage at will, open fire
+        {
+            _x setUnitCombatMode "RED";
+            _x setCombatBehaviour "COMBAT";
+        } forEach _units;
     };
     case "heal_other":
     {
