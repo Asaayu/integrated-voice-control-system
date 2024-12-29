@@ -343,35 +343,5 @@ namespace IntegratedVoiceControlSystem
                 Logger.Error("An error occurred when attempting to set the end babble timeout", e);
             }
         }
-
-
-
-        //static void Testing_SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
-        //{
-        //    // Set the text in the display box
-        //    Main.callback.Invoke("IVCS", "ctrlsettext", $"['ivcs_test_display', 5000, '<t font=\"RobotoCondensed\">{e.Result.Text}</t> - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%']");
-        //}
-
-        //static void Testing_SpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
-        //{
-        //    // Reset the text in the display box on rejection
-        //    Main.callback.Invoke("IVCS", "ctrlsettext", $"['ivcs_test_display', 5000, '']");
-        //}
-
-        //static void Testing_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
-        //{
-        //    // Log the input text
-        //    Logger.Input($"Reconginsed text: '{e.Result.Text}' - Confidence: {Math.Round(e.Result.Confidence, 2) * 100}%");
-
-        //    // Make sure the confidence value is above the user defined value
-        //    if (e.Result.Confidence >= confidence)
-        //    {
-        //        // Split the data to get the index of the text in the grammar xml file
-        //        string[] data = ((string)e.Result.Semantics.Value).Split(':');
-
-        //        // Set the text color for the specific ctrl based on the users input
-        //        Main.callback.Invoke("IVCS", "ctrlsettextcolor", $"['ivcs_test_display', {int.Parse(data[1], nfi) + 1000}, [0,1,0,1]]");
-        //    }
-        //}
     }
 }
