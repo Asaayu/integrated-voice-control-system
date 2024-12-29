@@ -34,8 +34,8 @@
                 <German>Push-to-Talk-Taste</German>
                 <Korean>푸시 투 톡 키</Korean>
                 <Japanese>プッシュトークキー</Japanese>
-                <Chinese>對講按鍵</Chinese> <!-- Traditional Chinese -->
-                <Chinesesimp>对讲键</Chinesesimp> <!-- Simplified Chinese -->
+                <Chinese>對講按鍵</Chinese>
+                <Chinesesimp>对讲键</Chinesesimp>
                 <Turkish>Bas-Konuş Tuşu</Turkish>
             </Key>
             <Key ID="STR_IVCS_KEYBIND_PTT_TOOLTIP">
@@ -382,7 +382,6 @@
                 <Chinesesimp>Windows 语音设置</Chinesesimp>
                 <Turkish>Windows Ses Ayarları</Turkish>
             </Key>
-
             <Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_TOOLTIP">
                 <Original>Open the Windows Speech Settings, allowing you to change your operating system's speech language settings.</Original>
                 <English>Open the Windows Speech Settings, allowing you to change your operating system's speech language settings.</English>
@@ -1089,6 +1088,23 @@
                 <Chinesesimp>%1 - 趴下</Chinesesimp>
                 <Turkish>%1 - Yüzüstü</Turkish>
             </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_QUICK_ATTACK_1">
+                <Original>%1 - Attack</Original>
+                <English>%1 - Attack</English>
+                <Czech>%1 - Útok</Czech>
+                <French>%1 - Attaque</French>
+                <Spanish>%1 - Atacar</Spanish>
+                <Italian>%1 - Attacca</Italian>
+                <Polish>%1 - atakuj</Polish>
+                <Portuguese>%1 - Atacar</Portuguese>
+                <Russian>%1 - Атака</Russian>
+                <German>%1 - Angriff</German>
+                <Korean>%1 - 공격</Korean>
+                <Japanese>%1 - 攻撃</Japanese>
+                <Chinese>%1 - 攻击</Chinese>
+                <Chinesesimp>%1 - 攻击</Chinesesimp>
+                <Turkish>%1 - Saldır</Turkish>
+            </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SALUTE_1">
                 <Original>%1 - Salute</Original>
                 <English>%1 - Salute</English>
@@ -1190,23 +1206,6 @@
                 <Chinese>%1 - 取位置</Chinese>
                 <Chinesesimp>%1 - 取位置</Chinesesimp>
                 <Turkish>%1 - Pozisyon al</Turkish>
-            </Key>
-            <Key ID="STR_IVCS_SYSTEMCHAT_QUICK_ATTACK_1">
-                <Original>%1 - Attack</Original>
-                <English>%1 - Attack</English>
-                <Czech>%1 - Útok</Czech>
-                <French>%1 - Attaque</French>
-                <Spanish>%1 - Atacar</Spanish>
-                <Italian>%1 - Attacca</Italian>
-                <Polish>%1 - atakuj</Polish>
-                <Portuguese>%1 - Atacar</Portuguese>
-                <Russian>%1 - Атака</Russian>
-                <German>%1 - Angriff</German>
-                <Korean>%1 - 공격</Korean>
-                <Japanese>%1 - 攻撃</Japanese>
-                <Chinese>%1 - 攻击</Chinese>
-                <Chinesesimp>%1 - 攻击</Chinesesimp>
-                <Turkish>%1 - Saldır</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_WATCH_1">
                 <Original>%1 - Watch</Original>
