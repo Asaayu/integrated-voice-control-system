@@ -4,124 +4,649 @@
         <Container name="Main Strings">
             <Key ID="STR_IVCS_MOD_NAME">
                 <Original>Integrated AI Voice Control System</Original>
+                <English>Integrated AI Voice Control System</English>
+                <Czech>Integrovaný systém hlasového ovládání AI</Czech>
+                <French>Système intégré de contrôle vocal par IA</French>
+                <Spanish>Sistema integrado de control por voz IA</Spanish>
+                <Italian>Sistema integrato di controllo vocale AI</Italian>
+                <Polish>Zintegrowany system sterowania głosem AI</Polish>
+                <Portuguese>Sistema Integrado de Controle de Voz por IA</Portuguese>
+                <Russian>Интегрированная система голосового управления ИИ</Russian>
+                <German>Integriertes KI-Sprachsteuerungssystem</German>
+                <Korean>통합 AI 음성 제어 시스템</Korean>
+                <Japanese>統合型AI音声制御システム</Japanese>
+                <Chinese>整合型人工智慧語音控制系統</Chinese>
+                <Chinesesimp>集成AI语音控制系统</Chinesesimp>
+                <Turkish>Entegre AI Ses Kontrol Sistemi</Turkish>
             </Key>
         </Container>
         <Container name="Keybind Strings">
             <Key ID="STR_IVCS_KEYBIND_PTT_NAME">
                 <Original>Push-To-Talk Key</Original>
+                <English>Push-To-Talk Key</English>
+                <Czech>Klávesa pro stiskni a mluv</Czech>
+                <French>Touche pour parler</French>
+                <Spanish>Tecla para hablar</Spanish>
+                <Italian>Tasto Push-To-Talk</Italian>
+                <Polish>Klawisz naciśnij i mów</Polish>
+                <Portuguese>Tecla Push-To-Talk</Portuguese>
+                <Russian>Клавиша "нажми и говори"</Russian>
+                <German>Push-to-Talk-Taste</German>
+                <Korean>푸시 투 톡 키</Korean>
+                <Japanese>プッシュトークキー</Japanese>
+                <Chinese>對講按鍵</Chinese> <!-- Traditional Chinese -->
+                <Chinesesimp>对讲键</Chinesesimp> <!-- Simplified Chinese -->
+                <Turkish>Bas-Konuş Tuşu</Turkish>
             </Key>
             <Key ID="STR_IVCS_KEYBIND_PTT_TOOLTIP">
                 <Original>When pressed, this key will enable voice recognition and when released, voice recognition will be disabled.</Original>
+                <English>When pressed, this key will enable voice recognition and when released, voice recognition will be disabled.</English>
+                <Czech>Po stisknutí této klávesy bude aktivováno rozpoznávání hlasu, a po uvolnění bude rozpoznávání hlasu deaktivováno.</Czech>
+                <French>Lorsqu'elle est enfoncée, cette touche activera la reconnaissance vocale et lorsqu'elle est relâchée, la reconnaissance vocale sera désactivée.</French>
+                <Spanish>Al presionarla, esta tecla habilitará el reconocimiento de voz y al soltarla, se deshabilitará el reconocimiento de voz.</Spanish>
+                <Italian>Quando premuto, questo tasto abiliterà il riconoscimento vocale e quando rilasciato, il riconoscimento vocale sarà disabilitato.</Italian>
+                <Polish>Po naciśnięciu tego klawisza rozpoznawanie głosu zostanie włączone, a po jego zwolnieniu rozpoznawanie głosu zostanie wyłączone.</Polish>
+                <Portuguese>Ao pressionar, esta tecla ativará o reconhecimento de voz e ao soltar, o reconhecimento de voz será desativado.</Portuguese>
+                <Russian>При нажатии эта клавиша включит распознавание речи, а при отпускании распознавание речи будет отключено.</Russian>
+                <German>Beim Drücken dieser Taste wird die Spracherkennung aktiviert, und beim Loslassen wird die Spracherkennung deaktiviert.</German>
+                <Korean>눌렀을 때 이 키는 음성 인식을 활성화하며, 뗐을 때 음성 인식이 비활성화됩니다.</Korean>
+                <Japanese>押している間、このキーは音声認識を有効にし、離すと音声認識が無効になります。</Japanese>
+                <Chinese>當按下此鍵時，語音識別將啟用，當釋放時，語音識別將停用。</Chinese>
+                <Chinesesimp>当按下此键时，语音识别将启用，当释放时，语音识别将停用。</Chinesesimp>
+                <Turkish>Bu tuşa basıldığında ses tanıma etkinleştirilir ve bırakıldığında ses tanıma devre dışı bırakılır.</Turkish>
             </Key>
         </Container>
         <Container name="Settings Strings">
             <Key ID="STR_IVCS_SETTINGS_CONFIDENCE_NAME">
                 <Original>Required Result Confidence Level</Original>
+                <English>Required Result Confidence Level</English>
+                <Czech>Požadovaná úroveň důvěry výsledku</Czech>
+                <French>Niveau de confiance du résultat requis</French>
+                <Spanish>Nivel de confianza del resultado requerido</Spanish>
+                <Italian>Livello di confidenza del risultato richiesto</Italian>
+                <Polish>Wymagany poziom pewności wyniku</Polish>
+                <Portuguese>Nível de confiança do resultado exigido</Portuguese>
+                <Russian>Необходимый уровень уверенности в результате</Russian>
+                <German>Erforderliches Ergebnis-Konfidenzniveau</German>
+                <Korean>필요한 결과 신뢰 수준</Korean>
+                <Japanese>必要な結果の信頼レベル</Japanese>
+                <Chinese>所需结果置信度</Chinese>
+                <Chinesesimp>所需结果置信度</Chinesesimp>
+                <Turkish>Gerekli Sonuç Güven Düzeyi</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_CONFIDENCE_TOOLTIP">
                 <Original>The result from the speech recognition engine comes with a confidence value based on how confident it is between the originally spoken words and the generated text it has created.\nThe engine will attempt to find the closest word from the list of available words that it is expecting, you can then use the confidence value as a fail safe to stop badly translated values from being processed.\nMay require a game restart to take effect.</Original>
+                <English>The result from the speech recognition engine comes with a confidence value based on how confident it is between the originally spoken words and the generated text it has created.\nThe engine will attempt to find the closest word from the list of available words that it is expecting, you can then use the confidence value as a fail safe to stop badly translated values from being processed.\nMay require a game restart to take effect.</English>
+                <Czech>Výsledek z rozpoznávání řeči přichází s hodnotou důvěry založenou na tom, jak silně je rozpoznána shoda mezi původně vyslovenými slovy a vygenerovaným textem.\nSystém se pokusí najít nejbližší slovo ze seznamu dostupných slov, která očekává, a můžete hodnotu důvěry použít jako ochranu, aby se špatně přeložené hodnoty nezpracovávaly.\nMůže být nutné restartovat hru, aby změny nabyly účinku.</Czech>
+                <French>Le résultat du moteur de reconnaissance vocale est accompagné d'une valeur de confiance basée sur la confiance entre les mots initialement prononcés et le texte généré qu'il a créé.\nLe moteur tentera de trouver le mot le plus proche dans la liste des mots disponibles qu'il attend, vous pouvez alors utiliser la valeur de confiance comme une sécurité pour empêcher que des valeurs mal traduites ne soient traitées.\nUn redémarrage du jeu peut être nécessaire pour que cela prenne effet.</French>
+                <Spanish>El resultado del motor de reconocimiento de voz viene con un valor de confianza basado en cuán seguro está entre las palabras originalmente pronunciadas y el texto generado que ha creado.\nEl motor intentará encontrar la palabra más cercana de la lista de palabras disponibles que espera, luego puede usar el valor de confianza como una medida de seguridad para evitar que se procesen valores mal traducidos.\nPuede ser necesario reiniciar el juego para que tenga efecto.</Spanish>
+                <Italian>Il risultato del motore di riconoscimento vocale viene fornito con un valore di confidenza basato su quanto il motore è sicuro tra le parole pronunciate originalmente e il testo generato.\nIl motore cercherà di trovare la parola più vicina dalla lista delle parole disponibili che si aspetta, quindi puoi usare il valore di confidenza come una misura di sicurezza per fermare i valori tradotti male dal trattamento.\nPotrebbe essere necessario riavviare il gioco affinché le modifiche abbiano effetto.</Italian>
+                <Polish>Wynik z silnika rozpoznawania mowy jest dostarczany z wartością pewności, która opiera się na tym, jak pewny jest silnik w odniesieniu do pierwotnie wypowiedzianych słów i wygenerowanego tekstu.\nSilnik spróbuje znaleźć najbliższe słowo z listy dostępnych słów, które oczekuje, a następnie możesz użyć wartości pewności jako zabezpieczenia, aby zatrzymać przetwarzanie źle przetłumaczonych wartości.\nMoże być konieczny restart gry, aby zmiany weszły w życie.</Polish>
+                <Portuguese>O resultado do mecanismo de reconhecimento de fala vem com um valor de confiança baseado em quão confiante está entre as palavras originalmente faladas e o texto gerado que criou.\nO mecanismo tentará encontrar a palavra mais próxima da lista de palavras disponíveis que espera, você pode então usar o valor de confiança como uma segurança para evitar que valores mal traduzidos sejam processados.\nPode ser necessário reiniciar o jogo para que a mudança tenha efeito.</Portuguese>
+                <Russian>Результат от движка распознавания речи сопровождается значением уверенности, основанным на том, насколько уверенно движок оценивает соответствие между исходно произнесенными словами и созданным текстом.\nДвигатель попытается найти наиболее близкое слово из списка ожидаемых слов, и вы можете использовать значение уверенности как защиту от обработки неверно переведенных значений.\nДля применения изменений может потребоваться перезапуск игры.</Russian>
+                <German>Das Ergebnis des Spracherkennungs-Engines kommt mit einem Vertrauenswert, der darauf basiert, wie sicher es sich zwischen den ursprünglich gesprochenen Wörtern und dem generierten Text fühlt.\nDie Engine wird versuchen, das nächstgelegene Wort aus der Liste der erwarteten Wörter zu finden, und Sie können den Vertrauenswert als Sicherheit verwenden, um zu verhindern, dass schlecht übersetzte Werte verarbeitet werden.\nEin Neustart des Spiels kann erforderlich sein, damit die Änderungen wirksam werden.</German>
+                <Korean>음성 인식 엔진에서 나온 결과는 원래 발음된 단어와 생성된 텍스트 간의 신뢰도에 따라 신뢰 값이 제공됩니다.\n엔진은 예상하는 사용 가능한 단어 목록에서 가장 가까운 단어를 찾으려고 시도하며, 신뢰 값을 안전장치로 사용하여 잘못 번역된 값이 처리되지 않도록 할 수 있습니다.\n변경 사항이 적용되려면 게임을 재시작해야 할 수 있습니다.</Korean>
+                <Japanese>音声認識エンジンからの結果は、元々話された言葉と生成されたテキストとの信頼度に基づいて信頼値が付与されます。\nエンジンは、期待する利用可能な単語リストから最も近い単語を見つけようと試みます。信頼値を安全装置として使用して、誤って翻訳された値が処理されないようにできます。\n変更が有効になるにはゲームの再起動が必要な場合があります。</Japanese>
+                <Chinese>语音识别引擎的结果附带一个置信值，基于它对原始说话内容与生成的文本之间的匹配度的信心。\n引擎将尝试从预期的可用单词列表中找到最接近的单词，您可以使用该置信值作为安全保护，防止错误翻译的值被处理。\n可能需要重新启动游戏以使其生效。</Chinese>
+                <Chinesesimp>语音识别引擎的结果附带一个置信值，基于它对原始说话内容与生成的文本之间的匹配度的信心。\n引擎将尝试从预期的可用单词列表中找到最接近的单词，您可以使用该置信值作为安全保护，防止错误翻译的值被处理。\n可能需要重新启动游戏以使其生效。</Chinesesimp>
+                <Turkish>Ses tanıma motorundan gelen sonuç, söylenen kelimeler ile oluşturulan metin arasındaki güven düzeyine dayalı bir güven değeri ile birlikte gelir.\nMotor, beklenen mevcut kelimeler listesinden en yakın kelimeyi bulmaya çalışacak, ardından güven değerini kötü çevrilmiş değerlerin işlenmesini engellemek için güvenlik önlemi olarak kullanabilirsiniz.\nDeğişikliğin etkili olabilmesi için oyunun yeniden başlatılması gerekebilir.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_DUCKING_NAME">
                 <Original>Reduce Game Volume When Speaking</Original>
+                <English>Reduce Game Volume When Speaking</English>
+                <Czech>Reduce the game volume when speaking</Czech>
+                <French>Réduire le volume du jeu lors de la parole</French>
+                <Spanish>Reducir el volumen del juego al hablar</Spanish>
+                <Italian>Ridurre il volume del gioco quando si parla</Italian>
+                <Polish>Zredukować głośność gry podczas mówienia</Polish>
+                <Portuguese>Reduzir o volume do jogo ao falar</Portuguese>
+                <Russian>Уменьшить громкость игры при разговоре</Russian>
+                <German>Spielvolumen beim Sprechen reduzieren</German>
+                <Korean>말할 때 게임 볼륨 줄이기</Korean>
+                <Japanese>話すときにゲームの音量を下げる</Japanese>
+                <Chinese>讲话时减少游戏音量</Chinese>
+                <Chinesesimp>讲话时减少游戏音量</Chinesesimp>
+                <Turkish>Konuşurken oyun sesini kıs</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_DUCKING_TOOLTIP">
                 <Original>Reduces the game volume when speaking to the speech recognition engine to prevent the engine from picking up game sounds as input.</Original>
+                <English>Reduces the game volume when speaking to the speech recognition engine to prevent the engine from picking up game sounds as input.</English>
+                <Czech>Sníží hlasitost hry při mluvení k rozpoznávači řeči, aby se zabránilo zachycení zvuků hry jako vstupních signálů.</Czech>
+                <French>Réduit le volume du jeu lors de la communication avec le moteur de reconnaissance vocale afin d'empêcher le moteur de capter les sons du jeu comme entrée.</French>
+                <Spanish>Reduce el volumen del juego cuando hables con el motor de reconocimiento de voz para evitar que el motor capture los sonidos del juego como entrada.</Spanish>
+                <Italian>Riduce il volume del gioco quando parli con il motore di riconoscimento vocale per evitare che il motore rilevi i suoni di gioco come input.</Italian>
+                <Polish>Zmniejsza głośność gry podczas mówienia do silnika rozpoznawania mowy, aby zapobiec przechwytywaniu dźwięków gry jako danych wejściowych.</Polish>
+                <Portuguese>Reduz o volume do jogo ao falar com o motor de reconhecimento de fala para evitar que o motor capture sons do jogo como entrada.</Portuguese>
+                <Russian>Уменьшает громкость игры при разговоре с системой распознавания речи, чтобы предотвратить захват звуков игры как ввода.</Russian>
+                <German>Reduziert die Lautstärke des Spiels, wenn mit der Spracherkennungs-Engine gesprochen wird, um zu verhindern, dass die Engine Geräusche des Spiels als Eingabe aufnimmt.</German>
+                <Korean>음성 인식 엔진에 말할 때 게임 소리가 입력으로 인식되지 않도록 게임 볼륨을 줄입니다.</Korean>
+                <Japanese>音声認識エンジンに話しかけるときに、エンジンがゲーム音を入力として認識しないようにゲーム音量を減少させます。</Japanese>
+                <Chinese>在与语音识别引擎交谈时，减少游戏音量，以防止引擎将游戏声音误识别为输入。</Chinese>
+                <Chinesesimp>在与语音识别引擎交谈时，减少游戏音量，以防止引擎将游戏声音误识别为输入。</Chinesesimp>
+                <Turkish>Konuşma tanıma motoruna konuşurken, motorun oyun seslerini giriş olarak algılamaması için oyun sesini azaltır.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_NAME">
                 <Original>End Background Noise Timeout</Original>
+                <English>End Background Noise Timeout</English>
+                <Czech>Ukončit časový limit pozadí šumu</Czech>
+                <French>Fin du délai de bruit de fond</French>
+                <Spanish>Finalizar el tiempo de espera de ruido de fondo</Spanish>
+                <Italian>Termina il timeout del rumore di fondo</Italian>
+                <Polish>Zakończ limit czasu hałasu w tle</Polish>
+                <Portuguese>Finalizar o tempo limite do ruído de fundo</Portuguese>
+                <Russian>Завершить тайм-аут фона шума</Russian>
+                <German>Beenden der Hintergrundgeräusch-Zeitüberschreitung</German>
+                <Korean>배경 소음 시간 초과 종료</Korean>
+                <Japanese>バックグラウンドノイズのタイムアウトを終了</Japanese>
+                <Chinese>结束背景噪音超时</Chinese>
+                <Chinesesimp>结束背景噪音超时</Chinesesimp>
+                <Turkish>Arka Plan Gürültüsü Zaman Aşımını Sonlandır</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_BABBLE_TIMEOUT_TOOLTIP">
                 <Original>Sets the interval of background noise that the speech recognition engine will accept at the end of an input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+                <English>Sets the interval of background noise that the speech recognition engine will accept at the end of an input before finalizing recognition.\nMay require a game restart to take effect.</English>
+                <Czech>Umožňuje nastavit interval pozadí zvuku, který rozpoznávací engine akceptuje na konci vstupu před dokončením rozpoznání.\nMůže být nutné restartovat hru, aby se projevily změny.</Czech>
+                <French>Définit l'intervalle de bruit de fond que le moteur de reconnaissance vocale acceptera à la fin d'une entrée avant de finaliser la reconnaissance.\nUn redémarrage du jeu peut être nécessaire pour que les modifications prennent effet.</French>
+                <Spanish>Establece el intervalo de ruido de fondo que el motor de reconocimiento de voz aceptará al final de una entrada antes de finalizar el reconocimiento.\nEs posible que sea necesario reiniciar el juego para que los cambios surtan efecto.</Spanish>
+                <Italian>Imposta l'intervallo di rumore di fondo che il motore di riconoscimento vocale accetterà alla fine di un input prima di finalizzare il riconoscimento.\nPotrebbe essere necessario riavviare il gioco affinché le modifiche abbiano effetto.</Italian>
+                <Polish>Ustawia interwał szumów tła, który silnik rozpoznawania mowy zaakceptuje na końcu wejścia przed finalizacją rozpoznania.\nMoże być konieczne ponowne uruchomienie gry, aby zmiany zostały zastosowane.</Polish>
+                <Portuguese>Define o intervalo de ruído de fundo que o mecanismo de reconhecimento de fala aceitará ao final de uma entrada antes de finalizar o reconhecimento.\nPode ser necessário reiniciar o jogo para que as alterações tenham efeito.</Portuguese>
+                <Russian>Устанавливает интервал фона, который система распознавания речи примет в конце ввода перед завершением распознавания.\nМожет потребоваться перезапуск игры для применения изменений.</Russian>
+                <German>Legt das Intervall für Hintergrundgeräusche fest, das die Spracherkennungs-Engine am Ende einer Eingabe akzeptiert, bevor die Erkennung abgeschlossen wird.\nEin Neustart des Spiels kann erforderlich sein, damit die Änderungen wirksam werden.</German>
+                <Korean>입력 종료 후 음성 인식 엔진이 인식 완료 전에 허용할 배경 소음 간격을 설정합니다.\n변경 사항을 적용하려면 게임을 재시작해야 할 수 있습니다.</Korean>
+                <Japanese>音声認識エンジンが入力の終了時に認識を完了する前に受け入れるバックグラウンドノイズのインターバルを設定します。\n効果を反映させるにはゲームの再起動が必要な場合があります。</Japanese>
+                <Chinese>设置语音识别引擎在输入结束时接受的背景噪声间隔，直到完成识别。\n可能需要重新启动游戏才能生效。</Chinese>
+                <Chinesesimp>设置语音识别引擎在输入结束时接受的背景噪声间隔，直到完成识别。\n可能需要重新启动游戏才能生效。</Chinesesimp>
+                <Turkish>Girişin sonrasında, konuşma tanıma motorunun tanımayı tamamlamadan önce kabul edeceği arka plan gürültü aralığını ayarlar.\nDeğişikliklerin etkili olması için oyun yeniden başlatılabilir.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_SILENCE_FINISHED_TIMEOUT_NAME">
                 <Original>End Silence Timeout (Finished)</Original>
+                <English>End Silence Timeout (Finished)</English>
+                <Czech>Ukončit časový limit ticha (Dokončeno)</Czech>
+                <French>Fin du délai de silence (Terminé)</French>
+                <Spanish>Fin del tiempo de silencio (Terminado)</Spanish>
+                <Italian>Fine del timeout silenzioso (Completato)</Italian>
+                <Polish>Kończony limit czasu ciszy (Zakończono)</Polish>
+                <Portuguese>Fim do Tempo de Silêncio (Concluído)</Portuguese>
+                <Russian>Окончание таймаута тишины (Завершено)</Russian>
+                <German>Ende der Stille-Timeout (Abgeschlossen)</German>
+                <Korean>침묵 타임아웃 종료 (완료)</Korean>
+                <Japanese>サイレントタイムアウト終了（完了）</Japanese>
+                <Chinese>结束静音超时（完成）</Chinese>
+                <Chinesesimp>结束静音超时（完成）</Chinesesimp>
+                <Turkish>Sessizlik Zaman Aşımı Sona Erdi (Tamamlandı)</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_SILENCE_FINISHED_TIMEOUT_TOOLTIP">
                 <Original>Sets the interval of silence that the speech recognition engine will accept at the end of a finished command input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+                <English>Sets the interval of silence that the speech recognition engine will accept at the end of a finished command input before finalizing recognition.\nMay require a game restart to take effect.</English>
+                <Czech>Nastavuje interval ticha, který motor rozpoznávání řeči přijme na konci dokončeného vstupu příkazu před dokončením rozpoznání.\nMůže být nutný restartování hry, aby změny nabyly účinku.</Czech>
+                <French>Définit l'intervalle de silence que le moteur de reconnaissance vocale acceptera à la fin d'une commande terminée avant de finaliser la reconnaissance.\nUn redémarrage du jeu peut être nécessaire pour que cela prenne effet.</French>
+                <Spanish>Define el intervalo de silencio que el motor de reconocimiento de voz aceptará al final de un comando terminado antes de finalizar el reconocimiento.\nPuede requerir un reinicio del juego para que surta efecto.</Spanish>
+                <Italian>Imposta l'intervallo di silenzio che il motore di riconoscimento vocale accetterà al termine di un comando finito prima di finalizzare il riconoscimento.\nPotrebbe essere necessario riavviare il gioco per applicare le modifiche.</Italian>
+                <Polish>Ustawia czas trwania ciszy, który silnik rozpoznawania mowy zaakceptuje po zakończeniu wprowadzenia polecenia przed zakończeniem rozpoznawania.\nMoże być konieczne ponowne uruchomienie gry, aby zmiany zaczęły obowiązywać.</Polish>
+                <Portuguese>Define o intervalo de silêncio que o motor de reconhecimento de voz aceitará no final de um comando concluído antes de finalizar o reconhecimento.\nPode ser necessário reiniciar o jogo para que as mudanças tenham efeito.</Portuguese>
+                <Russian>Устанавливает интервал тишины, который система распознавания речи примет в конце завершенной команды перед завершением распознавания.\nДля вступления изменений в силу может потребоваться перезапуск игры.</Russian>
+                <German>Legt das Zeitintervall der Stille fest, das die Spracherkennungs-Engine am Ende eines abgeschlossenen Befehls akzeptiert, bevor die Erkennung abgeschlossen wird.\nEin Neustart des Spiels ist möglicherweise erforderlich, damit die Änderungen wirksam werden.</German>
+                <Korean>명령 입력이 완료된 후 음성 인식 엔진이 인식 완료 전에 수용할 수 있는 침묵 간격을 설정합니다.\n효과가 적용되려면 게임을 재시작해야 할 수도 있습니다.</Korean>
+                <Japanese>音声認識エンジンが認識を完了する前に完了したコマンド入力の最後に受け入れる沈黙の間隔を設定します。\n効果を適用するにはゲームの再起動が必要な場合があります。</Japanese>
+                <Chinese>设置语音识别引擎在完成命令输入后，最终确认前所允许的静默间隔。\n可能需要重启游戏才能生效。</Chinese>
+                <Chinesesimp>设置语音识别引擎在完成命令输入后，最终确认前所允许的静默间隔。\n可能需要重启游戏才能生效。</Chinesesimp>
+                <Turkish>Konuşma tanıma motorunun, bir komut girişi tamamlandıktan sonra tanımayı tamamlamadan önce kabul edeceği sessizlik süresini ayarlar.\nEtkili olabilmesi için oyun yeniden başlatılabilir.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_SILENCE_TIMEOUT_NAME">
                 <Original>End Silence Timeout</Original>
+                <English>End Silence Timeout</English>
+                <Czech>Ukončit časový limit ticha</Czech>
+                <French>Fin du délai d'inactivité</French>
+                <Spanish>Finalizar el tiempo de espera en silencio</Spanish>
+                <Italian>Termina il timeout di silenzio</Italian>
+                <Polish>Zakończ limit ciszy</Polish>
+                <Portuguese>Finalizar o tempo limite de silêncio</Portuguese>
+                <Russian>Завершить тайм-аут тишины</Russian>
+                <German>Stummschalt-Timer beenden</German>
+                <Korean>침묵 타임아웃 종료</Korean>
+                <Japanese>サイレントタイムアウトを終了</Japanese>
+                <Chinese>结束静音超时</Chinese>
+                <Chinesesimp>结束静音超时</Chinesesimp>
+                <Turkish>Sessizlik zaman aşımını bitir</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_END_SILENCE_TIMEOUT_TOOLTIP">
                 <Original>Sets the interval of silence that the speech recognition engine will accept at the end of a not yet finished command input before finalizing recognition.\nMay require a game restart to take effect.</Original>
+                <English>Sets the interval of silence that the speech recognition engine will accept at the end of a not yet finished command input before finalizing recognition.\nMay require a game restart to take effect.</English>
+                <Czech>Určuje interval ticha, který bude rozpoznávací engine akceptovat na konci nedokončeného vstupu příkazu, než dojde k dokončení rozpoznání.\nMůže být nutné restartovat hru, aby změny nabyly účinku.</Czech>
+                <French>Définit l'intervalle de silence que le moteur de reconnaissance vocale acceptera à la fin d'une entrée de commande non terminée avant de finaliser la reconnaissance.\nPeut nécessiter un redémarrage du jeu pour prendre effet.</French>
+                <Spanish>Establece el intervalo de silencio que el motor de reconocimiento de voz aceptará al final de una entrada de comando no terminada antes de finalizar el reconocimiento.\nEs posible que se requiera reiniciar el juego para que surta efecto.</Spanish>
+                <Italian>Imposta l'intervallo di silenzio che il motore di riconoscimento vocale accetterà alla fine di un comando non ancora terminato prima di finalizzare il riconoscimento.\nPotrebbe essere necessario riavviare il gioco per applicare le modifiche.</Italian>
+                <Polish>Ustala interwał ciszy, który silnik rozpoznawania mowy zaakceptuje na końcu niedokończonego wprowadzenia komendy, zanim zakończy rozpoznawanie.\nMoże być wymagany ponowny rozruch gry, aby zmiany weszły w życie.</Polish>
+                <Portuguese>Define o intervalo de silêncio que o motor de reconhecimento de voz aceitará no final de uma entrada de comando ainda não finalizada antes de finalizar o reconhecimento.\nPode ser necessário reiniciar o jogo para que tenha efeito.</Portuguese>
+                <Russian>Устанавливает интервал тишины, который движок распознавания речи примет в конце незавершенного ввода команды перед завершением распознавания.\nМожет потребоваться перезагрузка игры, чтобы изменения вступили в силу.</Russian>
+                <German>Legt das Zeitintervall für Stille fest, das die Spracherkennungs-Engine am Ende einer noch nicht abgeschlossenen Befehls-Eingabe akzeptiert, bevor die Erkennung abgeschlossen wird.\nEin Neustart des Spiels kann erforderlich sein, damit die Änderungen wirksam werden.</German>
+                <Korean>명령어 입력이 아직 완료되지 않은 상태에서 음성 인식 엔진이 인식 종료 전에 허용할 침묵의 간격을 설정합니다.\n변경 사항이 적용되려면 게임을 다시 시작해야 할 수 있습니다.</Korean>
+                <Japanese>未完了のコマンド入力の最後に、音声認識エンジンが認識を完了する前に受け入れる無音の間隔を設定します。\n効果を反映させるにはゲームの再起動が必要な場合があります。</Japanese>
+                <Chinese>设置语音识别引擎在未完成的命令输入结束时接受的静默时间间隔，之后会完成识别。\n可能需要重新启动游戏才能生效。</Chinese>
+                <Chinesesimp>设置语音识别引擎在未完成的命令输入结束时接受的静默时间间隔，之后会完成识别。\n可能需要重新启动游戏才能生效。</Chinesesimp>
+                <Turkish>Ses tanıma motorunun, tamamlanmamış bir komut girişinin sonundaki sessizlik aralığını tanıma işlemi tamamlanmadan önce kabul edeceği süreyi ayarlar.\nEtkili olması için oyun yeniden başlatılabilir.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_INITIAL_SILENCE_TIMEOUT_NAME">
                 <Original>Initial Silence Timeout</Original>
+                <English>Initial Silence Timeout</English>
+                <Czech>Počáteční časový limit ticha</Czech>
+                <French>Délai d'expiration du silence initial</French>
+                <Spanish>Tiempo de espera de silencio inicial</Spanish>
+                <Italian>Timeout iniziale di silenzio</Italian>
+                <Polish>Początkowy limit czasu ciszy</Polish>
+                <Portuguese>Tempo limite de silêncio inicial</Portuguese>
+                <Russian>Начальное время ожидания тишины</Russian>
+                <German>Initialer Stille-Timeout</German>
+                <Korean>초기 침묵 시간 초과</Korean>
+                <Japanese>初期無音タイムアウト</Japanese>
+                <Chinese>初始静默超时</Chinese>
+                <Chinesesimp>初始静默超时</Chinesesimp>
+                <Turkish>İlk Sessizlik Zaman Aşımı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_INITIAL_SILENCE_TIMEOUT_TOOLTIP">
                 <Original>Sets the time interval during which the speech recognition engine accepts input containing only silence before finalizing recognition.\nMay require a game restart to take effect.</Original>
+                <English>Sets the time interval during which the speech recognition engine accepts input containing only silence before finalizing recognition.\nMay require a game restart to take effect.</English>
+                <Czech>Určuje časový interval, během kterého engine pro rozpoznávání řeči přijímá vstupy obsahující pouze ticho, než dokončí rozpoznávání.\nMůže být nutný restart hry pro účinnost změn.</Czech>
+                <French>Définit l'intervalle de temps pendant lequel le moteur de reconnaissance vocale accepte une entrée contenant uniquement du silence avant de finaliser la reconnaissance.\nUn redémarrage du jeu peut être nécessaire pour que cela prenne effet.</French>
+                <Spanish>Define el intervalo de tiempo durante el cual el motor de reconocimiento de voz acepta entradas que contienen solo silencio antes de finalizar el reconocimiento.\nEs posible que se requiera reiniciar el juego para que tenga efecto.</Spanish>
+                <Italian>Imposta l'intervallo di tempo durante il quale il motore di riconoscimento vocale accetta input contenenti solo silenzio prima di completare il riconoscimento.\nPotrebbe essere necessario riavviare il gioco affinché abbia effetto.</Italian>
+                <Polish>Ustala czas, w którym silnik rozpoznawania mowy akceptuje dane wejściowe zawierające tylko ciszę przed zakończeniem rozpoznawania.\nMoże być wymagany restart gry, aby zmiana zaczęła obowiązywać.</Polish>
+                <Portuguese>Define o intervalo de tempo durante o qual o motor de reconhecimento de voz aceita entradas contendo apenas silêncio antes de finalizar o reconhecimento.\nPode ser necessário reiniciar o jogo para que tenha efeito.</Portuguese>
+                <Russian>Устанавливает интервал времени, в течение которого система распознавания речи принимает только молчание перед завершением распознавания.\nДля применения изменений может потребоваться перезапуск игры.</Russian>
+                <German>Legt das Zeitintervall fest, währenddessen die Spracherkennungssoftware nur Eingaben mit Stille akzeptiert, bevor die Erkennung abgeschlossen wird.\nEin Neustart des Spiels ist möglicherweise erforderlich, damit die Änderungen wirksam werden.</German>
+                <Korean>음성 인식 엔진이 인식을 완료하기 전에 오직 침묵만 포함된 입력을 수락하는 시간 간격을 설정합니다.\n효과를 보기 위해 게임을 다시 시작해야 할 수 있습니다.</Korean>
+                <Japanese>音声認識エンジンが認識を完了する前に、音声認識エンジンが沈黙のみを含む入力を受け入れる時間間隔を設定します。\n効果を得るにはゲームの再起動が必要な場合があります。</Japanese>
+                <Chinese>%1 - 设置语音识别引擎接受仅包含静默的输入的时间间隔，然后完成识别。\n可能需要重新启动游戏以生效。</Chinese>
+                <Chinesesimp>%1 - 设置语音识别引擎接受仅包含静默的输入的时间间隔，然后完成识别。\n可能需要重新启动游戏以生效。</Chinesesimp>
+                <Turkish>Sadece sessizlik içeren girişleri kabul eden konuşma tanıma motorunun tanımayı tamamlamadan önceki zaman aralığını ayarlar.\nEtkili olması için oyunun yeniden başlatılması gerekebilir.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_OUTPUT_GROUP_CHAT_NAME">
                 <Original>Output Recognized Text in Group Chat</Original>
+                <English>Output Recognized Text in Group Chat</English>
+                <Czech>Výstup rozpoznaného textu v skupinovém chatu</Czech>
+                <French>Sortie du texte reconnu dans le chat de groupe</French>
+                <Spanish>Salida del texto reconocido en el chat grupal</Spanish>
+                <Italian>Visualizza il testo riconosciuto nella chat di gruppo</Italian>
+                <Polish>Wyświetl rozpoznany tekst w czacie grupowym</Polish>
+                <Portuguese>Exibir texto reconhecido no chat em grupo</Portuguese>
+                <Russian>Вывод распознанного текста в групповом чате</Russian>
+                <German>Erkannter Text im Gruppenchat ausgeben</German>
+                <Korean>그룹 채팅에서 인식된 텍스트 출력</Korean>
+                <Japanese>グループチャットで認識されたテキストを出力</Japanese>
+                <Chinese>在群聊中输出识别的文本</Chinese>
+                <Chinesesimp>在群聊中输出识别的文本</Chinesesimp>
+                <Turkish>Gruplu Sohbette Tanınan Metni Çıktı Olarak Göster</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_OUTPUT_GROUP_CHAT_TOOLTIP">
                 <Original>Recognized text that results in a command or function being run will be output into group chat, the same as a command given through the game.</Original>
+                <English>Recognized text that results in a command or function being run will be output into group chat, the same as a command given through the game.</English>
+                <Czech>Rozpoznaný text, který vede k provedení příkazu nebo funkce, bude vyveden do skupinového chatu, stejně jako příkaz zadaný ve hře.</Czech>
+                <French>Le texte reconnu qui entraîne l'exécution d'une commande ou d'une fonction sera envoyé dans le chat de groupe, tout comme une commande donnée dans le jeu.</French>
+                <Spanish>El texto reconocido que da lugar a la ejecución de un comando o función se enviará al chat del grupo, de la misma manera que un comando dado en el juego.</Spanish>
+                <Italian>Il testo riconosciuto che comporta l'esecuzione di un comando o di una funzione verrà inviato nella chat di gruppo, proprio come un comando dato nel gioco.</Italian>
+                <Polish>Rozpoznany tekst, który skutkuje wykonaniem polecenia lub funkcji, zostanie wysłany do czatu grupowego, tak jak polecenie wydane w grze.</Polish>
+                <Portuguese>O texto reconhecido que resulta na execução de um comando ou função será enviado para o chat do grupo, assim como um comando dado no jogo.</Portuguese>
+                <Russian>Распознанный текст, который приводит к выполнению команды или функции, будет выведен в групповой чат, как и команда, заданная через игру.</Russian>
+                <German>Erkannter Text, der zur Ausführung eines Befehls oder einer Funktion führt, wird in den Gruppen-Chat ausgegeben, genauso wie ein Befehl, der im Spiel gegeben wird.</German>
+                <Korean>인식된 텍스트가 명령어나 기능 실행을 초래하면 게임을 통해 주어진 명령과 동일하게 그룹 채팅에 출력됩니다.</Korean>
+                <Japanese>認識されたテキストがコマンドまたは機能を実行する結果となると、それはゲーム内で与えられたコマンドと同様にグループチャットに出力されます。</Japanese>
+                <Chinese>识别出的文本导致执行命令或功能时，将像游戏内输入的命令一样输出到群聊中。</Chinese>
+                <Chinesesimp>识别出的文本导致执行命令或功能时，将像游戏内输入的命令一样输出到群聊中。</Chinesesimp>
+                <Turkish>Tanınan metin, bir komut veya işlevin çalışmasına yol açarsa, bu metin, oyunda verilen bir komut gibi grup sohbetine çıkacaktır.</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TARGET_CONFIRM_UI_NAME">
                 <Original>Display Selected Target</Original>
+                <English>Display Selected Target</English>
+                <Czech>Zobrazit vybraný cíl</Czech>
+                <French>Afficher la cible sélectionnée</French>
+                <Spanish>Mostrar objetivo seleccionado</Spanish>
+                <Italian>Visualizza obiettivo selezionato</Italian>
+                <Polish>Wyświetl wybrany cel</Polish>
+                <Portuguese>Exibir alvo selecionado</Portuguese>
+                <Russian>Показать выбранную цель</Russian>
+                <German>Ausgewähltes Ziel anzeigen</German>
+                <Korean>선택된 목표 표시</Korean>
+                <Japanese>選択したターゲットを表示</Japanese>
+                <Chinese>顯示選定的目標</Chinese>
+                <Chinesesimp>显示选定的目标</Chinesesimp>
+                <Turkish>Seçilen Hedefi Göster</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TARGET_CONFIRM_UI_TOOLTIP">
                 <Original>Displays a circle over the selected target when giving target orders.</Original>
+                <English>Displays a circle over the selected target when giving target orders.</English>
+                <Czech>Zobrazuje kruh nad vybraným cílem při zadávání příkazů cíle.</Czech>
+                <French>Affiche un cercle au-dessus de la cible sélectionnée lors de l'émission des ordres de cible.</French>
+                <Spanish>Muestra un círculo sobre el objetivo seleccionado al dar órdenes de objetivo.</Spanish>
+                <Italian>Mostra un cerchio sopra l'obiettivo selezionato quando vengono dati ordini di obiettivo.</Italian>
+                <Polish>Wyświetla okrąg nad wybranym celem podczas wydawania rozkazów celowania.</Polish>
+                <Portuguese>Exibe um círculo sobre o alvo selecionado ao dar ordens de alvo.</Portuguese>
+                <Russian>Отображает круг над выбранной целью при выдаче команд для цели.</Russian>
+                <German>Zeigt einen Kreis über dem ausgewählten Ziel an, wenn Zielbefehle erteilt werden.</German>
+                <Korean>대상 명령을 내릴 때 선택한 대상 위에 원을 표시합니다.</Korean>
+                <Japanese>ターゲットの命令を出す際に選択したターゲットの上に円を表示します。</Japanese>
+                <Chinese>在给出目标命令时，在选定的目标上显示一个圆圈。</Chinese>
+                <Chinesesimp>在给出目标命令时，在选定的目标上显示一个圆圈。</Chinesesimp>
+                <Turkish>Hedef emirleri verirken seçilen hedefin üzerine bir daire gösterir.</Turkish>
             </Key>
         </Container>
         <Container name="Pause Menu Strings">
             <Key ID="STR_IVCS_PAUSE_MENU_SOUND_BUTTON_NAME">
                 <Original>Windows Sound Control Panel</Original>
+                <English>Windows Sound Control Panel</English>
+                <Czech>Ovládací panel zvuku Windows</Czech>
+                <French>Panneau de configuration du son Windows</French>
+                <Spanish>Panel de control de sonido de Windows</Spanish>
+                <Italian>Pannello di controllo audio di Windows</Italian>
+                <Polish>Panel sterowania dźwiękiem systemu Windows</Polish>
+                <Portuguese>Painel de Controle de Som do Windows</Portuguese>
+                <Russian>Панель управления звуком Windows</Russian>
+                <German>Windows Sound-Systemsteuerung</German>
+                <Korean>Windows 사운드 제어판</Korean>
+                <Japanese>Windows サウンドコントロールパネル</Japanese>
+                <Chinese>Windows声音控制面板</Chinese>
+                <Chinesesimp>Windows声音控制面板</Chinesesimp>
+                <Turkish>Windows Ses Kontrol Paneli</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_SOUND_BUTTON_TOOLTIP">
                 <Original>Open the Windows Sound Control Panel, allowing you to change the default input and output device.</Original>
+                <English>Open the Windows Sound Control Panel, allowing you to change the default input and output device.</English>
+                <Czech>Otevřete Ovládací panel zvuku Windows, který vám umožní změnit výchozí vstupní a výstupní zařízení.</Czech>
+                <French>Ouvrez le Panneau de configuration du son Windows, vous permettant de changer le périphérique d'entrée et de sortie par défaut.</French>
+                <Spanish>Abrir el Panel de Control de Sonido de Windows, permitiéndote cambiar el dispositivo de entrada y salida predeterminado.</Spanish>
+                <Italian>Apri il Pannello di Controllo del Suono di Windows, permettendoti di cambiare il dispositivo di input e output predefinito.</Italian>
+                <Polish>Otwórz Panel Sterowania Dźwiękiem Windows, pozwalając na zmianę domyślnego urządzenia wejściowego i wyjściowego.</Polish>
+                <Portuguese>Abra o Painel de Controle de Som do Windows, permitindo que você mude o dispositivo de entrada e saída padrão.</Portuguese>
+                <Russian>Откройте Панель управления звуком Windows, что позволит вам изменить устройства ввода и вывода по умолчанию.</Russian>
+                <German>Öffnen Sie das Windows-Soundsteuerungspanel, mit dem Sie das Standard-Eingabe- und Ausgabegerät ändern können.</German>
+                <Korean>Windows 사운드 제어판을 열어 기본 입력 및 출력 장치를 변경할 수 있습니다.</Korean>
+                <Japanese>Windowsのサウンドコントロールパネルを開き、デフォルトの入力および出力デバイスを変更できます。</Japanese>
+                <Chinese>打开Windows声音控制面板，允许您更改默认的输入和输出设备。</Chinese>
+                <Chinesesimp>打开Windows声音控制面板，允许您更改默认的输入和输出设备。</Chinesesimp>
+                <Turkish>Windows Ses Denetim Panelini açın, böylece varsayılan giriş ve çıkış cihazlarını değiştirebilirsiniz.</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_NAME">
                 <Original>Windows Speech Settings</Original>
+                <English>Windows Speech Settings</English>
+                <Czech>Nastavení hlasu Windows</Czech>
+                <French>Paramètres de la reconnaissance vocale Windows</French>
+                <Spanish>Ajustes de voz de Windows</Spanish>
+                <Italian>Impostazioni vocali di Windows</Italian>
+                <Polish>Ustawienia mowy Windows</Polish>
+                <Portuguese>Configurações de voz do Windows</Portuguese>
+                <Russian>Настройки речи Windows</Russian>
+                <German>Windows-Sprachausgabeinstellungen</German>
+                <Korean>Windows 음성 설정</Korean>
+                <Japanese>Windows 音声設定</Japanese>
+                <Chinese>Windows 语音设置</Chinese>
+                <Chinesesimp>Windows 语音设置</Chinesesimp>
+                <Turkish>Windows Ses Ayarları</Turkish>
             </Key>
+
             <Key ID="STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_TOOLTIP">
-                <Original>Open the Windows Speech Settings, allowing you to change your operating systems speech language settings.</Original>
+                <Original>Open the Windows Speech Settings, allowing you to change your operating system's speech language settings.</Original>
+                <English>Open the Windows Speech Settings, allowing you to change your operating system's speech language settings.</English>
+                <Czech>Otevřete nastavení řeči Windows, které vám umožní změnit jazyková nastavení řeči vašeho operačního systému.</Czech>
+                <French>Ouvrez les paramètres de la parole Windows, vous permettant de modifier les paramètres de langue de la parole de votre système d'exploitation.</French>
+                <Spanish>Abra la configuración de voz de Windows, lo que le permitirá cambiar la configuración de idioma de la voz de su sistema operativo.</Spanish>
+                <Italian>Apri le impostazioni vocali di Windows, che ti permetteranno di modificare le impostazioni della lingua vocale del tuo sistema operativo.</Italian>
+                <Polish>Otwórz ustawienia mowy Windows, które pozwolą ci zmienić ustawienia języka mowy systemu operacyjnego.</Polish>
+                <Portuguese>Abra as Configurações de Fala do Windows, permitindo que você altere as configurações de idioma de fala do seu sistema operacional.</Portuguese>
+                <Russian>Откройте настройки речи Windows, позволяя вам изменить языковые настройки речи вашей операционной системы.</Russian>
+                <German>Öffnen Sie die Windows-Sprach Einstellungen, um die Spracheinstellungen der Sprachausgabe Ihres Betriebssystems zu ändern.</German>
+                <Korean>Windows 음성 설정을 열어 운영 체제의 음성 언어 설정을 변경할 수 있습니다.</Korean>
+                <Japanese>Windowsの音声設定を開き、オペレーティングシステムの音声言語設定を変更できるようにします。</Japanese>
+                <Chinese>打开Windows语音设置，允许您更改操作系统的语音语言设置。</Chinese>
+                <Chinesesimp>打开Windows语音设置，允许您更改操作系统的语音语言设置。</Chinesesimp>
+                <Turkish>Windows Konuşma Ayarlarını açın, böylece işletim sisteminizin konuşma dilini ayarlayabilirsiniz.</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_TEST_BUTTON_NAME">
-                <Original>IVCS Audio Test</Original>
+                <Original>Speech Recognition Audio Test</Original>
+                <English>Speech Recognition Audio Test</English>
+                <Czech>Test zvukového rozpoznávání řeči</Czech>
+                <French>Test audio de reconnaissance vocale</French>
+                <Spanish>Prueba de audio de reconocimiento de voz</Spanish>
+                <Italian>Test audio di riconoscimento vocale</Italian>
+                <Polish>Test dźwiękowy rozpoznawania mowy</Polish>
+                <Portuguese>Teste de áudio de reconhecimento de fala</Portuguese>
+                <Russian>Тест аудио распознавания речи</Russian>
+                <German>Spracherkennung Audio-Test</German>
+                <Korean>음성 인식 오디오 테스트</Korean>
+                <Japanese>音声認識オーディオテスト</Japanese>
+                <Chinese>语音识别音频测试</Chinese>
+                <Chinesesimp>语音识别音频测试</Chinesesimp>
+                <Turkish>Ses Tanıma Sesli Test</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_TEST_BUTTON_TOOLTIP">
-                <Original>Open the IVCS testing menu, allowing you to test your computers voice recognition.</Original>
+                <Original>Open the speech recognition testing menu, allowing you to test your computer's voice recognition.</Original>
+                <English>Open the speech recognition testing menu, allowing you to test your computer's voice recognition.</English>
+                <Czech>Otevřete nabídku pro testování rozpoznávání hlasu, která vám umožní otestovat rozpoznávání hlasu vašeho počítače.</Czech>
+                <French>Ouvrir le menu de test de reconnaissance vocale, vous permettant de tester la reconnaissance vocale de votre ordinateur.</French>
+                <Spanish>Abrir el menú de prueba de reconocimiento de voz, lo que le permitirá probar el reconocimiento de voz de su computadora.</Spanish>
+                <Italian>Apri il menu di test del riconoscimento vocale, che ti permette di testare il riconoscimento vocale del tuo computer.</Italian>
+                <Polish>Otwórz menu testowania rozpoznawania mowy, które pozwala na przetestowanie rozpoznawania głosu w twoim komputerze.</Polish>
+                <Portuguese>Abrir o menu de teste de reconhecimento de voz, permitindo testar o reconhecimento de voz do seu computador.</Portuguese>
+                <Russian>Откройте меню тестирования распознавания речи, позволяющее протестировать распознавание речи на вашем компьютере.</Russian>
+                <German>Öffnen Sie das Menü zum Testen der Spracherkennung, mit dem Sie die Spracherkennung Ihres Computers testen können.</German>
+                <Korean>음성 인식 테스트 메뉴를 열어 컴퓨터의 음성 인식을 테스트할 수 있습니다.</Korean>
+                <Japanese>音声認識テストメニューを開き、コンピュータの音声認識をテストできます。</Japanese>
+                <Chinese>打开语音识别测试菜单，允许您测试计算机的语音识别。</Chinese>
+                <Chinesesimp>打开语音识别测试菜单，允许您测试计算机的语音识别。</Chinesesimp>
+                <Turkish>Sesli tanıma test menüsünü açarak bilgisayarınızın sesli tanımasını test etmenizi sağlar.</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_NAME">
                 <Original>Windows Voice Training</Original>
+                <English>Windows Voice Training</English>
+                <Czech>Trénink hlasu ve Windows</Czech>
+                <French>Entraînement vocal Windows</French>
+                <Spanish>Entrenamiento de voz de Windows</Spanish>
+                <Italian>Allenamento vocale di Windows</Italian>
+                <Polish>Szkolenie głosowe Windows</Polish>
+                <Portuguese>Treinamento de voz do Windows</Portuguese>
+                <Russian>Обучение голосу Windows</Russian>
+                <German>Windows Sprachtraining</German>
+                <Korean>Windows 음성 훈련</Korean>
+                <Japanese>Windows 音声トレーニング</Japanese>
+                <Chinese>Windows 语音训练</Chinese>
+                <Chinesesimp>Windows 语音训练</Chinesesimp>
+                <Turkish>Windows Ses Eğitimi</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_TOOLTIP">
                 <Original>Open the Windows Speech Recognition Voice Training Wizard, allowing you to train your computer's speech recognition to understand your voice easier.</Original>
+                <English>Open the Windows Speech Recognition Voice Training Wizard, allowing you to train your computer's speech recognition to understand your voice easier.</English>
+                <Czech>Otevřete průvodce trénováním rozpoznávání řeči systému Windows, který vám umožní trénovat rozpoznávání řeči vašeho počítače, aby lépe rozuměl vašemu hlasu.</Czech>
+                <French>Ouvrez l'assistant de formation à la reconnaissance vocale de Windows, vous permettant d'entraîner la reconnaissance vocale de votre ordinateur pour mieux comprendre votre voix.</French>
+                <Spanish>Abrir el Asistente de Entrenamiento de Reconocimiento de Voz de Windows, lo que le permitirá entrenar el reconocimiento de voz de su computadora para entender su voz con mayor facilidad.</Spanish>
+                <Italian>Apri la procedura guidata di formazione per il riconoscimento vocale di Windows, che ti permette di addestrare il riconoscimento vocale del tuo computer per comprendere meglio la tua voce.</Italian>
+                <Polish>Otwórz Kreatora szkolenia rozpoznawania mowy systemu Windows, który pozwala trenować rozpoznawanie mowy w komputerze, aby łatwiej rozumiał Twój głos.</Polish>
+                <Portuguese>Abra o Assistente de Treinamento de Reconhecimento de Fala do Windows, permitindo que você treine o reconhecimento de fala do seu computador para entender sua voz mais facilmente.</Portuguese>
+                <Russian>Откройте Мастер тренировки распознавания речи Windows, который позволяет обучить распознавание речи вашего компьютера, чтобы он легче понимал ваш голос.</Russian>
+                <German>Öffnen Sie den Windows-Spracherkennungs-Trainingsassistenten, mit dem Sie die Spracherkennung Ihres Computers trainieren können, um Ihre Stimme leichter zu verstehen.</German>
+                <Korean>Windows 음성 인식 음성 훈련 마법사를 열어 컴퓨터의 음성 인식을 훈련시켜 목소리를 더 쉽게 인식할 수 있도록 합니다.</Korean>
+                <Japanese>Windows音声認識の音声トレーニングウィザードを開き、コンピュータの音声認識を訓練して、あなたの声をより簡単に理解できるようにします。</Japanese>
+                <Chinese>打开 Windows 语音识别语音训练向导，让您训练计算机的语音识别系统更容易理解您的声音。</Chinese>
+                <Chinesesimp>打开 Windows 语音识别语音训练向导，让您训练计算机的语音识别系统更容易理解您的声音。</Chinesesimp>
+                <Turkish>Windows Ses Tanıma Ses Eğitim Sihirbazını açarak, bilgisayarınızın ses tanımasını sesinizi daha kolay anlaması için eğitmenizi sağlar.</Turkish>
             </Key>
         </Container>
         <Container name="Settings Category Strings">
             <Key ID="STR_IVCS_SETTINGS_CATEGORY_NAME">
                 <Original>Integrated AI Voice Control System</Original>
+                <English>Integrated AI Voice Control System</English>
+                <Czech>Integrovaný systém hlasového ovládání AI</Czech>
+                <French>Système de contrôle vocal AI intégré</French>
+                <Spanish>Sistema de control de voz AI integrado</Spanish>
+                <Italian>Sistema di controllo vocale AI integrato</Italian>
+                <Polish>Zintegrowany system sterowania głosem AI</Polish>
+                <Portuguese>Sistema de Controle de Voz AI Integrado</Portuguese>
+                <Russian>Интегрированная система голосового управления ИИ</Russian>
+                <German>Integriertes AI-Sprachsteuerungssystem</German>
+                <Korean>통합 AI 음성 제어 시스템</Korean>
+                <Japanese>統合されたAI音声コントロールシステム</Japanese>
+                <Chinese>集成AI语音控制系统</Chinese>
+                <Chinesesimp>集成AI语音控制系统</Chinesesimp>
+                <Turkish>Entegre AI Ses Kontrol Sistemi</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_INPUT_NAME">
                 <Original>Input</Original>
+                <English>Input</English>
+                <Czech>Vstup</Czech>
+                <French>Entrée</French>
+                <Spanish>Entrada</Spanish>
+                <Italian>Ingresso</Italian>
+                <Polish>Wejście</Polish>
+                <Portuguese>Entrada</Portuguese>
+                <Russian>Ввод</Russian>
+                <German>Eingabe</German>
+                <Korean>입력</Korean>
+                <Japanese>入力</Japanese>
+                <Chinese>輸入</Chinese>
+                <Chinesesimp>输入</Chinesesimp>
+                <Turkish>Girdi</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_RESULT_NAME">
                 <Original>Results</Original>
+                <English>Results</English>
+                <Czech>Výsledky</Czech>
+                <French>Résultats</French>
+                <Spanish>Resultados</Spanish>
+                <Italian>Risultati</Italian>
+                <Polish>Wyniki</Polish>
+                <Portuguese>Resultados</Portuguese>
+                <Russian>Результаты</Russian>
+                <German>Ergebnisse</German>
+                <Korean>결과</Korean>
+                <Japanese>結果</Japanese>
+                <Chinese>結果</Chinese>
+                <Chinesesimp>结果</Chinesesimp>
+                <Turkish>Sonuçlar</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_SOUND_NAME">
                 <Original>Gameplay Audio</Original>
+                <English>Gameplay Audio</English>
+                <Czech>Zvuk ve hře</Czech>
+                <French>Audio du jeu</French>
+                <Spanish>Audio del juego</Spanish>
+                <Italian>Audio di gioco</Italian>
+                <Polish>Audio w grze</Polish>
+                <Portuguese>Áudio do jogo</Portuguese>
+                <Russian>Аудио игры</Russian>
+                <German>Spiel-Audio</German>
+                <Korean>게임 오디오</Korean>
+                <Japanese>ゲームオーディオ</Japanese>
+                <Chinese>遊戲音頻</Chinese>
+                <Chinesesimp>游戏音频</Chinesesimp>
+                <Turkish>Oyun Sesleri</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_SUBCATEGORY_USER_FEEDBACK_NAME">
                 <Original>Feedback to the User</Original>
+                <English>Feedback to the User</English>
+                <Czech>Feedback pro uživatele</Czech>
+                <French>Retour à l'utilisateur</French>
+                <Spanish>Comentarios al usuario</Spanish>
+                <Italian>Feedback per l'utente</Italian>
+                <Polish>Informacje zwrotne dla użytkownika</Polish>
+                <Portuguese>Comentários para o usuário</Portuguese>
+                <Russian>Обратная связь с пользователем</Russian>
+                <German>Feedback an den Benutzer</German>
+                <Korean>사용자에게 피드백</Korean>
+                <Japanese>ユーザーへのフィードバック</Japanese>
+                <Chinese>反馈给用户</Chinese>
+                <Chinesesimp>反馈给用户</Chinesesimp>
+                <Turkish>Kullanıcıya Geri Bildirim</Turkish>
             </Key>
         </Container>
         <Container name="PTT Display Strings">
             <Key ID="STR_IVCS_PTT_CONFIDENCE_TEXT">
                 <Original>%1%% confident</Original>
+                <English>%1%% confident</English>
+                <Czech>%1%% jistý</Czech>
+                <French>%1%% confiant</French>
+                <Spanish>%1%% confiado</Spanish>
+                <Italian>%1%% sicuro</Italian>
+                <Polish>%1%% pewny</Polish>
+                <Portuguese>%1%% confiante</Portuguese>
+                <Russian>%1%% уверен</Russian>
+                <German>%1%% zuversichtlich</German>
+                <Korean>%1%% 자신감</Korean>
+                <Japanese>%1%% 自信</Japanese>
+                <Chinese>%1%% 自信</Chinese>
+                <Chinesesimp>%1%% 自信</Chinesesimp>
+                <Turkish>%1%% emin</Turkish>
             </Key>
         </Container>
         <Container name="Microphone Testing Display Strings">
             <Key ID="STR_IVCS_SETTINGS_TESTING_CONFIDENCE_TEXT">
                 <Original>Confidence: %1%%</Original>
+                <English>Confidence: %1%%</English>
+                <Czech>Confidence: %1%%</Czech>
+                <French>Confiance: %1%%</French>
+                <Spanish>Confianza: %1%%</Spanish>
+                <Italian>Confidenza: %1%%</Italian>
+                <Polish>Pełne zaufanie: %1%%</Polish>
+                <Portuguese>Confiança: %1%%</Portuguese>
+                <Russian>Уверенность: %1%%</Russian>
+                <German>Vertrauen: %1%%</German>
+                <Korean>신뢰도: %1%%</Korean>
+                <Japanese>信頼度: %1%%</Japanese>
+                <Chinese>信心: %1%%</Chinese>
+                <Chinesesimp>信心: %1%%</Chinesesimp>
+                <Turkish>Güven: %1%%</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_CURRENT_TITLE">
-                <Original>Engine Hypothesis:</Original>
+                <Original>Speech Recognition Hypothesis:</Original>
+                <English>Speech Recognition Hypothesis:</English>
+                <Czech>Hypotéza rozpoznávání řeči:</Czech>
+                <French>Hypothèse de reconnaissance vocale :</French>
+                <Spanish>Hipótesis de reconocimiento de voz:</Spanish>
+                <Italian>Ipotesi di riconoscimento vocale:</Italian>
+                <Polish>Hipoteza rozpoznawania mowy:</Polish>
+                <Portuguese>Hipótese de reconhecimento de fala:</Portuguese>
+                <Russian>Гипотеза распознавания речи:</Russian>
+                <German>Spracherkennungshypothese:</German>
+                <Korean>음성 인식 가설:</Korean>
+                <Japanese>音声認識仮説：</Japanese>
+                <Chinese>語音識別假設：</Chinese>
+                <Chinesesimp>语音识别假设：</Chinesesimp>
+                <Turkish>Konuşma Tanıma Hipotezi:</Turkish>
             </Key>
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_DESCRIPTION">
                 <Original>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3. This menu allows you to test your microphone and built-in Windows speech recognition engine. Say the phrases below, they will turn green when the engine recognizes you've said the phrase. The engine will only recognize the following phrases as correct input when this menu is open - You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.</Original>
+                <English>Welcome to Asaayu's Integrated AI Voice Control System (IVCS) for Arma 3. This menu allows you to test your microphone and built-in Windows speech recognition engine. Say the phrases below, they will turn green when the engine recognizes you've said the phrase. The engine will only recognize the following phrases as correct input when this menu is open - You don't need to pronounce punctuation marks like periods, commas, or apostrophes. Speak as you normally would to another person.</English>
+                <Czech>Vítejte v integrovaném systému hlasového ovládání AI Asaayu pro Arma 3. Toto menu vám umožňuje otestovat mikrofon a vestavěný rozpoznávací engine Windows pro řeč. Řekněte níže uvedené fráze, ty se zbarví zeleně, když engine rozpozná, že jste frázi vyslovili. Engine rozpozná pouze následující fráze jako správný vstup, když je toto menu otevřené - Nemusíte vyslovovat interpunkční znaménka jako tečky, čárky nebo apostrofy. Mluvte tak, jak byste normálně mluvili s jinou osobou.</Czech>
+                <French>Bienvenue dans le système de contrôle vocal AI intégré d'Asaayu (IVCS) pour Arma 3. Ce menu vous permet de tester votre microphone et le moteur de reconnaissance vocale intégré de Windows. Dites les phrases ci-dessous, elles deviendront vertes lorsque le moteur reconnaîtra que vous avez prononcé la phrase. Le moteur ne reconnaîtra que les phrases suivantes comme saisie correcte lorsque ce menu est ouvert - Vous n'avez pas besoin de prononcer les signes de ponctuation tels que les points, les virgules ou les apostrophes. Parlez comme vous le feriez normalement à une autre personne.</French>
+                <Spanish>Bienvenido al Sistema de Control de Voz AI Integrado (IVCS) de Asaayu para Arma 3. Este menú te permite probar tu micrófono y el motor de reconocimiento de voz integrado de Windows. Di las frases a continuación, se pondrán verdes cuando el motor reconozca que dijiste la frase. El motor solo reconocerá las siguientes frases como entradas correctas cuando este menú esté abierto: No es necesario pronunciar marcas de puntuación como puntos, comas o apóstrofes. Habla como lo harías normalmente con otra persona.</Spanish>
+                <Italian>Benvenuto nel Sistema di Controllo Vocale AI Integrato (IVCS) di Asaayu per Arma 3. Questo menu ti consente di testare il tuo microfono e il motore di riconoscimento vocale integrato di Windows. Pronuncia le frasi sottostanti, diventeranno verdi quando il motore riconoscerà che hai pronunciato la frase. Il motore riconoscerà solo le seguenti frasi come input corretto quando questo menu è aperto - Non è necessario pronunciare segni di punteggiatura come punti, virgole o apostrofi. Parla come faresti normalmente con un'altra persona.</Italian>
+                <Polish>Witaj w Zintegrowanym Systemie Sterowania Głosem AI Asaayu (IVCS) dla Arma 3. To menu umożliwia testowanie mikrofonu oraz wbudowanego silnika rozpoznawania mowy w systemie Windows. Powiedz poniższe frazy, staną się one zielone, gdy silnik rozpozna, że wypowiedziałeś frazę. Silnik rozpozna tylko poniższe frazy jako poprawne wejście, gdy to menu jest otwarte - Nie musisz wymawiać znaków interpunkcyjnych, takich jak kropki, przecinki czy apostrofy. Mów, jak normalnie mówisz do innej osoby.</Polish>
+                <Portuguese>Bem-vindo ao Sistema Integrado de Controle de Voz AI (IVCS) da Asaayu para Arma 3. Este menu permite testar seu microfone e o motor de reconhecimento de voz integrado do Windows. Diga as frases abaixo, elas ficarão verdes quando o motor reconhecer que você disse a frase. O motor só reconhecerá as seguintes frases como entrada correta quando este menu estiver aberto - Você não precisa pronunciar sinais de pontuação como pontos, vírgulas ou apóstrofos. Fale como falaria normalmente com outra pessoa.</Portuguese>
+                <Russian>Добро пожаловать в интегрированную систему голосового управления ИИ Asaayu (IVCS) для Arma 3. Это меню позволяет протестировать ваш микрофон и встроенный двигатель распознавания речи Windows. Произнесите фразы ниже, они станут зелеными, когда двигатель распознает, что вы произнесли фразу. Двигатель будет распознавать только следующие фразы как правильный ввод, когда это меню открыто - Вам не нужно произносить знаки препинания, такие как точки, запятые или апострофы. Говорите, как обычно, как с другим человеком.</Russian>
+                <German>Willkommen im integrierten AI-Sprachsteuerungssystem (IVCS) von Asaayu für Arma 3. Dieses Menü ermöglicht es Ihnen, Ihr Mikrofon und die integrierte Windows-Spracherkennungs-Engine zu testen. Sagen Sie die untenstehenden Sätze, sie werden grün, wenn die Engine erkennt, dass Sie den Satz gesagt haben. Die Engine erkennt nur die folgenden Sätze als korrekte Eingabe, wenn dieses Menü geöffnet ist - Sie müssen keine Satzzeichen wie Punkte, Kommas oder Apostrophe aussprechen. Sprechen Sie, wie Sie es normalerweise mit einer anderen Person tun würden.</German>
+                <Korean>Arma 3용 Asaayu의 통합 AI 음성 제어 시스템(IVCS)에 오신 것을 환영합니다. 이 메뉴에서는 마이크와 내장된 Windows 음성 인식 엔진을 테스트할 수 있습니다. 아래 문구를 말하면 엔진이 문구를 인식했을 때 초록색으로 바뀝니다. 이 메뉴가 열려 있을 때만 엔진은 아래 문구를 올바른 입력으로 인식합니다 - 마침표, 쉼표 또는 아포스트로피와 같은 문장 부호는 발음할 필요가 없습니다. 다른 사람과 대화하듯이 말하세요.</Korean>
+                <Japanese>Arma 3のAsaayuの統合AI音声コントロールシステム(IVCS)へようこそ。このメニューでは、マイクとWindowsの音声認識エンジンをテストできます。以下のフレーズを言うと、エンジンがそのフレーズを認識したときに緑色に変わります。このメニューが開いている間のみ、エンジンは以下のフレーズを正しい入力として認識します - ピリオド、コンマ、アポストロフィなどの句読点を発音する必要はありません。通常、他の人に話すように話してください。</Japanese>
+                <Chinese>欢迎来到Asaayu的集成AI语音控制系统（IVCS）适用于Arma 3。此菜单允许您测试麦克风和内置的Windows语音识别引擎。说下面的短语，当引擎识别您说的短语时，它们会变成绿色。当此菜单打开时，系统只会识别以下短语为正确输入 - 您无需发音标点符号，如句号、逗号或撇号。像平常与他人交谈一样讲话。</Chinese>
+                <Chinesesimp>欢迎来到Asaayu的集成AI语音控制系统（IVCS）适用于Arma 3。此菜单允许您测试麦克风和内置的Windows语音识别引擎。说下面的短语，当引擎识别您说的短语时，它们会变成绿色。当此菜单打开时，系统只会识别以下短语为正确输入 - 您无需发音标点符号，如句号、逗号或撇号。像平常与他人交谈一样讲话。</Chinesesimp>
+                <Turkish>Asaayu'nun Arma 3 için Entegre Yapay Zeka Ses Kontrol Sistemi'ne (IVCS) hoş geldiniz. Bu menü, mikrofonunuzu ve Windows'un yerleşik ses tanıma motorunu test etmenize olanak tanır. Aşağıdaki cümleleri söyleyin, motor, cümlenizi söylediğinizi tanıdığında yeşile dönecektir. Bu menü açıkken, motor yalnızca aşağıdaki cümleleri doğru giriş olarak tanıyacaktır - Noktalama işaretlerini, noktalar, virgüller veya kesme işaretleri gibi telaffuz etmeniz gerekmez. Diğer bir kişiyle konuştuğunuz gibi konuşun.</Turkish>
             </Key>
+            <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TITLE">
+                <Original>Integrated AI Voice Control System (IVCS)</Original>
+                <English>Integrated AI Voice Control System (IVCS)</English>
+                <Czech>Integrovaný systém hlasového ovládání AI (IVCS)</Czech>
+                <French>Système intégré de contrôle vocal par IA (IVCS)</French>
+                <Spanish>Sistema de control por voz integrado con IA (IVCS)</Spanish>
+                <Italian>Sistema di controllo vocale integrato con IA (IVCS)</Italian>
+                <Polish>Zintegrowany system sterowania głosowego AI (IVCS)</Polish>
+                <Portuguese>Sistema Integrado de Controle de Voz por IA (IVCS)</Portuguese>
+                <Russian>Интегрированная система голосового управления ИИ (IVCS)</Russian>
+                <German>Integriertes KI-Sprachsteuerungssystem (IVCS)</German>
+                <Korean>통합 AI 음성 제어 시스템 (IVCS)</Korean>
+                <Japanese>統合AI音声制御システム (IVCS)</Japanese>
+                <Chinese>集成的人工智能语音控制系统 (IVCS)</Chinese>
+                <Chinesesimp>集成的人工智能语音控制系统 (IVCS)</Chinesesimp>
+                <Turkish>Entegre AI Ses Kontrol Sistemi (IVCS)</Turkish>
+            </Key>
+        </Container>
+        <!-- The grammar strings are not translated as they are grammar specific which may be different to the selected in-game language -->
+        <Container name="Microphone Testing Grammar Strings">
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_01">
                 <Original>Integrated Voice Control System</Original>
             </Key>
@@ -137,73 +662,364 @@
             <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TEST_05">
                 <Original>Everybody, stop!</Original>
             </Key>
-            <Key ID="STR_IVCS_SETTINGS_TESTING_DISPLAY_TITLE">
-                <Original>Integrated AI Voice Control System (IVCS)</Original>
-            </Key>
         </Container>
         <Container name="User Feedback">
             <Key ID="STR_IVCS_FEEDBACK_GET_IN_TARGET_TEXT">
                 <Original>Get In</Original>
+                <English>Get In</English>
+                <Czech>Vstupte</Czech>
+                <French>Entrez</French>
+                <Spanish>Entrar</Spanish>
+                <Italian>Entra</Italian>
+                <Polish>Wejdź</Polish>
+                <Portuguese>Entrar</Portuguese>
+                <Russian>Войти</Russian>
+                <German>Rein</German>
+                <Korean>들어가다</Korean>
+                <Japanese>入る</Japanese>
+                <Chinese>進入</Chinese>
+                <Chinesesimp>进入</Chinesesimp>
+                <Turkish>Girin</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_MOVE_TO_TARGET_TEXT">
                 <Original>Move To</Original>
+                <English>Move To</English>
+                <Czech>Posunout na</Czech>
+                <French>Déplacer vers</French>
+                <Spanish>Mover a</Spanish>
+                <Italian>Sposta a</Italian>
+                <Polish>Przenieść do</Polish>
+                <Portuguese>Mover para</Portuguese>
+                <Russian>Переместить в</Russian>
+                <German>Bewege zu</German>
+                <Korean>이동하기</Korean>
+                <Japanese>移動する</Japanese>
+                <Chinese>移動到</Chinese>
+                <Chinesesimp>移动到</Chinesesimp>
+                <Turkish>Taşı</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_SUPPRESSIVE_FIRE_TARGET_TEXT">
                 <Original>Suppressive Fire Target</Original>
+                <English>Suppressive Fire Target</English>
+                <Czech>Terč potlačující palby</Czech>
+                <French>Cible de feu de suppression</French>
+                <Spanish>Objetivo de fuego supresivo</Spanish>
+                <Italian>Obiettivo di fuoco di soppressione</Italian>
+                <Polish>Cel ognia tłumiącego</Polish>
+                <Portuguese>Alvo de Fogo Suprimido</Portuguese>
+                <Russian>Цель подавляющего огня</Russian>
+                <German>Ziel des unterdrückenden Feuers</German>
+                <Korean>억제 사격 목표</Korean>
+                <Japanese>抑制射撃ターゲット</Japanese>
+                <Chinese>压制火力目标</Chinese>
+                <Chinesesimp>压制火力目标</Chinesesimp>
+                <Turkish>Suppressif Ateş Hedefi</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_TARGET_OBJECT_NOT_FOUND">
                 <Original>No target object could be found</Original>
+                <English>No target object could be found</English>
+                <Czech>Žádný cílový objekt nebyl nalezen</Czech>
+                <French>Aucun objet cible n'a pu être trouvé</French>
+                <Spanish>No se pudo encontrar el objeto objetivo</Spanish>
+                <Italian>Nessun oggetto di destinazione trovato</Italian>
+                <Polish>Nie znaleziono obiektu docelowego</Polish>
+                <Portuguese>Nenhum objeto alvo foi encontrado</Portuguese>
+                <Russian>Целевой объект не найден</Russian>
+                <German>Kein Zielobjekt gefunden</German>
+                <Korean>대상 객체를 찾을 수 없습니다</Korean>
+                <Japanese>ターゲットオブジェクトが見つかりませんでした</Japanese>
+                <Chinese>未找到目标对象</Chinese>
+                <Chinesesimp>未找到目标对象</Chinesesimp>
+                <Turkish>Hedef nesne bulunamadı</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_TARGET_TEXT">
                 <Original>Target</Original>
+                <English>Target</English>
+                <Czech>Cíl</Czech>
+                <French>Cible</French>
+                <Spanish>Objetivo</Spanish>
+                <Italian>Obiettivo</Italian>
+                <Polish>Cel</Polish>
+                <Portuguese>Alvo</Portuguese>
+                <Russian>Цель</Russian>
+                <German>Ziel</German>
+                <Korean>목표</Korean>
+                <Japanese>ターゲット</Japanese>
+                <Chinese>目標</Chinese>
+                <Chinesesimp>目标</Chinesesimp>
+                <Turkish>Hedef</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_TARGET_UNIT_NOT_FOUND">
                 <Original>No target unit could be found</Original>
+                <English>No target unit could be found</English>
+                <Czech>Žádná cílová jednotka nebyla nalezena</Czech>
+                <French>Aucune unité cible n'a été trouvée</French>
+                <Spanish>No se pudo encontrar la unidad objetivo</Spanish>
+                <Italian>Nessuna unità target trovata</Italian>
+                <Polish>Nie znaleziono jednostki docelowej</Polish>
+                <Portuguese>Nenhuma unidade alvo foi encontrada</Portuguese>
+                <Russian>Целевая единица не найдена</Russian>
+                <German>Keine Zieleinheit gefunden</German>
+                <Korean>대상 유닛을 찾을 수 없습니다</Korean>
+                <Japanese>ターゲットユニットが見つかりませんでした</Japanese>
+                <Chinese>找不到目标单位</Chinese>
+                <Chinesesimp>找不到目标单位</Chinesesimp>
+                <Turkish>Hedef birim bulunamadı</Turkish>
             </Key>
             <Key ID="STR_IVCS_FEEDBACK_VEHICLE_OBJECT_NOT_FOUND">
                 <Original>No vehicle object could be found</Original>
+                <English>No vehicle object could be found</English>
+                <Czech>Žádný objekt vozidla nebyl nalezen</Czech>
+                <French>Aucun objet de véhicule n'a pu être trouvé</French>
+                <Spanish>No se pudo encontrar el objeto del vehículo</Spanish>
+                <Italian>Impossibile trovare l'oggetto del veicolo</Italian>
+                <Polish>Nie znaleziono obiektu pojazdu</Polish>
+                <Portuguese>Não foi possível encontrar o objeto do veículo</Portuguese>
+                <Russian>Не удалось найти объект транспортного средства</Russian>
+                <German>Es konnte kein Fahrzeugobjekt gefunden werden</German>
+                <Korean>차량 객체를 찾을 수 없습니다</Korean>
+                <Japanese>車両オブジェクトが見つかりませんでした</Japanese>
+                <Chinese>无法找到车辆对象</Chinese>
+                <Chinesesimp>无法找到车辆对象</Chinesesimp>
+                <Turkish>Hiçbir araç nesnesi bulunamadı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_CROUCH_1">
                 <Original>%1 - Crouch</Original>
+                <English>%1 - Crouch</English>
+                <Czech>%1 - Kleknout</Czech>
+                <French>%1 - S'accroupir</French>
+                <Spanish>%1 - Agacharse</Spanish>
+                <Italian>%1 - Accovacciarsi</Italian>
+                <Polish>%1 - Kucnij</Polish>
+                <Portuguese>%1 - Agachar</Portuguese>
+                <Russian>%1 - Приседать</Russian>
+                <German>%1 - Kauern</German>
+                <Korean>%1 - 웅크리기</Korean>
+                <Japanese>%1 - しゃがむ</Japanese>
+                <Chinese>%1 - 蹲下</Chinese>
+                <Chinesesimp>%1 - 蹲下</Chinesesimp>
+                <Turkish>%1 - Çömel</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_ENGINE_OFF_1">
                 <Original>%1 - Engine Off</Original>
+                <English>%1 - Engine Off</English>
+                <Czech>%1 - Motor vypnutý</Czech>
+                <French>%1 - Moteur éteint</French>
+                <Spanish>%1 - Motor apagado</Spanish>
+                <Italian>%1 - Motore spento</Italian>
+                <Polish>%1 - Silnik wyłączony</Polish>
+                <Portuguese>%1 - Motor Desligado</Portuguese>
+                <Russian>%1 - Двигатель выключен</Russian>
+                <German>%1 - Motor aus</German>
+                <Korean>%1 - 엔진 끄기</Korean>
+                <Japanese>%1 - エンジンオフ</Japanese>
+                <Chinese>%1 - 引擎关闭</Chinese>
+                <Chinesesimp>%1 - 引擎关闭</Chinesesimp>
+                <Turkish>%1 - Motor Kapalı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_ENGINE_ON_1">
                 <Original>%1 - Engine On</Original>
+                <English>%1 - Engine On</English>
+                <Czech>%1 - Motor zapnutý</Czech>
+                <French>%1 - Moteur allumé</French>
+                <Spanish>%1 - Motor encendido</Spanish>
+                <Italian>%1 - Motore acceso</Italian>
+                <Polish>%1 - Silnik włączony</Polish>
+                <Portuguese>%1 - Motor Ligado</Portuguese>
+                <Russian>%1 - Двигатель включен</Russian>
+                <German>%1 - Motor an</German>
+                <Korean>%1 - 엔진 켜기</Korean>
+                <Japanese>%1 - エンジンオン</Japanese>
+                <Chinese>%1 - 引擎开启</Chinese>
+                <Chinesesimp>%1 - 引擎开启</Chinesesimp>
+                <Turkish>%1 - Motor Açık</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_FIRE_1">
                 <Original>%1 - Fire</Original>
+                <English>%1 - Fire</English>
+                <Czech>%1 - Střelba</Czech>
+                <French>%1 - Tir</French>
+                <Spanish>%1 - Fuego</Spanish>
+                <Italian>%1 - Fuoco</Italian>
+                <Polish>%1 - Ogień</Polish>
+                <Portuguese>%1 - Fogo</Portuguese>
+                <Russian>%1 - Огонь</Russian>
+                <German>%1 - Feuer</German>
+                <Korean>%1 - 발사</Korean>
+                <Japanese>%1 - 発砲</Japanese>
+                <Chinese>%1 - 开火</Chinese>
+                <Chinesesimp>%1 - 开火</Chinesesimp>
+                <Turkish>%1 - Ateş</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_GARRISON_1">
                 <Original>%1 - Garrison</Original>
+                <English>%1 - Garrison</English>
+                <Czech>%1 - Garnizon</Czech>
+                <French>%1 - Garnison</French>
+                <Spanish>%1 - Guarnición</Spanish>
+                <Italian>%1 - Garisson</Italian>
+                <Polish>%1 - Garnizon</Polish>
+                <Portuguese>%1 - Guarnição</Portuguese>
+                <Russian>%1 - Гарнизон</Russian>
+                <German>%1 - Garnison</German>
+                <Korean>%1 - 주둔지</Korean>
+                <Japanese>%1 - 駐屯地</Japanese>
+                <Chinese>%1 - 驻军</Chinese>
+                <Chinesesimp>%1 - 驻军</Chinesesimp>
+                <Turkish>%1 - Garnizon</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_GET_OUT_1">
                 <Original>%1 - Get Out</Original>
+                <English>%1 - Get Out</English>
+                <Czech>%1 - Vypadni</Czech>
+                <French>%1 - Sortez</French>
+                <Spanish>%1 - Salir</Spanish>
+                <Italian>%1 - Esci</Italian>
+                <Polish>%1 - Wyjdź</Polish>
+                <Portuguese>%1 - Sair</Portuguese>
+                <Russian>%1 - Выйди</Russian>
+                <German>%1 - Raus</German>
+                <Korean>%1 - 나가</Korean>
+                <Japanese>%1 - 出ていけ</Japanese>
+                <Chinese>%1 - 离开</Chinese>
+                <Chinesesimp>%1 - 离开</Chinesesimp>
+                <Turkish>%1 - Çık</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_FIND_1">
                 <Original>%1 - Find Treatment</Original>
+                <English>%1 - Find Treatment</English>
+                <Czech>%1 - Najít ošetření</Czech>
+                <French>%1 - Trouver un traitement</French>
+                <Spanish>%1 - Buscar tratamiento</Spanish>
+                <Italian>%1 - Trova trattamento</Italian>
+                <Polish>%1 - Znajdź leczenie</Polish>
+                <Portuguese>%1 - Encontrar tratamento</Portuguese>
+                <Russian>%1 - Найти лечение</Russian>
+                <German>%1 - Behandlung finden</German>
+                <Korean>%1 - 치료 찾기</Korean>
+                <Japanese>%1 - 治療を探す</Japanese>
+                <Chinese>%1 - 寻找治疗</Chinese>
+                <Chinesesimp>%1 - 寻找治疗</Chinesesimp>
+                <Turkish>%1 - Tedavi Bul</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_FIND_PLAYER_1">
                 <Original>%1 - Need A Medic</Original>
+                <English>%1 - Need A Medic</English>
+                <Czech>%1 - Potřebuji lékaře</Czech>
+                <French>%1 - Besoin d'un médecin</French>
+                <Spanish>%1 - Necesito un médico</Spanish>
+                <Italian>%1 - Ho bisogno di un medico</Italian>
+                <Polish>%1 - Potrzebuję medyka</Polish>
+                <Portuguese>%1 - Preciso de um médico</Portuguese>
+                <Russian>%1 - Нужен медик</Russian>
+                <German>%1 - Brauche einen Arzt</German>
+                <Korean>%1 - 의사가 필요해</Korean>
+                <Japanese>%1 - 医者が必要</Japanese>
+                <Chinese>%1 - 需要治疗</Chinese>
+                <Chinesesimp>%1 - 需要治疗</Chinesesimp>
+                <Turkish>%1 - Bir doktora ihtiyacım var</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_HEAL_SELF_1">
                 <Original>%1 - Treat Yourself</Original>
+                <English>%1 - Treat Yourself</English>
+                <Czech>%1 - Ošetři se</Czech>
+                <French>%1 - Soigne-toi</French>
+                <Spanish>%1 - Trátate</Spanish>
+                <Italian>%1 - Curati</Italian>
+                <Polish>%1 - Leczyć się</Polish>
+                <Portuguese>%1 - Trate-se</Portuguese>
+                <Russian>%1 - Лечи себя</Russian>
+                <German>%1 - Behandle dich selbst</German>
+                <Korean>%1 - 스스로 치료해</Korean>
+                <Japanese>%1 - 自分で治療</Japanese>
+                <Chinese>%1 - 自我治疗</Chinese>
+                <Chinesesimp>%1 - 自我治疗</Chinesesimp>
+                <Turkish>%1 - Kendini Tedavi Et</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LAND_HELICOPTER_1">
                 <Original>%1 - Land Helicopter</Original>
+                <English>%1 - Land Helicopter</English>
+                <Czech>%1 - Přistát s vrtulníkem</Czech>
+                <French>%1 - Atterrir en hélicoptère</French>
+                <Spanish>%1 - Aterrizar helicóptero</Spanish>
+                <Italian>%1 - Atterra el elicottero</Italian>
+                <Polish>%1 - Lądowanie śmigłowca</Polish>
+                <Portuguese>%1 - Aterrissar helicóptero</Portuguese>
+                <Russian>%1 - Посадка вертолета</Russian>
+                <German>%1 - Hubschrauber landen</German>
+                <Korean>%1 - 헬리콥터 착륙</Korean>
+                <Japanese>%1 - ヘリコプター着陸</Japanese>
+                <Chinese>%1 - 降落直升机</Chinese>
+                <Chinesesimp>%1 - 降落直升机</Chinesesimp>
+                <Turkish>%1 - Helikopteri İndir</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LASER_OFF_1">
                 <Original>%1 - Laser Pointers Off</Original>
+                <English>%1 - Laser Pointers Off</English>
+                <Czech>%1 - Laserové ukazovátko vypnuto</Czech>
+                <French>%1 - Laser éteint</French>
+                <Spanish>%1 - Apagar puntero láser</Spanish>
+                <Italian>%1 - Laser spento</Italian>
+                <Polish>%1 - Wskaźnik laserowy wyłączony</Polish>
+                <Portuguese>%1 - Laser Desligado</Portuguese>
+                <Russian>%1 - Лазер выключен</Russian>
+                <German>%1 - Laser aus</German>
+                <Korean>%1 - 레이저 포인터 끄기</Korean>
+                <Japanese>%1 - レーザーポインターオフ</Japanese>
+                <Chinese>%1 - 激光指示器关闭</Chinese>
+                <Chinesesimp>%1 - 激光指示器关闭</Chinesesimp>
+                <Turkish>%1 - Lazer Işıkları Kapalı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LASER_ON_1">
                 <Original>%1 - Laser Pointers On</Original>
+                <English>%1 - Laser Pointers On</English>
+                <Czech>%1 - Laserové ukazovátko zapnuto</Czech>
+                <French>%1 - Laser allumé</French>
+                <Spanish>%1 - Encender puntero láser</Spanish>
+                <Italian>%1 - Laser acceso</Italian>
+                <Polish>%1 - Wskaźnik laserowy włączony</Polish>
+                <Portuguese>%1 - Laser Ligado</Portuguese>
+                <Russian>%1 - Лазер включен</Russian>
+                <German>%1 - Laser an</German>
+                <Korean>%1 - 레이저 포인터 켜기</Korean>
+                <Japanese>%1 - レーザーポインターオン</Japanese>
+                <Chinese>%1 - 激光指示器开启</Chinese>
+                <Chinesesimp>%1 - 激光指示器开启</Chinesesimp>
+                <Turkish>%1 - Lazer Işıkları Açık</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LIGHTS_OFF_1">
                 <Original>%1 - Lights Off</Original>
+                <English>%1 - Lights Off</English>
+                <Czech>%1 - Světla vypnutá</Czech>
+                <French>%1 - Lumières éteintes</French>
+                <Spanish>%1 - Luces apagadas</Spanish>
+                <Italian>%1 - Luci spente</Italian>
+                <Polish>%1 - Światła wyłączone</Polish>
+                <Portuguese>%1 - Luzes Desligadas</Portuguese>
+                <Russian>%1 - Огни выключены</Russian>
+                <German>%1 - Lichter aus</German>
+                <Korean>%1 - 불 끄기</Korean>
+                <Japanese>%1 - ライトオフ</Japanese>
+                <Chinese>%1 - 灯光关闭</Chinese>
+                <Chinesesimp>%1 - 灯光关闭</Chinesesimp>
+                <Turkish>%1 - Işıklar Kapalı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_LIGHTS_ON_1">
                 <Original>%1 - Lights On</Original>
+                <English>%1 - Lights On</English>
+                <Czech>%1 - Světla zapnutá</Czech>
+                <French>%1 - Lumières allumées</French>
+                <Spanish>%1 - Luces encendidas</Spanish>
+                <Italian>%1 - Luci accese</Italian>
+                <Polish>%1 - Światła włączone</Polish>
+                <Portuguese>%1 - Luzes Ligadas</Portuguese>
+                <Russian>%1 - Огни включены</Russian>
+                <German>%1 - Lichter an</German>
+                <Korean>%1 - 불 켜기</Korean>
+                <Japanese>%1 - ライトオン</Japanese>
+                <Chinese>%1 - 灯光开启</Chinese>
+                <Chinesesimp>%1 - 灯光开启</Chinesesimp>
+                <Turkish>%1 - Işıklar Açık</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_MOVE_1">
                 <Original>%1 - Move</Original>
@@ -224,30 +1040,173 @@
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1">
                 <Original>Negative, no medical equipment</Original>
+                <English>Negative, no medical equipment</English>
+                <Czech>Negativní, žádné lékařské vybavení</Czech>
+                <French>Négatif, pas d'équipement médical</French>
+                <Spanish>Negativo, sin equipo médico</Spanish>
+                <Italian>Negativo, nessuna attrezzatura medica</Italian>
+                <Polish>Negatywne, brak sprzętu medycznego</Polish>
+                <Portuguese>Negativo, sem equipamento médico</Portuguese>
+                <Russian>Отрицательно, нет медицинского оборудования</Russian>
+                <German>Negativ, keine medizinische Ausrüstung</German>
+                <Korean>부정, 의료 장비 없음</Korean>
+                <Japanese>否定、医療機器なし</Japanese>
+                <Chinese>否定，沒有醫療設備</Chinese>
+                <Chinesesimp>否定，没有医疗设备</Chinesesimp>
+                <Turkish>Olumsuz, tıbbi ekipman yok</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_OPEN_FIRE_WHITE_1">
                 <Original>%1 - Fire When Fired Upon</Original>
+                <English>%1 - Fire When Fired Upon</English>
+                <Czech>%1 - Střílet při útoku</Czech>
+                <French>%1 - Tirer lorsque l'on est attaqué</French>
+                <Spanish>%1 - Disparar cuando te disparen</Spanish>
+                <Italian>%1 - Spara quando sei sparato</Italian>
+                <Polish>%1 - Strzelać po otrzymaniu ognia</Polish>
+                <Portuguese>%1 - Atirar quando atacado</Portuguese>
+                <Russian>%1 - Открыть огонь при попадании</Russian>
+                <German>%1 - Feuer eröffnen, wenn beschossen</German>
+                <Korean>%1 - 공격당하면 사격</Korean>
+                <Japanese>%1 - 攻撃されたら撃て</Japanese>
+                <Chinese>%1 - 被攻击时开火</Chinese>
+                <Chinesesimp>%1 - 被攻击时开火</Chinesesimp>
+                <Turkish>%1 - Ateş edildiğinde ateş edin</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_PRONE_1">
                 <Original>%1 - Prone</Original>
+                <English>%1 - Prone</English>
+                <Czech>%1 - v leže</Czech>
+                <French>%1 - Couché</French>
+                <Spanish>%1 - En el suelo</Spanish>
+                <Italian>%1 - Sdraiato</Italian>
+                <Polish>%1 - leżąc</Polish>
+                <Portuguese>%1 - Deitado</Portuguese>
+                <Russian>%1 - В положении лёжа</Russian>
+                <German>%1 - In Bauchlage</German>
+                <Korean>%1 - 엎드려</Korean>
+                <Japanese>%1 - うつ伏せ</Japanese>
+                <Chinese>%1 - 趴下</Chinese>
+                <Chinesesimp>%1 - 趴下</Chinesesimp>
+                <Turkish>%1 - Yüzüstü</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SALUTE_1">
                 <Original>%1 - Salute</Original>
+                <English>%1 - Salute</English>
+                <Czech>%1 - pozdravit</Czech>
+                <French>%1 - Saluer</French>
+                <Spanish>%1 - Saludar</Spanish>
+                <Italian>%1 - Saluto</Italian>
+                <Polish>%1 - salutować</Polish>
+                <Portuguese>%1 - Saudação</Portuguese>
+                <Russian>%1 - Приветствовать</Russian>
+                <German>%1 - Grüßen</German>
+                <Korean>%1 - 경례</Korean>
+                <Japanese>%1 - 敬礼</Japanese>
+                <Chinese>%1 - 致敬</Chinese>
+                <Chinesesimp>%1 - 致敬</Chinesesimp>
+                <Turkish>%1 - Selamla</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SENSORS_OFF_1">
                 <Original>%1 - Sensors Off</Original>
+                <English>%1 - Sensors Off</English>
+                <Czech>%1 - Senzory vypnuté</Czech>
+                <French>%1 - Capteurs éteints</French>
+                <Spanish>%1 - Sensores apagados</Spanish>
+                <Italian>%1 - Sensori spenti</Italian>
+                <Polish>%1 - Czujniki wyłączone</Polish>
+                <Portuguese>%1 - Sensores desligados</Portuguese>
+                <Russian>%1 - Сенсоры выключены</Russian>
+                <German>%1 - Sensoren aus</German>
+                <Korean>%1 - 센서 끄기</Korean>
+                <Japanese>%1 - センサーオフ</Japanese>
+                <Chinese>%1 - 传感器关闭</Chinese>
+                <Chinesesimp>%1 - 传感器关闭</Chinesesimp>
+                <Turkish>%1 - Sensörler kapalı</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SENSORS_ON_1">
                 <Original>%1 - Sensors On</Original>
+                <English>%1 - Sensors On</English>
+                <Czech>%1 - Senzory zapnuté</Czech>
+                <French>%1 - Capteurs allumés</French>
+                <Spanish>%1 - Sensores encendidos</Spanish>
+                <Italian>%1 - Sensori accesi</Italian>
+                <Polish>%1 - Czujniki włączone</Polish>
+                <Portuguese>%1 - Sensores ligados</Portuguese>
+                <Russian>%1 - Сенсоры включены</Russian>
+                <German>%1 - Sensoren an</German>
+                <Korean>%1 - 센서 켜기</Korean>
+                <Japanese>%1 - センサーオン</Japanese>
+                <Chinese>%1 - 传感器开启</Chinese>
+                <Chinesesimp>%1 - 传感器开启</Chinesesimp>
+                <Turkish>%1 - Sensörler açık</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_SIT_1">
                 <Original>%1 - Sit</Original>
+                <English>%1 - Sit</English>
+                <Czech>%1 - Sednout</Czech>
+                <French>%1 - Asseoir</French>
+                <Spanish>%1 - Sentarse</Spanish>
+                <Italian>%1 - Siedi</Italian>
+                <Polish>%1 - usiądź</Polish>
+                <Portuguese>%1 - Sentar</Portuguese>
+                <Russian>%1 - Сесть</Russian>
+                <German>%1 - Sitzen</German>
+                <Korean>%1 - 앉기</Korean>
+                <Japanese>%1 - 座る</Japanese>
+                <Chinese>%1 - 坐下</Chinese>
+                <Chinesesimp>%1 - 坐下</Chinesesimp>
+                <Turkish>%1 - Otur</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_STAND_1">
                 <Original>%1 - Stand</Original>
+                <English>%1 - Stand</English>
+                <Czech>%1 - Stát</Czech>
+                <French>%1 - Se lever</French>
+                <Spanish>%1 - Levantarse</Spanish>
+                <Italian>%1 - Alzati</Italian>
+                <Polish>%1 - wstań</Polish>
+                <Portuguese>%1 - Levantar</Portuguese>
+                <Russian>%1 - Встать</Russian>
+                <German>%1 - Stehen</German>
+                <Korean>%1 - 일어나다</Korean>
+                <Japanese>%1 - 立つ</Japanese>
+                <Chinese>%1 - 站起来</Chinese>
+                <Chinesesimp>%1 - 站起来</Chinesesimp>
+                <Turkish>%1 - Kalk</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_TAKE_POSITION_1">
                 <Original>%1 - Take Position</Original>
+                <English>%1 - Take Position</English>
+                <Czech>%1 - Zaujmout pozici</Czech>
+                <French>%1 - Prendre position</French>
+                <Spanish>%1 - Tomar posición</Spanish>
+                <Italian>%1 - Prendi posizione</Italian>
+                <Polish>%1 - Zająć pozycję</Polish>
+                <Portuguese>%1 - Tomar posição</Portuguese>
+                <Russian>%1 - Занять позицию</Russian>
+                <German>%1 - Position einnehmen</German>
+                <Korean>%1 - 위치 잡기</Korean>
+                <Japanese>%1 - ポジションを取る</Japanese>
+                <Chinese>%1 - 取位置</Chinese>
+                <Chinesesimp>%1 - 取位置</Chinesesimp>
+                <Turkish>%1 - Pozisyon al</Turkish>
+            </Key>
+            <Key ID="STR_IVCS_SYSTEMCHAT_QUICK_ATTACK_1">
+                <Original>%1 - Attack</Original>
+                <English>%1 - Attack</English>
+                <Czech>%1 - Útok</Czech>
+                <French>%1 - Attaque</French>
+                <Spanish>%1 - Atacar</Spanish>
+                <Italian>%1 - Attacca</Italian>
+                <Polish>%1 - atakuj</Polish>
+                <Portuguese>%1 - Atacar</Portuguese>
+                <Russian>%1 - Атака</Russian>
+                <German>%1 - Angriff</German>
+                <Korean>%1 - 공격</Korean>
+                <Japanese>%1 - 攻撃</Japanese>
+                <Chinese>%1 - 攻击</Chinese>
+                <Chinesesimp>%1 - 攻击</Chinesesimp>
+                <Turkish>%1 - Saldır</Turkish>
             </Key>
             <Key ID="STR_IVCS_SYSTEMCHAT_WATCH_1">
                 <Original>%1 - Watch</Original>
