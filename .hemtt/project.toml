@@ -9,8 +9,8 @@ signame = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
 [version]
 major = 2
 minor = 0
-patch = 6
-build = 69
+patch = 7
+build = 70
 
 [files]
 include = [
