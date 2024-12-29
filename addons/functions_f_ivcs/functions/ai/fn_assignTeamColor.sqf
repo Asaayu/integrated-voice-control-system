@@ -18,11 +18,11 @@
     Team colors can be either red, green, yellow, blue, or white.
 */
 
-params [["_units",[],[[]]], ["_teamColorText", "", [""]]];
+params [["_units",[],[[]]], ["_right", [], [[]]]];
 
 // Get units to join the color team
 private _colors = ["white", "red", "green", "yellow", "blue"];
-private _index = _colors findIf {private _color = _x; _teamColorText findIf {_x == _color} > -1};
+private _index = _colors findIf {private _color = _x; _right findIf {_x == _color} > -1};
 if (_index > -1) then
 {
     private _team = _colors#_index;
