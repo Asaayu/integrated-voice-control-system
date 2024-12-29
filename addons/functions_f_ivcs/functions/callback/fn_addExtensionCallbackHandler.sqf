@@ -30,7 +30,7 @@ private _eventHandlerId = addMissionEventHandler ["ExtensionCallback", {
     {
         case "log":
         {
-            diag_log format ["IVCS: %1", _data];
+            diag_log text format ["[IVCS] %1", _data];
         };
         case "speech_recognition_result":
         {

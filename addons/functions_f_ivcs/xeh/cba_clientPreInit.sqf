@@ -29,10 +29,6 @@ call IVCS_fnc_addExtensionCallbackHandler;
 
 if (is3DEN) exitWith {};
 
-addMissionEventHandler ["Loaded", {
-    call compile preprocessFileLineNumbers '\z\ivcs\addons\functions_f_ivcs\xeh\cba_clientPreInit.sqf';
-}];
-
 // Remove any frame handlers that are already present
 private _frame_id = uiNamespace getVariable ["ivcs_ptt_check_id", -1];
 if (_frame_id > -1) then
