@@ -1119,6 +1119,10 @@
                         <tag>out="give em hell[quick_attack]";</tag>
                     </item>
                     <item>
+                        give them hell
+                        <tag>out="give them hell[quick_attack]";</tag>
+                    </item>
+                    <item>
                         open up
                         <tag>out="open up[quick_attack]";</tag>
                     </item>

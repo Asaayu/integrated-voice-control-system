@@ -589,5 +589,38 @@
         <grapheme>i'm</grapheme>
         <phoneme>aɪm</phoneme>
     </lexeme>
-    
+    <lexeme>
+        <grapheme>contact</grapheme>
+        <phoneme>ˈkɒn.tækt</phoneme>
+        <phoneme>ˈkɑːn.tækt</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>give</grapheme>
+        <phoneme>ɡɪv</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>em</grapheme>
+        <phoneme>ɛm</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>hell</grapheme>
+        <phoneme>hɛl</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>open</grapheme>
+        <phoneme>ˈəʊpən</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>up</grapheme>
+        <phoneme>ʌp</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>fire</grapheme>
+        <phoneme>ˈfaɪə</phoneme>
+        <phoneme>ˈfaɪər</phoneme>
+    </lexeme>
+    <lexeme>
+        <grapheme>patch</grapheme>
+        <phoneme>pætʃ</phoneme>
+    </lexeme>
 </lexicon>
