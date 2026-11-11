@@ -366,21 +366,21 @@
                 <Turkish>Windows Ses Denetim Panelini açın, böylece varsayılan giriş ve çıkış cihazlarını değiştirebilirsiniz.</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_RECOGNIZER_BUTTON_NAME">
-                <Original>Windows Speech Recognizer Settings</Original>
-                <English>Windows Speech Recognizer Settings</English>
-                <Czech>Nastavení rozpoznávání řeči Windows</Czech>
-                <French>Paramètres de reconnaissance vocale Windows</French>
-                <Spanish>Configuración del reconocedor de voz de Windows</Spanish>
-                <Italian>Impostazioni del riconoscimento vocale di Windows</Italian>
-                <Polish>Ustawienia rozpoznawania mowy Windows</Polish>
-                <Portuguese>Configurações do Reconhecedor de Fala do Windows</Portuguese>
-                <Russian>Настройки распознавателя речи Windows</Russian>
-                <German>Windows-Spracherkennungseinstellungen</German>
-                <Korean>Windows 음성 인식기 설정</Korean>
-                <Japanese>Windows 音声認識エンジンの設定</Japanese>
-                <Chinese>Windows 語音辨識器設定</Chinese>
-                <Chinesesimp>Windows 语音识别器设置</Chinesesimp>
-                <Turkish>Windows Konuşma Tanıyıcı Ayarları</Turkish>
+                <Original>Windows Speech Settings</Original>
+                <English>Windows Speech Settings</English>
+                <Czech>Nastavení řeči Windows</Czech>
+                <French>Paramètres vocaux de Windows</French>
+                <Spanish>Configuración de voz de Windows</Spanish>
+                <Italian>Impostazioni vocali di Windows</Italian>
+                <Polish>Ustawienia mowy Windows</Polish>
+                <Portuguese>Configurações de Fala do Windows</Portuguese>
+                <Russian>Настройки речи Windows</Russian>
+                <German>Windows-Spracheinstellungen</German>
+                <Korean>Windows 음성 설정</Korean>
+                <Japanese>Windows 音声設定</Japanese>
+                <Chinese>Windows 語音設定</Chinese>
+                <Chinesesimp>Windows 语音设置</Chinesesimp>
+                <Turkish>Windows Konuşma Ayarları</Turkish>
             </Key>
             <Key ID="STR_IVCS_PAUSE_MENU_RECOGNIZER_BUTTON_TOOLTIP">
                 <Original>Open the Windows Speech Properties, allowing you to choose which speech recognizer language the mod uses.</Original>

@@ -5,7 +5,7 @@
 #define AUTHORS authors[]= {"Asaayu"}; author = "Asaayu"
 #define URL url = "https://steamcommunity.com/id/asaayu/myworkshopfiles/?appid=107410"
 #define NAME(SUBTITLE) name = QUOTE(Integrated Voice Control System - #SUBTITLE)
-#define VERSION requiredVersion = 0.1
+#define VERSION requiredVersion = 2.02
 
 // UI defines
 #define SW safezoneW
