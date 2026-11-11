@@ -82,7 +82,7 @@ private _fnc_search =
                 };
             } forEach (vehicles + allUnits);
 
-            if (count _possible > 0) then
+            if (_possible isNotEqualTo []) then
             {
                 private _final_diff = 10;
                 private _final = objNull;
