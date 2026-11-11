@@ -29,10 +29,11 @@ if (!isNil "_targets" && {count _targets > 0}) then
     if (isNull _target || damage _target == 0) exitWith {};
 
     {
-        if (_x == _target) exitWith {};
+        if (_x == _target) then {continue};
 
-        if !([_x] call IVCS_fnc_hasMedicalItem) exitWith {
+        if !([_x] call IVCS_fnc_hasMedicalItem) then {
             [_x, localize "STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1"] call IVCS_fnc_negativeSpeak;
+            continue;
         };
 
         private _handle = [_x, _target] spawn
@@ -57,6 +58,7 @@ if (!isNil "_targets" && {count _targets > 0}) then
                 };
 
                 // Exit the loop if...
+                (time >= _exitTime) ||
                 (stopped _unit) ||
                 !(isNull objectParent _target) ||
                 !(alive _target) ||
@@ -74,14 +76,14 @@ if (!isNil "_targets" && {count _targets > 0}) then
             _unit action ["HealSoldier", _target];
 
             private _exitTime = time + 10;
-            waitUntil {damage _target >= _startHealth || !alive _unit || !alive _target || time >= _exitTime };
+            waitUntil {damage _target < _startHealth || !alive _unit || !alive _target || time >= _exitTime };
 
             _target enableAI "PATH";
             _unit doFollow (leader group _unit);
         };
 
         private _handles = _x getVariable ["ivcs_handles", []];
-        _x setVariable ["ivcs_handles", (_handles + _handler)];
+        _x setVariable ["ivcs_handles", (_handles + [_handle])];
     } forEach _units;
 }
 else

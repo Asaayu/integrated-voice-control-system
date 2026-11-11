@@ -30,6 +30,7 @@ if (damage _unit == 0) exitWith {false};
 // Check if the unit has a medical item in its inventory
 if !([_unit] call IVCS_fnc_hasMedicalItem) exitWith {
     [_unit, localize "STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1"] call IVCS_fnc_negativeSpeak;
+    false
 };
 
 _unit action ["HealSoldierSelf", _unit]; // May try 'HealSoldier' instead to see what the difference is

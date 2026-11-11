@@ -10,6 +10,8 @@
 
     Parameters:
     _units: Array - An array of units to get in the vehicle
+    _right: Array - The vehicle type, "as" keyword, and role from the recognized phrase
+    _function: String - The recognized function, "get_in_player" makes units get into the player's vehicle
 
     Returns:
     NONE
@@ -18,7 +20,9 @@
     The AI will attempt to move to the position of the vehicle and get in.
 */
 
-params [["_units",[],[[]]], ["_right", [], [[]]]];
+params [["_units",[],[[]]], ["_right", [], [[]]], ["_function", "", [""]]];
+
+private _player = call IVCS_fnc_player;
 
 _right params [["_type","",[""]], "_as", ["_role","",[""]]];
 
@@ -71,44 +75,10 @@ if !(isNull _object) then
         };
 
         private _handles = _x getVariable ["ivcs_handles", []];
-        _x setVariable ["ivcs_handles", (_handles + _handler)];
+        _x setVariable ["ivcs_handles", (_handles + [_handle])];
     } forEach _units;
 
-    if (uiNamespace getVariable ["ivcs_target_confirm_ui", true]) then
-    {
-        addMissionEventHandler ["Draw3D",
-        {
-            private _time = _thisArgs#0;
-            private _object = _thisArgs#1;
-
-            if (alive _object && {time <= _time + 4}) then
-            {
-                drawIcon3D
-                [
-                    "a3\ui_f\data\GUI\Cfg\Cursors\hc_overenemy_gs.paa",
-                    [1,1,1,linearConversion [_time + 2, _time + 2.5, time, 1, 0]],
-                    _object modelToWorldVisual (_object selectionPosition "pelvis"),
-                    1,
-                    1,
-                    0,
-                    localize "STR_IVCS_FEEDBACK_GET_IN_TARGET_TEXT",
-                    2,
-                    0.03,
-                    "RobotoCondensedLight",
-                    "center",
-                    true
-                ];
-            }
-            else
-            {
-                removeMissionEventHandler ["Draw3D", _thisEventHandler];
-            };
-        },
-        [
-            time,
-            _object
-        ]];
-    };
+    [_object, localize "STR_IVCS_FEEDBACK_GET_IN_TARGET_TEXT"] call IVCS_fnc_drawTargetConfirmation;
 }
 else
 {

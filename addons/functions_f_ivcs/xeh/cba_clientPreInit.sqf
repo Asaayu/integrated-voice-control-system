@@ -42,7 +42,7 @@ private _frame_id =
     if (uiNamespace getVariable ["ivcs_ptt_down", false] && {!isGameFocused || isGamePaused}) then
     {
         uiNamespace setVariable ["ivcs_ptt_down", false];
-        [] call IVCS_fnc_ptt_up;
+        [] call IVCS_fnc_onPttUp;
     };
 }, 0.1, []] call CBA_fnc_addPerFrameHandler;
 

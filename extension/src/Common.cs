@@ -1,12 +1,10 @@
 using System;
-using System.Activities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
 
 namespace IntegratedVoiceControlSystem
 {
@@ -58,16 +56,15 @@ namespace IntegratedVoiceControlSystem
                         Process.Start(speechTrainingPath, "UserTraining");
                         break;
 
-                    // OPEN_SPEECH_SETTINGS: Opens the speech language settings
-                    case "speechSettings":
-                        string currentWindowsVersion = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentMajorVersionNumber", "").ToString();
-                        if (currentWindowsVersion != "10" && currentWindowsVersion != "11")
+                    // OPEN_SPEECH_RECOGNIZER_SETTINGS: Opens the speech properties panel to change the default speech recognizer
+                    case "speechRecognizer":
+                        string speechPropertiesPath = Path.Combine(systemDirectory, "Speech", "SpeechUX", "sapi.cpl");
+                        if (!File.Exists(speechPropertiesPath))
                         {
-                            throw new VersionMismatchException("This link requires Windows 10 or 11 to open.");
+                            throw new FileNotFoundException("Windows Speech Properties could not be found on your system.");
                         }
 
-                        string speechSettingsUri = "ms-settings:speech";
-                        Process.Start(speechSettingsUri);
+                        Process.Start(Path.Combine(systemDirectory, "control.exe"), $"\"{speechPropertiesPath}\"");
                         break;
 
                     // OPEN_SOUND_CONTROL_PANEL_SETTINGS: Opens the sound control panel settings
@@ -80,10 +77,6 @@ namespace IntegratedVoiceControlSystem
             catch (FileNotFoundException fileNotFoundException)
             {
                 Logger.Error("Windows speech recognition training could not be found", fileNotFoundException);
-            }
-            catch (VersionMismatchException versionMismatchException)
-            {
-                Logger.Error($"This link requires Windows 10 or 11 to open.", versionMismatchException);
             }
             catch (Exception exception)
             {

@@ -10,5 +10,5 @@ class RscTitles
 
 #include "displays\ivcs_mod_test_display.hpp"
 #include "displays\ivcs_open_speech_training_display.hpp"
-#include "displays\ivcs_open_speech_settings_display.hpp"
+#include "displays\ivcs_open_speech_recognizer_display.hpp"
 #include "displays\ivcs_open_sound_control_panel_display.hpp"

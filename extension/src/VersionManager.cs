@@ -12,7 +12,7 @@ namespace IntegratedVoiceControlSystem
     class VersionManager
     {
         private static readonly string GIT_REPO = "Asaayu/integrated-voice-control-system/main";
-        private static readonly string GIT_VERSION_CHECK_URL = $"http://raw.githubusercontent.com/{GIT_REPO}/version_check.txt";
+        private static readonly string GIT_VERSION_CHECK_URL = $"https://raw.githubusercontent.com/{GIT_REPO}/version_check.txt";
         private static Version version;
 
         internal static void Setup()

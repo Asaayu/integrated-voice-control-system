@@ -30,7 +30,7 @@ private _closestUnit = objNull;
         }
         else
         {
-            if (_unit distance _x <= _unit distance _closestUnit) then
+            if (_player distance _x <= _player distance _closestUnit) then
             {
                 _closestUnit = _x;
             };
@@ -69,7 +69,7 @@ private _handle = [_player, _closestUnit] spawn
         !(alive _medic) ||
         (damage _unit == 0) ||
         (damage _unit < _startHealth) ||
-        (_medic distance _unit <= _radius && { speed _unit <= 0.1 })
+        (_medic distance _unit <= _radius && { speed _medic <= 0.1 })
     };
     if (time >= _exitTime || _medic distance _unit > _radius) exitWith {
         [_medic] call IVCS_fnc_negativeSpeak;
@@ -80,11 +80,11 @@ private _handle = [_player, _closestUnit] spawn
     _medic action ["HealSoldier", _unit];
 
     private _exitTime = time + 10;
-    waitUntil {damage _unit > _startHealth || !alive _unit || !alive _medic || time >= _exitTime };
+    waitUntil {damage _unit < _startHealth || !alive _unit || !alive _medic || time >= _exitTime };
 
     _medic enableAI "PATH";
     _medic doFollow (leader group _medic);
 };
 
 private _handles = _closestUnit getVariable ["ivcs_handles", []];
-_closestUnit setVariable ["ivcs_handles", (_handles + _handler)];
+_closestUnit setVariable ["ivcs_handles", (_handles + [_handle])];
