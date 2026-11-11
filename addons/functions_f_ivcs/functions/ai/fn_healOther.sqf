@@ -29,10 +29,11 @@ if (!isNil "_targets" && {count _targets > 0}) then
     if (isNull _target || damage _target == 0) exitWith {};
 
     {
-        if (_x == _target) exitWith {};
+        if (_x == _target) then {continue};
 
-        if !([_x] call IVCS_fnc_hasMedicalItem) exitWith {
+        if !([_x] call IVCS_fnc_hasMedicalItem) then {
             [_x, localize "STR_IVCS_SYSTEMCHAT_NO_MEDICAL_EQUIPMENT_1"] call IVCS_fnc_negativeSpeak;
+            continue;
         };
 
         private _handle = [_x, _target] spawn
@@ -57,6 +58,7 @@ if (!isNil "_targets" && {count _targets > 0}) then
                 };
 
                 // Exit the loop if...
+                (time >= _exitTime) ||
                 (stopped _unit) ||
                 !(isNull objectParent _target) ||
                 !(alive _target) ||

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Speech.Recognition;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static IntegratedVoiceControlSystem.Types;
 
@@ -16,6 +17,8 @@ namespace IntegratedVoiceControlSystem
         private static bool usingTestGrammar = false;
         private static bool ptt = false;
         private static bool speech = false;
+        private static int pttSession = 0;
+        private static readonly ManualResetEventSlim recognitionIdle = new ManualResetEventSlim(true);
 
         private static double minimumRequiredConfidence = 0.8;
 
@@ -102,10 +105,7 @@ namespace IntegratedVoiceControlSystem
             try
             {
                 Logger.Debug("Starting test mode...");
-                ReloadIfDefaultRecognizerChanged();
-                speechEngine.SetInputToDefaultAudioDevice();
-                ApplyTimeouts();
-                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                StartRecognition();
 
                 LoadTestGrammar();
             }
@@ -130,6 +130,34 @@ namespace IntegratedVoiceControlSystem
             }
         }
 
+        private static void StartRecognition()
+        {
+            ReloadIfDefaultRecognizerChanged();
+
+            // RecognizeAsyncStop returns before the engine finishes, and starting again while it is still running throws
+            if (!recognitionIdle.IsSet)
+            {
+                speechEngine.RecognizeAsyncCancel();
+                if (!recognitionIdle.Wait(TimeSpan.FromSeconds(1)))
+                {
+                    Logger.Warn("The previous speech recognition did not stop in time.");
+                }
+            }
+
+            speechEngine.SetInputToDefaultAudioDevice();
+            ApplyTimeouts();
+            recognitionIdle.Reset();
+            try
+            {
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+            }
+            catch
+            {
+                recognitionIdle.Set();
+                throw;
+            }
+        }
+
         private static void ApplyTimeouts()
         {
             speechEngine.InitialSilenceTimeout = TimeSpan.FromSeconds(initialSilenceTimeout);
@@ -151,6 +179,7 @@ namespace IntegratedVoiceControlSystem
             Logger.Info($"Default speech recognizer changed from '{loadedRecognizerToken}' to '{currentRecognizerToken}', reloading the speech engine...");
             speechEngine?.Dispose();
             speechEngine = null;
+            recognitionIdle.Set();
             Setup();
         }
 
@@ -261,10 +290,18 @@ namespace IntegratedVoiceControlSystem
 
         private static void RecognizeCompleted(object sender, RecognizeCompletedEventArgs recognizeCompletedEventArgs)
         {
+            recognitionIdle.Set();
+
             if (speech)
             {
-                Thread.Sleep(1000);
-                UiManager.SetPttBackgroundDisplay(false);
+                int session = pttSession;
+                Task.Delay(1000).ContinueWith(_ =>
+                {
+                    if (session == pttSession && !ptt)
+                    {
+                        UiManager.SetPttBackgroundDisplay(false);
+                    }
+                });
             }
         }
 
@@ -277,11 +314,9 @@ namespace IntegratedVoiceControlSystem
 
                 ptt = true;
                 speech = false;
+                pttSession++;
 
-                ReloadIfDefaultRecognizerChanged();
-                speechEngine.SetInputToDefaultAudioDevice();
-                ApplyTimeouts();
-                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                StartRecognition();
             }
             catch (Exception e)
             {

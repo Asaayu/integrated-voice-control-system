@@ -72,7 +72,6 @@ namespace IntegratedVoiceControlSystem
         internal static void Error(string message, Exception exception, bool skipMessageBox = false)
         {
             OutputConsoleLine($"{message}\n{exception.Message}\n{exception.StackTrace}", "ERROR");
-            OutputConsoleLine($"{message}\n{exception.Message}\n{exception.StackTrace}", "ERROR");
 
             if (!skipMessageBox)
             {

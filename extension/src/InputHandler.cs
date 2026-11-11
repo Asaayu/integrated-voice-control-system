@@ -46,9 +46,9 @@ namespace IntegratedVoiceControlSystem
             {
                 // OPEN_EXTERNAL_PROGRAM: Open one of the white-listed external programs
                 case "open_external_program":
-                    Logger.Debug($"Opening external program '{parameters[0]}'");
                     if (parameters.Length >= 1)
                     {
+                        Logger.Debug($"Opening external program '{parameters[0]}'");
                         Common.OpenExternalProgram(parameters[0].Replace("\"", ""));
                         return (1, null);
                     }
@@ -102,6 +102,9 @@ namespace IntegratedVoiceControlSystem
 
                 // CONVERT_NUMBER_READABLE: Convert a number from text to digits
                 case "convert_number_readable":
+                    if (parameters.Length < 1)
+                        return (0, null);
+
                     string output = Common.ConvertNumberToHumanString(parameters[0]);
                     return (1, output);
 
