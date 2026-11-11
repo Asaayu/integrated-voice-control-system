@@ -51,6 +51,13 @@ namespace IntegratedVoiceControlSystem
                 var installedRecognizers = SpeechRecognitionEngine.InstalledRecognizers();
                 Logger.Debug($"Found {installedRecognizers.Count} installed recognizers on the system - [{string.Join(", ", installedRecognizers.Select(recognizer => recognizer.Culture.EnglishName))}]");
 
+                CultureInfo defaultCulture = GetDefaultRecognizerCulture();
+                if (defaultCulture != null && IsCultureSupported(defaultCulture))
+                {
+                    Logger.Debug($"Using the system default recognizer culture '{defaultCulture.EnglishName}'");
+                    return defaultCulture;
+                }
+
                 foreach (RecognizerInfo recognizer in installedRecognizers)
                 {
                     CultureInfo culture = recognizer.Culture;
@@ -66,6 +73,22 @@ namespace IntegratedVoiceControlSystem
             catch (Exception exception)
             {
                 Logger.Error("An error occurred while attempting to get the first supported culture.", exception);
+                return null;
+            }
+        }
+
+        private static CultureInfo GetDefaultRecognizerCulture()
+        {
+            try
+            {
+                using (SpeechRecognitionEngine defaultEngine = new SpeechRecognitionEngine())
+                {
+                    return defaultEngine.RecognizerInfo.Culture;
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.Debug($"Could not get the system default recognizer: {exception.Message}");
                 return null;
             }
         }

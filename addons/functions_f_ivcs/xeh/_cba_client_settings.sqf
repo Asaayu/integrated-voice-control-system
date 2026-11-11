@@ -24,7 +24,7 @@ if !(missionNamespace getVariable ["ivcs_mission_loaded", false]) then
 {
     [[localize "STR_IVCS_PAUSE_MENU_TEST_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_TEST_BUTTON_TOOLTIP"], "ivcs_mod_test_display"] call CBA_fnc_addPauseMenuOption;
     [[localize "STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_TRAINING_BUTTON_TOOLTIP"], "ivcs_open_speech_training_display"] call CBA_fnc_addPauseMenuOption;
-    [[localize "STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_SPEECH_BUTTON_TOOLTIP"], "ivcs_open_speech_settings_display"] call CBA_fnc_addPauseMenuOption;
+    [[localize "STR_IVCS_PAUSE_MENU_RECOGNIZER_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_RECOGNIZER_BUTTON_TOOLTIP"], "ivcs_open_speech_recognizer_display"] call CBA_fnc_addPauseMenuOption;
     [[localize "STR_IVCS_PAUSE_MENU_SOUND_BUTTON_NAME", localize "STR_IVCS_PAUSE_MENU_SOUND_BUTTON_TOOLTIP"], "ivcs_open_sound_control_panel_display"] call CBA_fnc_addPauseMenuOption;
     missionNamespace setVariable ["ivcs_mission_loaded", true];
 };
