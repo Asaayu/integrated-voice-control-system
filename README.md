@@ -13,7 +13,7 @@ The **Integrated AI Voice Control System** enables players to issue voice comman
 ## Installation
 
 ### Install the Mod
-1. Go to the Steam Workshop page for the [Integrated AI Voice Control System](https://steamcommunity.com/sharedfiles/filedetails/?id=2535464017).
+1. Go to the Steam Workshop page for the [Integrated AI Voice Control System](https://steamcommunity.com/sharedfiles/filedetails/?id=2582780947).
 2. Click the green "Subscribe" button to download the mod.
 3. Launch Arma 3 and enable the mod in the launcher.
 
