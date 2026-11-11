@@ -10,6 +10,8 @@
 
     Parameters:
     _units: Array - An array of units to get in the vehicle
+    _right: Array - The vehicle type, "as" keyword, and role from the recognized phrase
+    _function: String - The recognized function, "get_in_player" makes units get into the player's vehicle
 
     Returns:
     NONE
@@ -18,7 +20,9 @@
     The AI will attempt to move to the position of the vehicle and get in.
 */
 
-params [["_units",[],[[]]], ["_right", [], [[]]]];
+params [["_units",[],[[]]], ["_right", [], [[]]], ["_function", "", [""]]];
+
+private _player = call IVCS_fnc_player;
 
 _right params [["_type","",[""]], "_as", ["_role","",[""]]];
 
@@ -71,7 +75,7 @@ if !(isNull _object) then
         };
 
         private _handles = _x getVariable ["ivcs_handles", []];
-        _x setVariable ["ivcs_handles", (_handles + _handler)];
+        _x setVariable ["ivcs_handles", (_handles + [_handle])];
     } forEach _units;
 
     if (uiNamespace getVariable ["ivcs_target_confirm_ui", true]) then

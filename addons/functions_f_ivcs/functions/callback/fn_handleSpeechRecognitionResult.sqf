@@ -156,7 +156,7 @@ if (uiNamespace getVariable ["ivcs_output_group_chat", true]) then
     { terminate _x } forEach _handles;
 
     private _frameHandles = _x getVariable ["ivcs_frame_handles", []];
-    { [_x] call CBA_fnc_removePerFrameHandler; } forEach ivcs_frame_handles;
+    { [_x] call CBA_fnc_removePerFrameHandler; } forEach _frameHandles;
 
     // "PATH" needs to be enabled as it may have been disabled by the HealOther or HealFind functions
     _x enableAI "PATH";
@@ -348,7 +348,7 @@ switch (toLower _function) do
     case "get_in_player";
     case "get_in":
     {
-        [_units, _right] call IVCS_fnc_getIn;
+        [_units, _right, _function] call IVCS_fnc_getIn;
     };
     case "salute":
     {
@@ -538,7 +538,7 @@ switch (toLower _function) do
     case "heal_other":
     {
         // If units is everyone and _right is empty, then this was just the phrase "heal"
-        if (count _units == count (units group _player - [_player]) && count _right == 0) then
+        if (count _units == count (units group _player - [_player]) && _right isEqualTo []) then
         {
             {
                 private _success = [_x] call IVCS_fnc_healSelf;

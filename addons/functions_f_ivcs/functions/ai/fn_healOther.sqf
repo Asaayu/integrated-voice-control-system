@@ -74,14 +74,14 @@ if (!isNil "_targets" && {count _targets > 0}) then
             _unit action ["HealSoldier", _target];
 
             private _exitTime = time + 10;
-            waitUntil {damage _target >= _startHealth || !alive _unit || !alive _target || time >= _exitTime };
+            waitUntil {damage _target < _startHealth || !alive _unit || !alive _target || time >= _exitTime };
 
             _target enableAI "PATH";
             _unit doFollow (leader group _unit);
         };
 
         private _handles = _x getVariable ["ivcs_handles", []];
-        _x setVariable ["ivcs_handles", (_handles + _handler)];
+        _x setVariable ["ivcs_handles", (_handles + [_handle])];
     } forEach _units;
 }
 else

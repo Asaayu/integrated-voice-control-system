@@ -32,7 +32,7 @@ params [["_units",[],[[]]]];
 
             if (isNil "_unit" || !alive _unit || damage _unit > _damage || behaviour _unit == "COMBAT" || _unit call BIS_fnc_enemyDetected) then
             {
-                [_handle] call CBA_fnc_removePerFrameHandler;
+                [_id] call CBA_fnc_removePerFrameHandler;
             }
             else
             {
@@ -50,5 +50,5 @@ params [["_units",[],[[]]]];
     ] call CBA_fnc_addPerFrameHandler;
 
     private _frame_handles = _x getVariable ["ivcs_frame_handles", []];
-    _x setVariable ["ivcs_frame_handles", (_frame_handles + _handler)];
+    _x setVariable ["ivcs_frame_handles", (_frame_handles + [_handler])];
 } forEach _units;

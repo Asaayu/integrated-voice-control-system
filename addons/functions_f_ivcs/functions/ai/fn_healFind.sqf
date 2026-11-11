@@ -27,7 +27,6 @@ private _player = call IVCS_fnc_player;
     private _groupUnits = units group _unit - [_player];
 
     {
-        systemChat format ["%1", _x];
         if (alive _x && {_x != _unit && {!isPlayer _x && {[_x] call IVCS_fnc_hasMedicalItem}}}) then {
             if (isNull _closestUnit) then
             {
@@ -87,7 +86,7 @@ private _player = call IVCS_fnc_player;
         _medic action ["HealSoldier", _unit];
 
         private _exitTime = time + 10;
-        waitUntil {damage _unit > _startHealth || !alive _unit || !alive _medic || time >= _exitTime };
+        waitUntil {damage _unit < _startHealth || !alive _unit || !alive _medic || time >= _exitTime };
 
         _unit enableAI "PATH";
         _medic enableAI "PATH";
@@ -96,5 +95,5 @@ private _player = call IVCS_fnc_player;
     };
 
     private _handles = _x getVariable ["ivcs_handles", []];
-    _x setVariable ["ivcs_handles", (_handles + _handler)];
+    _x setVariable ["ivcs_handles", (_handles + [_handle])];
 } forEach _units;

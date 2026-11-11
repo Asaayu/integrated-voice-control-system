@@ -22,7 +22,7 @@
 params [["_units",[],[[]]], ["_rightData", [], [[]]]];
 
 // Get units to suppress a position
-_rightData params ["_type"];
+_rightData params [["_type", "", [""]]];
 
 private _object = [_type] call IVCS_fnc_convertObjects;
 
