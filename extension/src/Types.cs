@@ -5,7 +5,7 @@ namespace IntegratedVoiceControlSystem
         public enum ExternalProgram
         {
             SpeechTraining,
-            SpeechSettings,
+            SpeechRecognizer,
             SoundControlPanel
         }
 
